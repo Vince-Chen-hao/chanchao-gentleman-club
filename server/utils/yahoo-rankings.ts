@@ -90,6 +90,21 @@ const percentOwned = (player: unknown) => {
   return Number.isFinite(parsed) ? parsed : null
 }
 
+const yahooFetch = async (url: string, token: string, label: string) => {
+  try {
+    return await $fetch<Record<string, any>>(url, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+  } catch (error: any) {
+    const data = error?.data || error?.response?._data
+    const description = data?.fantasy_content?.error?.description || data?.error_description || data?.error || error?.statusMessage || error?.message || 'Unknown Yahoo error'
+    throw createError({
+      statusCode: error?.statusCode || error?.response?.status || 502,
+      statusMessage: `Yahoo ${label} failed: ${description}`,
+    })
+  }
+}
+
 const findLeagueKey = (value: unknown): string => {
   if (typeof value === 'string' && /^\d+\.l\.16495$/.test(value)) return value
   if (!value || typeof value !== 'object') return ''
@@ -109,9 +124,7 @@ const findLeagueKey = (value: unknown): string => {
 
 const resolveLeagueKey = async (token: string, configuredLeagueKey: string) => {
   if (configuredLeagueKey) return configuredLeagueKey
-  const response = await $fetch<Record<string, any>>(`${apiBase}/users;use_login=1/games;game_keys=nba/leagues?format=json`, {
-    headers: { Authorization: `Bearer ${token}` },
-  })
+  const response = await yahooFetch(`${apiBase}/users;use_login=1/games;game_keys=nba/leagues?format=json`, token, 'league lookup')
   return findLeagueKey(response) || 'nba.l.16495'
 }
 
@@ -130,9 +143,7 @@ export const fetchYahooRankings = defineCachedFunction(async (count = 50) => {
   const leagueKey = await resolveLeagueKey(auth.token, config.leagueKey)
   const gameKey = leagueKey.split('.')[0] || 'nba'
   const url = `${apiBase}/game/${gameKey}/players;sort=OR;start=0;count=${Math.min(Math.max(count, 1), 100)}?format=json`
-  const response = await $fetch<Record<string, any>>(url, {
-    headers: { Authorization: `Bearer ${auth.token}` },
-  })
+  const response = await yahooFetch(url, auth.token, 'player rankings')
   const rawPlayers = response?.fantasy_content?.game?.[1]?.players || {}
   const rows = Object.keys(rawPlayers)
     .filter(key => key !== 'count')
