@@ -97,7 +97,8 @@ const yahooFetch = async (url: string, token: string, label: string) => {
     })
   } catch (error: any) {
     const data = error?.data || error?.response?._data
-    const description = data?.fantasy_content?.error?.description || data?.error_description || data?.error || error?.statusMessage || error?.message || 'Unknown Yahoo error'
+    const rawDescription = data?.fantasy_content?.error?.description || data?.error_description || data?.error || error?.statusMessage || error?.message || 'Unknown Yahoo error'
+    const description = typeof rawDescription === 'string' ? rawDescription : JSON.stringify(rawDescription)
     throw createError({
       statusCode: error?.statusCode || error?.response?.status || 502,
       statusMessage: `Yahoo ${label} failed: ${description}`,
