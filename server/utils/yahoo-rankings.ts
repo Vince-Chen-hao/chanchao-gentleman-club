@@ -109,7 +109,7 @@ const findLeagueKey = (value: unknown): string => {
 
 const resolveLeagueKey = async (token: string, configuredLeagueKey: string) => {
   if (configuredLeagueKey) return configuredLeagueKey
-  const response = await $fetch<Record<string, any>>(`${apiBase}/users;use_login=1/games;game_codes=nba/leagues?format=json`, {
+  const response = await $fetch<Record<string, any>>(`${apiBase}/users;use_login=1/games;game_keys=nba/leagues?format=json`, {
     headers: { Authorization: `Bearer ${token}` },
   })
   return findLeagueKey(response) || 'nba.l.16495'
@@ -157,4 +157,4 @@ export const fetchYahooRankings = defineCachedFunction(async (count = 50) => {
     updatedAt: new Date().toISOString(),
     rows,
   }
-}, { maxAge: 60 * 5, name: 'yahoo-rankings-v2' })
+}, { maxAge: 60 * 5, name: 'yahoo-rankings-v3' })
