@@ -23,7 +23,7 @@ const readYahooConfig = () => ({
   clientId: process.env.YAHOO_CLIENT_ID || '',
   clientSecret: process.env.YAHOO_CLIENT_SECRET || '',
   refreshToken: process.env.YAHOO_REFRESH_TOKEN || '',
-  leagueKey: process.env.YAHOO_LEAGUE_KEY || 'nba.l.16495',
+  leagueKey: process.env.YAHOO_LEAGUE_KEY || '',
 })
 
 const getAccessToken = async () => {
@@ -90,23 +90,50 @@ const percentOwned = (player: unknown) => {
   return Number.isFinite(parsed) ? parsed : null
 }
 
+const findLeagueKey = (value: unknown): string => {
+  if (typeof value === 'string' && /^\d+\.l\.16495$/.test(value)) return value
+  if (!value || typeof value !== 'object') return ''
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      const found = findLeagueKey(item)
+      if (found) return found
+    }
+    return ''
+  }
+  for (const item of Object.values(value)) {
+    const found = findLeagueKey(item)
+    if (found) return found
+  }
+  return ''
+}
+
+const resolveLeagueKey = async (token: string, configuredLeagueKey: string) => {
+  if (configuredLeagueKey) return configuredLeagueKey
+  const response = await $fetch<Record<string, any>>(`${apiBase}/users;use_login=1/games;game_codes=nba/leagues?format=json`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+  return findLeagueKey(response) || 'nba.l.16495'
+}
+
 export const fetchYahooRankings = defineCachedFunction(async (count = 50) => {
   const config = readYahooConfig()
   const auth = await getAccessToken()
   if (!auth.token) {
     return {
       status: 'needs_config' as const,
-      leagueKey: config.leagueKey,
+      leagueKey: config.leagueKey || 'auto',
       updatedAt: new Date().toISOString(),
       rows: [] as YahooPlayerRanking[],
     }
   }
 
-  const url = `${apiBase}/league/${config.leagueKey}/players;sort=OR;start=0;count=${Math.min(Math.max(count, 1), 100)}?format=json`
+  const leagueKey = await resolveLeagueKey(auth.token, config.leagueKey)
+  const gameKey = leagueKey.split('.')[0] || 'nba'
+  const url = `${apiBase}/game/${gameKey}/players;sort=OR;start=0;count=${Math.min(Math.max(count, 1), 100)}?format=json`
   const response = await $fetch<Record<string, any>>(url, {
     headers: { Authorization: `Bearer ${auth.token}` },
   })
-  const rawPlayers = response?.fantasy_content?.league?.[1]?.players || {}
+  const rawPlayers = response?.fantasy_content?.game?.[1]?.players || {}
   const rows = Object.keys(rawPlayers)
     .filter(key => key !== 'count')
     .map((key, index) => {
@@ -125,8 +152,9 @@ export const fetchYahooRankings = defineCachedFunction(async (count = 50) => {
 
   return {
     status: 'ready' as const,
-    leagueKey: config.leagueKey,
+    leagueKey,
+    gameKey,
     updatedAt: new Date().toISOString(),
     rows,
   }
-}, { maxAge: 60 * 30, name: 'yahoo-rankings' })
+}, { maxAge: 60 * 5, name: 'yahoo-rankings-v2' })
