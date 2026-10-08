@@ -36,6 +36,33 @@ const seasonStandings = [
   { rank: 12, team: 'JT Clash league', record: '60–107–4', pct: '.363', moves: 82 },
 ]
 
+const rosterMeta: Record<string, { slug: string, nick: string }> = {
+  'VICTOR🍋': { slug: 'vic', nick: 'Vic' },
+  '阿肥幹大事': { slug: 'vince', nick: 'Vince' },
+  'Gyuumao': { slug: 'gyuumao', nick: '牛魔王' },
+  '思得卓識博聞之士': { slug: 'leo', nick: '主委' },
+  'Jeffrey': { slug: 'jeffrey', nick: 'Jeffery' },
+  'Sean': { slug: 'sean', nick: '大叔' },
+  'CK': { slug: 'ck', nick: 'CK' },
+  '卡店老闆獨自升級': { slug: 'cardshop', nick: '卡店老闆' },
+  'Wintersoldiers': { slug: 'li', nick: '李董' },
+  "Alan's Team": { slug: 'alan', nick: 'Alan' },
+  'Jesse prince': { slug: 'jesse', nick: 'Jesse' },
+  'JT Clash league': { slug: 'cao', nick: '小曹' },
+}
+const rosterBadges: Record<number, string> = { 1: '冠軍', 2: '亞軍', 3: '季軍' }
+const roster = [
+  ...seasonStandings.map(entry => ({
+    ...rosterMeta[entry.team]!,
+    team: entry.team,
+    no: String(entry.rank).padStart(2, '0'),
+    tier: entry.rank <= 3 ? `top-${entry.rank}` : entry.legacy ? 'legacy' : '',
+    badge: rosterBadges[entry.rank] || (entry.legacy ? '名人堂' : ''),
+    stat: `${entry.record} · ${entry.pct}`,
+  })),
+  { slug: 'wei', nick: '阿瑋', team: "瑋's Nice Team", no: 'NEW', tier: 'rookie', badge: '新人上場', stat: '2026–27 新加入' },
+]
+
 const selectedWeek = ref('22')
 const weeklyOptions = Array.from({ length: 22 }, (_, index) => {
   const week = index + 1
@@ -101,6 +128,17 @@ const matchupState = (value: unknown) => {
       <div class="season-facts"><article v-for="fact in seasonFacts" :key="fact.label"><p>{{ fact.label }}</p><h3>{{ fact.value }}</h3><span>{{ fact.detail }}</span></article></div>
       <div class="season-track"><div class="regular"><small>WEEK 1</small><span>例行賽</span><small>WEEK 19</small></div><div class="playoffs"><span>季後賽</span><small>WEEK 20–22</small></div></div>
       <div class="category-row"><span v-for="category in categories" :key="category">{{ category }}</span></div>
+      <div class="roster-band" aria-labelledby="roster-title">
+        <div class="roster-head"><div><p class="eyebrow">2025–26 ROSTER</p><h3 id="roster-title">十三張帥臉，一間沒有社長的傑尼斯</h3></div><p>依上季最終名次排開，名人堂 Jesse 與新上場的阿瑋也在場；球衣背號就是你的名次。</p></div>
+        <ul class="roster-grid">
+          <li v-for="player in roster" :key="player.slug" class="roster-card" :class="player.tier ? `roster-${player.tier}` : ''">
+            <span class="roster-no" aria-hidden="true">{{ player.no }}</span>
+            <span v-if="player.badge" class="roster-badge">{{ player.badge }}</span>
+            <img :src="`/players/${player.slug}.png`" :alt="`${player.nick} 的灌籃高手風格形象照`" width="720" loading="lazy" decoding="async">
+            <div class="roster-plate"><strong>{{ player.nick }}</strong><span>{{ player.team }}</span><em>{{ player.stat }}</em></div>
+          </li>
+        </ul>
+      </div>
       <div class="standings-wrap"><div class="standings-heading"><div><p class="eyebrow ink">YAHOO 2025 FINAL STANDINGS</p><h3>上季戰績，攤開來看</h3></div><p>W–L–T 是九項分類的累積成果；Moves 則是誰最常在半夜動腦換人。</p></div><div class="standings-table"><div class="standings-row standings-label"><span>#</span><span>TEAM</span><span>W–L–T</span><span>PCT</span><span>MOVES</span></div><div v-for="entry in seasonStandings" :key="entry.team" class="standings-row"><span>{{ String(entry.rank).padStart(2, '0') }}</span><strong>{{ entry.team }}</strong><span>{{ entry.record }}</span><span>{{ entry.pct }}</span><span>{{ entry.moves }}</span></div></div></div>
       <div id="weekly" class="weekly-vault">
         <div class="weekly-vault-head"><div><p class="eyebrow ink">WEEKLY DATA VAULT</p><h3>22 週數據，慢慢翻舊帳</h3><p>挑一週回看，12 隊、20 個欄位，誰是大腿誰在挖坑一清二楚。</p></div><label>切換查看週次<select v-model="selectedWeek"><option v-for="week in weeklyOptions" :key="week.value" :value="week.value">{{ week.label }}</option></select></label></div>
@@ -138,3 +176,43 @@ const matchupState = (value: unknown) => {
     <footer class="site-footer"><div class="wrap"><p>© 2026 Chanchao. All rights reserved.</p></div></footer>
   </main>
 </template>
+
+<style scoped>
+.roster-band { position:relative; margin:56px 0; padding:60px 0 68px; background:var(--navy); color:#fff; box-shadow:0 0 0 100vmax var(--navy); clip-path:inset(0 -100vmax); }
+.roster-band::before { content:''; position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(115deg,transparent 0 46px,rgba(240,184,73,.045) 46px 48px); }
+.roster-head { position:relative; display:flex; align-items:end; justify-content:space-between; gap:48px; margin-bottom:34px; }
+.roster-head .eyebrow { color:var(--gold); }
+.roster-head h3 { margin:0; color:#fff; font-size:clamp(1.7rem,3.2vw,2.6rem); letter-spacing:-.02em; }
+.roster-head > p { max-width:360px; margin:0; color:#c2cedd; font-size:.95rem; line-height:1.75; }
+.roster-grid { position:relative; display:grid; grid-template-columns:repeat(4,1fr); gap:22px 18px; margin:0; padding:0; list-style:none; }
+.roster-card { position:relative; aspect-ratio:4 / 5.1; overflow:hidden; border:3px solid #060b14; background:radial-gradient(circle at 1px 1px,rgba(240,184,73,.2) 1.2px,transparent 1.7px) 0 0 / 10px 10px,linear-gradient(165deg,#1b2f4f,#0a1322 72%); box-shadow:6px 6px 0 rgba(240,184,73,.32); isolation:isolate; transition:transform .25s ease,box-shadow .25s ease; }
+.roster-card::before { content:''; position:absolute; inset:0; z-index:-1; background:repeating-conic-gradient(from 0deg at 50% 82%,rgba(255,255,255,.075) 0 2.5deg,transparent 2.5deg 9deg); }
+.roster-card:hover { transform:translate(-3px,-3px); box-shadow:9px 9px 0 var(--gold); }
+.roster-no { position:absolute; z-index:1; top:4px; left:12px; color:transparent; font:700 clamp(3.6rem,7.4vw,5.6rem)/.9 'Oswald',sans-serif; letter-spacing:-.02em; -webkit-text-stroke:2px rgba(240,184,73,.6); }
+.roster-card img { position:absolute; z-index:2; left:50%; bottom:0; width:112%; max-width:none; height:auto; transform:translateX(-50%); filter:drop-shadow(0 6px 0 rgba(0,0,0,.35)); transition:transform .3s ease; }
+.roster-card:hover img { transform:translateX(-50%) scale(1.04); }
+.roster-badge { position:absolute; z-index:4; top:12px; right:-6px; padding:5px 16px 5px 14px; background:var(--gold); color:var(--ink); font:700 .78rem 'Noto Sans TC',sans-serif; letter-spacing:.08em; transform:skewX(-10deg); box-shadow:3px 3px 0 #060b14; }
+.roster-plate { position:absolute; z-index:3; left:0; right:0; bottom:0; display:grid; gap:2px; padding:42px 14px 12px; background:linear-gradient(0deg,rgba(6,11,20,.97) 52%,rgba(6,11,20,.7) 78%,transparent); }
+.roster-plate strong { font:700 1.35rem/1.15 'Noto Sans TC',sans-serif; letter-spacing:.02em; }
+.roster-plate span { color:#b9c5d6; font-size:.74rem; line-height:1.4; }
+.roster-plate em { margin-top:3px; color:var(--gold); font:500 .7rem 'DM Mono',monospace; font-style:normal; letter-spacing:.06em; }
+.roster-top-1 { border-color:var(--gold); box-shadow:6px 6px 0 var(--gold); }
+.roster-top-1 .roster-no { -webkit-text-stroke-color:var(--gold); }
+.roster-top-2 { border-color:#cbd0d7; box-shadow:6px 6px 0 rgba(203,208,215,.55); }
+.roster-top-2 .roster-badge { background:#cbd0d7; }
+.roster-top-3 { border-color:#d5a073; box-shadow:6px 6px 0 rgba(213,160,115,.55); }
+.roster-top-3 .roster-badge { background:#d5a073; }
+.roster-legacy .roster-badge { background:#fff; }
+.roster-rookie { border-style:dashed; border-color:var(--gold); }
+.roster-rookie .roster-no { font-size:clamp(2.6rem,5.4vw,4rem); }
+@media (max-width:1000px) { .roster-grid { grid-template-columns:repeat(3,1fr); } }
+@media (max-width:760px) {
+  .roster-band { margin:40px 0; padding:44px 0 52px; }
+  .roster-head { flex-direction:column; align-items:flex-start; gap:12px; }
+  .roster-grid { grid-template-columns:repeat(2,1fr); gap:16px 12px; }
+  .roster-plate { padding:34px 10px 10px; }
+  .roster-plate strong { font-size:1.1rem; }
+  .roster-badge { top:8px; right:-5px; padding:4px 12px; font-size:.7rem; }
+}
+@media (prefers-reduced-motion:reduce) { .roster-card,.roster-card img { transition:none; } .roster-card:hover { transform:none; } .roster-card:hover img { transform:translateX(-50%); } }
+</style>

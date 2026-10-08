@@ -72,10 +72,10 @@ const baselineNote = computed(() => {
   const shares = fund.value?.position.shares
   const cost = fund.value?.position.cost
   if (fund.value?.position.mode === 'actual' && price != null && shares != null && cost != null) {
-    return `${date} 已買進 0050：${numberAmount(shares)} 股 × ${amount(price, 2)}，成本 ${amount(cost, 2)}；未含交易費用及配息，季末揭曉加菜成果`
+    return `${date} 已用聯盟積分池買進 0050：${numberAmount(shares)} 股 × ${amount(price, 2)}，成本 ${amount(cost, 2)}；未含交易費用及配息，季末揭曉加菜成果`
   }
   return price != null
-    ? `${date} 收盤 ${amount(price, 2)} 為試算起點；未含交易費用及配息，季末以實際結算為準`
+    ? `${date} 收盤 ${amount(price, 2)} 為試算起點；僅供私人聯盟內部紀錄，季末以實際結算為準`
     : `等待 ${date} 收盤價建立起點，季末揭曉加菜成果`
 })
 const holdingNote = computed(() => {
@@ -107,8 +107,8 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
   <aside ref="section" class="fund-tracker" aria-labelledby="fund-title" :aria-busy="pending">
     <div class="fund-heading">
       <div>
-        <p class="fund-kicker"><span aria-hidden="true">↗</span> 0050 實戰加菜計畫</p>
-        <h3 id="fund-title"><span>球場拚獎金，</span><span>0050 拚加菜</span></h3>
+        <p class="fund-kicker"><span aria-hidden="true">↗</span> 0050 積分加菜計畫</p>
+        <h3 id="fund-title"><span>聯盟積分池，</span><span>0050 拚加菜</span></h3>
       </div>
       <button class="fund-refresh" type="button" :disabled="pending" @click="refreshQuote">
         <span aria-hidden="true" :class="{ 'is-refreshing': pending }">↻</span>

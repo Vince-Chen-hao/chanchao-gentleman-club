@@ -26,17 +26,17 @@ const podium = [
 
 const members = [
   { team: '思得卓識博聞之士', name: '主委', image: '/members/leo-eyes-wide.png' },
-  { team: 'JT Clash League', name: '小曹', image: '/members/cao.jpg' },
-  { team: "Alan's Team", name: 'Alan', image: '/members/alan.jpg' },
+  { team: '台北胯下大暖流艦隊', name: '小曹', image: '/members/cao.jpg' },
+  { team: '浪子踢球', name: 'Alan', image: '/members/alan.jpg' },
   { team: 'Wintersoldiers', name: '李董', image: '/members/li.jpg' },
   { team: 'VICTOR🍋', name: 'Vic', image: '/members/vic.jpg' },
   { team: 'Gyuumao', name: '牛魔王', image: '/members/gyuumao.jpg' },
   { team: '阿肥幹大事', name: 'Vince', image: '/members/vince.jpg' },
-  { team: '卡店老闆獨自升級', name: '卡店老闆', image: '/members/cardshop.jpg' },
+  { team: '卡店老闆懇求高抬貴手', name: '卡店老闆', image: '/members/cardshop.jpg' },
   { team: 'CK', name: 'CK', image: '/members/ck.jpg', position: '50% 12%' },
   { team: 'Sean', name: '大叔', image: '/members/sean.jpg' },
   { team: 'Jeffrey', name: 'Jeffery', image: '/members/jeffrey.jpg' },
-  { team: "瑋's Nice Team", name: '阿瑋', image: '/members/wei.png', rookie: true },
+  { team: 'Wei Too Strong', name: '阿瑋', image: '/members/wei.png', rookie: true },
 ]
 const selectedMember = ref<typeof members[number] | null>(null)
 const prizes = [
@@ -131,7 +131,7 @@ const resetHonorCard = (event: PointerEvent) => {
     <div class="wrap site-menu-inner">
       <a class="menu-brand" href="#top" aria-label="Chanchao Gentleman Club 首頁"><img src="/cgc-logo.svg" alt="Chanchao Gentleman Club"><span>2026–27</span></a>
       <div class="menu-links">
-        <a href="#countdown">選秀倒數</a><a href="#prizes">獎金規則</a><a href="#members">選手牆</a><a href="#alumni">名人堂</a><a href="#current-season">本季戰報</a><a href="#archive">上季回顧</a>
+        <a href="#countdown">選秀倒數</a><a href="#prizes">積分規則</a><a href="#members">選手牆</a><a href="#alumni">名人堂</a><a href="#current-season">本季戰報</a><a href="#archive">上季回顧</a>
       </div>
     </div>
   </nav>
@@ -165,9 +165,10 @@ const resetHonorCard = (event: PointerEvent) => {
 
     <section id="prizes" class="prizes-section">
       <div class="wrap">
-        <header class="prizes-head"><div><p class="eyebrow ink">2026–27 PRIZE RULES</p><h2>一項一項贏，獎金一筆一筆拿</h2></div><p>12 個人、$24,000；每個分類都值得拚到底。</p></header>
-        <div class="prize-board"><div class="prize-pool"><span>PRIZE POOL</span><strong>$24,000</strong><p>入場費 $2,000 × 12 人，全部拿來玩真的。</p></div><div class="prize-rules"><article><b>18 + 3</b><span>18 週例行賽，3 週季後賽；撐到最後才算贏。</span></article><article><b>$10</b><span>每贏一項，就把十塊塞進口袋。</span></article><article><b>$5</b><span>平手也不白忙，雙方各收 $5。</span></article></div><div class="prize-splits"><span>例行賽戰場 $9,720</span><span>季後賽大獎 $14,000</span><span>行政費 $280</span></div></div>
-        <div class="payouts"><article v-for="prize in prizes" :key="prize.place" :class="`payout-${prize.place}`"><span>{{ String(prize.place).padStart(2, '0') }} PLACE</span><strong>${{ prize.amount }}</strong></article></div>
+        <header class="prizes-head"><div><p class="eyebrow ink">2026–27 LEAGUE POINTS</p><h2>每項攏會算，季末多尊嚴</h2></div><p>12 位經理人、24,000 P；每個分類都是本季戰力的一部分。</p></header>
+        <div class="prize-board"><div class="prize-pool"><span>POINT BANK</span><strong>24,000 P</strong><p>私人聯盟年度活動積分：2,000 P × 12 人，整季認真玩到底。</p></div><div class="prize-rules"><article><b>18 + 3</b><span>18 週例行賽，3 週季後賽；撐到最後才算完成任務。</span></article><article><b>10 P</b><span>每拿下一項分類，就收下 10 P 聯盟積分。</span></article><article><b>5 P</b><span>平手也有紀錄，雙方各拿 5 P。</span></article></div><div class="prize-splits"><span>例行賽戰場 9,720 P</span><span>季後賽任務 14,000 P</span><span>共同支出 280 P · 無個人抽成</span></div></div>
+        <p class="points-disclaimer">本站僅為私人 Fantasy NBA 聯盟的成績與活動紀錄頁；積分規則限既有成員內部使用，不對外招募、不提供投注、不提供賠率。</p>
+        <div class="payouts"><article v-for="prize in prizes" :key="prize.place" :class="`payout-${prize.place}`"><span>{{ String(prize.place).padStart(2, '0') }} PLACE</span><strong>{{ prize.amount }} P</strong></article></div>
         <FundTracker />
       </div>
     </section>
