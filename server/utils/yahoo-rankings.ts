@@ -140,32 +140,42 @@ export const fetchYahooRankings = defineCachedFunction(async (count = 50) => {
     }
   }
 
-  const leagueKey = await resolveLeagueKey(auth.token, config.leagueKey)
-  const gameKey = leagueKey.split('.')[0] || 'nba'
-  const url = `${apiBase}/game/${gameKey}/players;sort=OR;start=0;count=${Math.min(Math.max(count, 1), 100)}?format=json`
-  const response = await yahooFetch(url, auth.token, 'player rankings')
-  const rawPlayers = response?.fantasy_content?.game?.[1]?.players || {}
-  const rows = Object.keys(rawPlayers)
-    .filter(key => key !== 'count')
-    .map((key, index) => {
-      const player = rawPlayers[key]?.player
-      return {
-        rank: index + 1,
-        playerKey: playerMeta(player, 'player_key'),
-        playerId: playerMeta(player, 'player_id'),
-        name: playerName(player),
-        team: playerMeta(player, 'editorial_team_abbr'),
-        positions: playerPositions(player),
-        percentOwned: percentOwned(player),
-      }
-    })
-    .filter(player => player.playerKey && player.name !== 'Unknown Player')
+  try {
+    const leagueKey = await resolveLeagueKey(auth.token, config.leagueKey)
+    const gameKey = leagueKey.split('.')[0] || 'nba'
+    const url = `${apiBase}/game/${gameKey}/players;sort=OR;start=0;count=${Math.min(Math.max(count, 1), 100)}?format=json`
+    const response = await yahooFetch(url, auth.token, 'player rankings')
+    const rawPlayers = response?.fantasy_content?.game?.[1]?.players || {}
+    const rows = Object.keys(rawPlayers)
+      .filter(key => key !== 'count')
+      .map((key, index) => {
+        const player = rawPlayers[key]?.player
+        return {
+          rank: index + 1,
+          playerKey: playerMeta(player, 'player_key'),
+          playerId: playerMeta(player, 'player_id'),
+          name: playerName(player),
+          team: playerMeta(player, 'editorial_team_abbr'),
+          positions: playerPositions(player),
+          percentOwned: percentOwned(player),
+        }
+      })
+      .filter(player => player.playerKey && player.name !== 'Unknown Player')
 
-  return {
-    status: 'ready' as const,
-    leagueKey,
-    gameKey,
-    updatedAt: new Date().toISOString(),
-    rows,
+    return {
+      status: 'ready' as const,
+      leagueKey,
+      gameKey,
+      updatedAt: new Date().toISOString(),
+      rows,
+    }
+  } catch (error: any) {
+    return {
+      status: 'error' as const,
+      leagueKey: config.leagueKey || 'auto',
+      updatedAt: new Date().toISOString(),
+      error: error?.statusMessage || error?.message || 'Unknown Yahoo rankings error',
+      rows: [] as YahooPlayerRanking[],
+    }
   }
-}, { maxAge: 60 * 5, name: 'yahoo-rankings-v3' })
+}, { maxAge: 60 * 5, name: 'yahoo-rankings-v4' })
