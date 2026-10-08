@@ -36,7 +36,9 @@ const members = [
   { team: 'CK', name: 'CK', image: '/members/ck.jpg', position: '50% 12%' },
   { team: 'Sean', name: '大叔', image: '/members/sean.jpg' },
   { team: 'Jeffrey', name: 'Jeffery', image: '/members/jeffrey.jpg' },
+  { team: '方唐鏡又跳進來了', name: 'Jesse', image: '/members/jesse.jpg' },
   { team: 'Wei Too Strong', name: '阿瑋', image: '/members/wei.png', rookie: true },
+  { team: '尬電鮪魚', name: 'Tim', image: '/members/tim.png', rookie: true },
 ]
 const selectedMember = ref<typeof members[number] | null>(null)
 const prizes = [
@@ -54,7 +56,7 @@ const seasonFacts = [
 const lastSeasonAlumnus = {
   name: 'Jesse Prince',
   nickname: '展昭最帥',
-  team: 'Jesse prince',
+  team: '方唐鏡又跳進來了',
   image: '/members/jesse.jpg',
 }
 const seasonStandings = [
@@ -142,7 +144,7 @@ const resetHonorCard = (event: PointerEvent) => {
       <div class="hero-content wrap">
         <p class="eyebrow">FANTASY NBA · 2026–27</p>
         <h1>Chanchao<br><em>Gentleman Club</em></h1>
-        <p class="hero-copy">十二位經理人，十二條命運線；當選秀鐘聲敲響，Gentleman Club 的戰火正式覺醒。</p>
+        <p class="hero-copy">十四位經理人，十四條命運線；當選秀鐘聲敲響，Gentleman Club 的戰火正式覺醒。</p>
         <div class="draft-line"><span>SEASON DRAFT</span><b>10.17 · 22:00</b><small>TAIPEI TIME</small></div>
       </div>
     </section>
@@ -165,7 +167,7 @@ const resetHonorCard = (event: PointerEvent) => {
 
     <section id="prizes" class="prizes-section">
       <div class="wrap">
-        <header class="prizes-head"><div><p class="eyebrow ink">2026–27 LEAGUE POINTS</p><h2>每項攏會算，季末多尊嚴</h2></div><p>12 位經理人、24,000 P；每個分類都是本季戰力的一部分。</p></header>
+        <header class="prizes-head"><div><p class="eyebrow ink">2026–27 LEAGUE POINTS</p><h2>每項攏會算，季末多尊嚴</h2></div><p>14 位經理人；每個分類都是本季戰力的一部分。</p></header>
         <div class="prize-board"><div class="prize-pool"><span>POINT BANK</span><strong>24,000 P</strong><p>私人聯盟年度活動積分：2,000 P × 12 人，整季認真玩到底。</p></div><div class="prize-rules"><article><b>18 + 3</b><span>18 週例行賽，3 週季後賽；撐到最後才算完成任務。</span></article><article><b>10 P</b><span>每拿下一項分類，就收下 10 P 聯盟積分。</span></article><article><b>5 P</b><span>平手也有紀錄，雙方各拿 5 P。</span></article></div><div class="prize-splits"><span>例行賽戰場 9,720 P</span><span>季後賽任務 14,000 P</span><span>共同支出 280 P · 無個人抽成</span></div></div>
         <p class="points-disclaimer">本站僅為私人 Fantasy NBA 聯盟的成績與活動紀錄頁；積分規則限既有成員內部使用，不對外招募、不提供投注、不提供賠率。</p>
         <div class="payouts"><article v-for="prize in prizes" :key="prize.place" :class="`payout-${prize.place}`"><span>{{ String(prize.place).padStart(2, '0') }} PLACE</span><strong>{{ prize.amount }} P</strong></article></div>
@@ -175,10 +177,11 @@ const resetHonorCard = (event: PointerEvent) => {
 
     <section id="members" class="members-section">
       <div class="wrap">
-        <header class="members-head"><div><p class="eyebrow">THE LEAGUE</p><h2>12 位經理人，12 套劇本</h2></div><p>Jesse 退場、阿瑋上桌；本季的新火藥味已經到位。</p></header>
+        <header class="members-head"><div><p class="eyebrow">THE LEAGUE</p><h2>14 位經理人，14 套劇本</h2></div><p>Jesse 又跳進來，阿瑋與 Tim 也上桌；本季的新火藥味已經到位。</p></header>
         <div class="members-grid">
           <button v-for="member in members" :key="member.team" type="button" class="member-card" :class="{ rookie: member.rookie }" :aria-label="`放大查看 ${member.name} 的照片`" @click="selectedMember = member">
             <img :src="member.image" :alt="member.name" :style="{ objectPosition: member.position || 'center' }">
+            <span v-if="member.rookie" class="rookie-badge">Rookie</span>
             <div class="member-meta"><h3>{{ member.team }}</h3><p>{{ member.name }}</p></div>
           </button>
         </div>
@@ -186,7 +189,7 @@ const resetHonorCard = (event: PointerEvent) => {
     </section>
 
     <section id="alumni" class="alumnus-section wrap">
-      <article class="alumnus-card"><img :src="lastSeasonAlumnus.image" :alt="lastSeasonAlumnus.nickname"><div><p class="eyebrow ink">2025–26 ALUMNUS · HALL OF FAME</p><h3>{{ lastSeasonAlumnus.nickname }}</h3><p class="alumnus-team">{{ lastSeasonAlumnus.team }} · {{ lastSeasonAlumnus.name }}</p><p>哥雖暫離聯盟，但帥照、戰績與江湖傳說，永久列入 Gentleman Club 名人堂。</p></div></article>
+      <article class="alumnus-card"><img :src="lastSeasonAlumnus.image" :alt="lastSeasonAlumnus.nickname"><div><p class="eyebrow ink">HALL OF FAME · COMEBACK TOUR</p><h3>那個男人，又回來了</h3><p class="alumnus-team">{{ lastSeasonAlumnus.team }} · {{ lastSeasonAlumnus.name }}</p><p>當大家以為傳說已是歷史，Jesse 選擇再次走上舞台。方唐鏡又跳進來了，這不是彩蛋，是本季最大種馬。</p></div></article>
     </section>
 
     <section id="honors" class="honors wrap">

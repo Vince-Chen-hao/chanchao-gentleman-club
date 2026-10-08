@@ -1,0 +1,22 @@
+.rookie-badge {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 12px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 68px;
+  height: 28px;
+  padding: 0 11px;
+  border: 1px solid rgba(168, 230, 125, .55);
+  border-radius: 999px;
+  background: rgba(6, 16, 13, .78);
+  box-shadow: 0 8px 20px rgba(12, 24, 18, .28);
+  color: #dfffd2;
+  font: 700 .68rem/1 'DM Mono', monospace;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+
