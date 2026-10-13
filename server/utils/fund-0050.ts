@@ -52,10 +52,12 @@ export function parseMisQuote(payload: unknown, fetchedAt: string, sourceUrl: st
   const data = payload as { msgArray?: Array<Record<string, unknown>> }
   const item = Array.isArray(data?.msgArray) ? data.msgArray.find(row => row?.c === '0050' && row.ex === 'tse') : null
   if (!item) return null
+  const trade = item.trade as Record<string, unknown> | undefined
   // Never substitute bids, asks or the prior close for an actual latest trade.
-  const price = numeric(item.z)
+  const price = numeric(item.z) ?? numeric(trade?.z)
   const quoteDate = dateString(item.d)
-  const quoteTime = typeof item.t === 'string' && /^\d{2}:\d{2}:\d{2}$/.test(item.t) ? item.t : null
+  const rawTime = typeof trade?.t === 'string' ? trade.t : item.t
+  const quoteTime = typeof rawTime === 'string' && /^\d{2}:\d{2}:\d{2}$/.test(rawTime) ? rawTime : null
   if (!price || !quoteDate || !quoteTime) return null
   return { symbol: '0050', name: '元大台灣50', price, quoteDate, quoteTime,
     kind: quoteTime >= '13:30:00' ? 'close' : 'trade', sourceUrl, fetchedAt, stale: false }
