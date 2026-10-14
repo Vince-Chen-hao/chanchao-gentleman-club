@@ -42,20 +42,20 @@ const members = [
 ]
 const selectedMember = ref<typeof members[number] | null>(null)
 const prizes = [
-  { place: 1, group: '爭冠組', title: '總冠軍', amount: '3,000' },
-  { place: 2, group: '爭冠組', title: '亞軍', amount: '2,000' },
-  { place: 3, group: '爭冠組', title: '季軍', amount: '1,500' },
-  { place: 4, group: '爭冠組', title: '殿軍', amount: '1,200' },
-  { place: 5, group: '爭冠組', title: '第 5 名', amount: '1,100' },
-  { place: 6, group: '爭冠組', title: '第 6 名', amount: '900' },
-  { place: 7, group: '安慰組', title: '安慰組冠軍', amount: '1,000' },
-  { place: 8, group: '安慰組', title: '安慰組亞軍', amount: '800' },
-  { place: 9, group: '安慰組', title: '第 9 名', amount: '600' },
-  { place: 10, group: '安慰組', title: '第 10 名', amount: '500' },
-  { place: 11, group: '安慰組', title: '第 11 名', amount: '400' },
-  { place: 12, group: '安慰組', title: '第 12 名', amount: '300' },
-  { place: 13, group: '未進季後賽', title: '第 13 名', amount: '200' },
-  { place: 14, group: '未進季後賽', title: '第 14 名', amount: '100' },
+  { place: 1, tier: 'contender', group: '爭冠組', title: '總冠軍', amount: '3,000' },
+  { place: 2, tier: 'contender', group: '爭冠組', title: '亞軍', amount: '2,000' },
+  { place: 3, tier: 'contender', group: '爭冠組', title: '季軍', amount: '1,500' },
+  { place: 4, tier: 'contender', group: '爭冠組', title: '殿軍', amount: '1,200' },
+  { place: 5, tier: 'contender', group: '爭冠組', title: '第 5 名', amount: '1,100' },
+  { place: 6, tier: 'contender', group: '爭冠組', title: '第 6 名', amount: '900' },
+  { place: 7, tier: 'comfort', group: '安慰組', title: '安慰組冠軍', amount: '1,000' },
+  { place: 8, tier: 'comfort', group: '安慰組', title: '安慰組亞軍', amount: '800' },
+  { place: 9, tier: 'comfort', group: '安慰組', title: '第 9 名', amount: '600' },
+  { place: 10, tier: 'comfort', group: '安慰組', title: '第 10 名', amount: '500' },
+  { place: 11, tier: 'comfort', group: '安慰組', title: '第 11 名', amount: '400' },
+  { place: 12, tier: 'comfort', group: '安慰組', title: '第 12 名', amount: '300' },
+  { place: 13, tier: 'outside', group: '未進季後賽', title: '第 13 名', amount: '200' },
+  { place: 14, tier: 'outside', group: '未進季後賽', title: '第 14 名', amount: '100' },
 ]
 
 const categories = ['FG%', 'FT%', '3PTM', 'PTS', 'REB', 'AST', 'ST', 'BLK', 'TO']
@@ -180,7 +180,7 @@ const resetHonorCard = (event: PointerEvent) => {
         <header class="prizes-head"><div><p class="eyebrow ink">2026–27 LEAGUE POINTS</p><h2>每項攏會算，季末多尊嚴</h2></div><p>14 位經理人；每個分類都是本季戰力的一部分。</p></header>
         <div class="prize-board"><div class="prize-pool"><span>POINT BANK</span><strong>28,000 P</strong><p>私人聯盟年度活動積分：2,000 P × 14 人，整季認真玩到底。</p></div><div class="prize-rules"><article><b>18 + 3</b><span>18 週例行賽，3 週季後賽；撐到最後才算完成任務。</span></article><article><b>10 P</b><span>每拿下一項分類，就收下 10 P 聯盟積分。</span></article><article><b>5 P</b><span>平手也有紀錄，雙方各拿 5 P。</span></article></div><div class="prize-splits"><span>例行賽戰場 11,340 P</span><span>季後賽任務 13,600 P</span><span>聚餐基金 2,800 P · 行政費用 260 P</span></div></div>
         <p class="points-disclaimer">本站僅為私人 Fantasy NBA 聯盟的成績與活動紀錄頁；積分規則限既有成員內部使用，不對外招募、不提供投注、不提供賠率。</p>
-        <div class="payouts"><article v-for="prize in prizes" :key="prize.place" :class="`payout-${prize.place}`"><span>{{ prize.group }}</span><em>{{ prize.title }}</em><strong>{{ prize.amount }} P</strong></article></div>
+        <div class="payouts"><article v-for="prize in prizes" :key="prize.place" :class="[`payout-${prize.place}`, `payout-${prize.tier}`]"><div class="payout-top"><span>{{ prize.group }}</span><small>#{{ String(prize.place).padStart(2, '0') }}</small></div><em>{{ prize.title }}</em><strong>{{ prize.amount }} P</strong></article></div>
         <FundTracker />
       </div>
     </section>
