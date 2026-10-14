@@ -40,25 +40,25 @@
 .flip-digit-enter-active { animation:flip-in .43s cubic-bezier(.2,.78,.27,1); transform-origin:50% 0; }.flip-digit-leave-active { position:absolute; animation:flip-out .19s ease-in; transform-origin:50% 100%; }.flip-digit-enter-from { opacity:.2; transform:rotateX(-86deg); }.flip-digit-leave-to { opacity:.15; transform:rotateX(82deg); }@keyframes flip-in { 0% { opacity:.15; transform:rotateX(-88deg); } 55% { opacity:1; transform:rotateX(10deg); } 100% { opacity:1; transform:rotateX(0); } }@keyframes flip-out { from { opacity:1; transform:rotateX(0); } to { opacity:.12; transform:rotateX(86deg); } }
 .prizes-section { padding:100px 0; background:#f7f3ea; }.prizes-head { display:flex; align-items:end; justify-content:space-between; gap:40px; margin-bottom:34px; }.prizes-head h2 { margin:0; }.prizes-head > p { margin:0; max-width:270px; color:#5d6570; font-size:1.03rem; line-height:1.7; }.prize-board { display:grid; grid-template-columns:1.05fr 1.6fr; border:1px solid #c9b484; background:#101d31; color:#fff; }.prize-pool { min-height:210px; display:flex; flex-direction:column; justify-content:center; padding:30px; background:var(--gold); color:var(--ink); }.prize-pool span,.payouts span { font:500 .67rem 'DM Mono',monospace; letter-spacing:.09em; }.prize-pool strong { font:700 clamp(3rem,5vw,5.2rem)/1 'Oswald',sans-serif; margin:8px 0; }.prize-pool p { margin:0; font-size:.9rem; }.prize-rules { display:grid; grid-template-columns:repeat(3,1fr); }.prize-rules article { display:flex; flex-direction:column; justify-content:center; gap:10px; padding:27px 22px; border-right:1px solid rgba(255,255,255,.16); }.prize-rules article:last-child { border:0; }.prize-rules b { color:var(--gold); font:700 2.25rem/1 'Oswald',sans-serif; }.prize-rules span { color:#d2d9e3; font-size:.82rem; line-height:1.5; }.prize-splits { grid-column:1 / -1; display:flex; gap:25px; padding:15px 30px; border-top:1px solid rgba(255,255,255,.16); color:#cfd7e3; font:500 .72rem 'DM Mono',monospace; }.points-disclaimer { margin:12px 0 0; padding:12px 16px; background:#ece5d7; color:#6a5c44; font-size:.78rem; line-height:1.7; }.payouts { display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin-top:12px; }.payouts article { min-height:105px; padding:15px; display:flex; flex-direction:column; justify-content:space-between; background:#e8e0d0; }.payouts strong { font:700 1.55rem/1 'Oswald',sans-serif; }.payout-1 { background:#f0b849 !important; }.payout-2 { background:#cbd0d7 !important; }.payout-3 { background:#d5a073 !important; }
 .payouts em { display:block; margin-top:8px; color:#243244; font-style:normal; font-weight:800; letter-spacing:.03em; }
-.payouts { grid-template-columns:repeat(7,1fr); gap:12px; }
-.payouts article { position:relative; overflow:hidden; min-height:132px; padding:18px; border:1px solid rgba(16,29,49,.08); border-radius:18px; background:linear-gradient(145deg,#fff9e9,#e7ddcb); box-shadow:0 18px 38px rgba(16,29,49,.08); transition:transform .24s ease, box-shadow .24s ease; }
-.payouts article::before { content:''; position:absolute; inset:0 0 auto; height:5px; background:linear-gradient(90deg,#d8a431,#fff0a7,#c5872c); }
-.payouts article::after { content:''; position:absolute; right:-32px; bottom:-40px; width:112px; height:112px; border-radius:50%; background:rgba(255,255,255,.42); pointer-events:none; }
-.payouts article:hover { transform:translateY(-5px); box-shadow:0 24px 50px rgba(16,29,49,.14); }
+.payouts { grid-template-columns:repeat(7,1fr); gap:10px; }
+.payouts article { position:relative; overflow:hidden; min-height:128px; padding:17px; border:1px solid rgba(16,29,49,.18); border-left:5px solid #9a7a35; border-radius:6px; background:#e7dfcf; box-shadow:0 10px 22px rgba(16,29,49,.08); transition:transform .18s ease, box-shadow .18s ease; }
+.payouts article::before { content:none; }
+.payouts article::after { content:''; position:absolute; right:12px; bottom:10px; width:42px; height:42px; border:1px solid rgba(16,29,49,.08); transform:rotate(45deg); pointer-events:none; }
+.payouts article:hover { transform:translateY(-3px); box-shadow:0 16px 30px rgba(16,29,49,.13); }
 .payouts .payout-top { display:flex; align-items:center; justify-content:space-between; gap:10px; position:relative; z-index:1; }
-.payouts span { display:inline-flex; align-items:center; min-height:24px; padding:5px 9px; border-radius:999px; background:rgba(16,29,49,.08); color:#172338; font-weight:800; letter-spacing:.08em; }
-.payouts small { color:rgba(16,29,49,.48); font:800 .75rem 'DM Mono',monospace; letter-spacing:.04em; }
-.payouts em { position:relative; z-index:1; margin-top:20px; color:#102033; font-size:1.05rem; }
-.payouts strong { position:relative; z-index:1; margin-top:10px; color:#061223; font-size:clamp(1.7rem,2.4vw,2.25rem); letter-spacing:.02em; }
+.payouts span { display:inline-flex; align-items:center; min-height:23px; padding:4px 8px; border-radius:2px; background:#101d31; color:#d7b35b; font-weight:800; letter-spacing:.08em; }
+.payouts small { color:rgba(16,29,49,.55); font:800 .75rem 'DM Mono',monospace; letter-spacing:.04em; }
+.payouts em { position:relative; z-index:1; margin-top:18px; color:#102033; font-size:1.04rem; }
+.payouts strong { position:relative; z-index:1; margin-top:9px; color:#061223; font-size:clamp(1.65rem,2.25vw,2.1rem); letter-spacing:.02em; }
 .payout-1,.payout-2,.payout-3 { color:#061223; }
-.payout-1 { background:linear-gradient(145deg,#ffe38a,#f3b82e 56%,#d88912) !important; box-shadow:0 22px 54px rgba(216,137,18,.28) !important; }
-.payout-2 { background:linear-gradient(145deg,#f7fbff,#c9d1dc 58%,#aeb8c5) !important; }
-.payout-3 { background:linear-gradient(145deg,#ffd7aa,#d79b69 58%,#b97849) !important; }
-.payout-contender::before { background:linear-gradient(90deg,#e8b845,#fff2a8,#b87914); }
-.payout-comfort::before { background:linear-gradient(90deg,#68d7bc,#bfffea,#2b9a80); }
-.payout-outside::before { background:linear-gradient(90deg,#8796ac,#d8dee8,#59677c); }
-.payout-comfort span { background:rgba(43,154,128,.13); color:#0f5e4e; }
-.payout-outside span { background:rgba(89,103,124,.13); color:#344154; }
+.payout-1 { border-left-color:#c28b12; background:#d9a936 !important; box-shadow:0 16px 34px rgba(146,94,10,.22) !important; }
+.payout-2 { border-left-color:#7e8794; background:#c8ced6 !important; }
+.payout-3 { border-left-color:#a26937; background:#d09a68 !important; }
+.payout-contender { border-left-color:#b88a25; }
+.payout-comfort { border-left-color:#4a6f8a; background:#dce2e5 !important; }
+.payout-outside { border-left-color:#59677c; background:#d7d5cd !important; }
+.payout-comfort span { background:#132436; color:#8bb3ca; }
+.payout-outside span { background:#202a38; color:#c8cfda; }
 .member-card { border:0; padding:0; cursor:zoom-in; text-align:left; font:inherit; color:inherit; }.member-card:focus-visible { outline:3px solid var(--gold); outline-offset:3px; }.photo-dialog { position:fixed; z-index:20; inset:0; display:grid; place-items:center; padding:25px; background:rgba(4,10,18,.86); backdrop-filter:blur(8px); }.photo-dialog-card { position:relative; width:min(760px,100%); max-height:calc(100vh - 50px); overflow:hidden; background:#111; box-shadow:0 24px 80px rgba(0,0,0,.48); }.photo-dialog-card img { display:block; width:100%; max-height:calc(100vh - 50px); object-fit:contain; object-position:center; }.photo-dialog-close { position:absolute; z-index:1; top:10px; right:10px; width:38px; height:38px; border:0; border-radius:50%; background:#101d31; color:#fff; font-size:1.65rem; line-height:1; cursor:pointer; }
 @media (max-width:760px) { html,body { overflow-x:hidden; } .archive-intro,.archive-footer { display:block; } .archive-intro > p { margin-top:20px; } .archive-footer-links { display:block; } .archive-footer a { display:inline-block; max-width:100%; margin-top:18px; white-space:normal; overflow-wrap:anywhere; } .season-track,.season-facts { grid-template-columns:1fr; margin-top:32px; } .season-track > div { min-height:88px; } .standings-wrap { overflow-x:auto; } .standings-heading { display:block; padding:20px; } .standings-heading > p { margin-top:12px; } .standings-table { min-width:560px; } .standings-row { padding:0 18px; } .weekly-vault-head { display:block; padding:20px; } .weekly-vault-head p { max-width:none; } .weekly-vault label { min-width:0; width:100%; margin-top:16px; } .weekly-vault select { width:100%; } .flip-clock .flip-unit { padding:0 2px 9px; } .flip-frame { min-height:66px; } .flip-unit > span { padding-top:7px; font-size:.53rem; } }
 
@@ -101,7 +101,7 @@
 .championship-trophy { transform:translateX(-50%) translateZ(58px); }
 @media (max-width:760px) { .podium { perspective:none; }.honor-card { transform:none !important; box-shadow:0 14px 32px rgba(25,28,35,.09); }.honor-card::before { display:none; }.honor-card > img:not(.championship-trophy),.honor-card:hover > img:not(.championship-trophy),.honor-card > div { transform:none; }.rank-01 { --lift:0px; }.rank-01 .championship-trophy { transform:none; } }
 @media (max-width:760px) { .prizes-section { padding:70px 0; }.prizes-head { display:block; }.prizes-head > p { margin-top:18px; }.prize-board { grid-template-columns:1fr; }.prize-rules { grid-template-columns:1fr; }.prize-rules article { padding:20px 24px; border-right:0; border-top:1px solid rgba(255,255,255,.16); }.prize-splits { flex-direction:column; gap:8px; }.payouts { grid-template-columns:repeat(2,1fr); }.payouts article { min-height:86px; }.photo-dialog { padding:14px; }.photo-dialog-card img { max-height:calc(100vh - 126px); } }
-@media (max-width:760px) { .payouts { gap:10px; }.payouts article { min-height:124px; padding:15px; border-radius:16px; }.payouts em { margin-top:16px; font-size:.95rem; }.payouts strong { font-size:1.55rem; }.payouts span { padding:4px 8px; font-size:.6rem; }.payouts small { font-size:.68rem; } }
+@media (max-width:760px) { .payouts { gap:10px; }.payouts article { min-height:120px; padding:14px; border-radius:5px; }.payouts em { margin-top:15px; font-size:.95rem; }.payouts strong { font-size:1.55rem; }.payouts span { padding:4px 7px; font-size:.6rem; }.payouts small { font-size:.68rem; } }
 
 html { scroll-behavior:smooth; }
 .medal-totals.dragon-arena { position:relative; isolation:isolate; overflow:hidden; padding:82px 0 160px; background:#04101e; color:#fff; }
