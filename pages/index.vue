@@ -42,11 +42,11 @@ const members = [
 ]
 const selectedMember = ref<typeof members[number] | null>(null)
 const prizes = [
-  { place: 1, amount: '3,500' }, { place: 2, amount: '2,500' }, { place: 3, amount: '1,800' },
-  { place: 4, amount: '1,300' }, { place: 5, amount: '1,000' }, { place: 6, amount: '800' },
-  { place: 7, amount: '900' }, { place: 8, amount: '600' }, { place: 9, amount: '400' },
-  { place: 10, amount: '300' }, { place: 11, amount: '200' }, { place: 12, amount: '100' },
-  { place: 13, amount: '100' }, { place: 14, amount: '100' },
+  { place: 1, amount: '3,000' }, { place: 2, amount: '2,000' }, { place: 3, amount: '1,500' },
+  { place: 4, amount: '1,200' }, { place: 5, amount: '1,100' }, { place: 6, amount: '900' },
+  { place: 7, amount: '1,000' }, { place: 8, amount: '800' }, { place: 9, amount: '600' },
+  { place: 10, amount: '500' }, { place: 11, amount: '400' }, { place: 12, amount: '300' },
+  { place: 13, amount: '200' }, { place: 14, amount: '100' },
 ]
 
 const categories = ['FG%', 'FT%', '3PTM', 'PTS', 'REB', 'AST', 'ST', 'BLK', 'TO']
