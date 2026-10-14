@@ -18,6 +18,8 @@ interface FundResponse {
     investmentBudget: number
     cost: number | null
     shares: number | null
+    averagePrice?: number | null
+    purchaseSummary?: string | null
     baselinePrice: number | null
     baselineDate: string
     purchasedAt?: string | null
@@ -71,8 +73,10 @@ const baselineNote = computed(() => {
   const price = fund.value?.position.baselinePrice
   const shares = fund.value?.position.shares
   const cost = fund.value?.position.cost
+  const averagePrice = fund.value?.position.averagePrice
+  const purchaseSummary = fund.value?.position.purchaseSummary
   if (fund.value?.position.mode === 'actual' && price != null && shares != null && cost != null) {
-    return `${date} 已用聯盟積分池買進 0050：${numberAmount(shares)} 股 × ${amount(price, 2)}，成本 ${amount(cost, 2)}；未含交易費用及配息，季末揭曉加菜成果`
+    return `${purchaseSummary || `${date} 已用聯盟積分池買進 0050`}；目前總持股 ${numberAmount(shares)} 股，總成本 ${amount(cost, 2)}，平均成本 ${amount(averagePrice ?? cost / shares, 2)}；未含交易費用及配息，季末揭曉加菜成果`
   }
   return price != null
     ? `${date} 收盤 ${amount(price, 2)} 為試算起點；僅供私人聯盟內部紀錄，季末以實際結算為準`
@@ -124,8 +128,8 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
       </div>
       <div>
         <dt>買進成本 <span class="fund-unit">NT$</span></dt>
-        <dd>{{ numberAmount(fund?.position.cost ?? 24001.65, 2) }}</dd>
-        <small>{{ fund?.position.purchasedAt || '2026-10-06' }} · {{ numberAmount(fund?.position.shares ?? 207) }} 股 × NT$ {{ numberAmount(fund?.position.baselinePrice ?? 115.95, 2) }}</small>
+        <dd>{{ numberAmount(fund?.position.cost ?? 28087.65, 2) }}</dd>
+        <small>{{ fund?.position.purchasedAt || '2026-10-14' }} · {{ numberAmount(fund?.position.shares ?? 243) }} 股 · 平均 NT$ {{ numberAmount(fund?.position.averagePrice ?? 115.59, 2) }}</small>
       </div>
       <div>
         <dt>持股市值 <span class="fund-unit">NT$</span></dt>

@@ -10,17 +10,23 @@ export type FundQuote = {
   stale: boolean
 }
 
-// Actual 0050 position bought on 2026-10-06.
-// User-provided order confirmation: 207 shares at NT$115.95, estimated amount NT$24,001.65.
+// Actual 0050 position.
+// User-provided order confirmations:
+// - 2026-10-06: 207 shares at NT$115.95, estimated amount NT$24,001.65.
+// - 2026-10-14: 36 shares at NT$113.45, cost NT$4,086 from two new members' contribution.
 export const fundPlan = {
-  plannedPrincipal: 24001.65,
+  plannedPrincipal: 28087.65,
   adminReserve: 0,
   baselineDate: '2026-10-06',
   baselinePrice: 115.95,
-  purchasedAt: '2026-10-06',
-  shares: 207,
-  cost: 24001.65,
-  baselineSource: 'user-provided-order-confirmation',
+  purchasedAt: '2026-10-14',
+  shares: 243,
+  cost: 28087.65,
+  baselineSource: 'user-provided-order-confirmations',
+  purchases: [
+    { date: '2026-10-06', shares: 207, price: 115.95, cost: 24001.65, note: '首筆買進' },
+    { date: '2026-10-14', shares: 36, price: 113.45, cost: 4086, note: '兩位新成員加碼' },
+  ],
 } as const
 
 const money = (value: number) => Math.round((value + Number.EPSILON) * 100) / 100
@@ -93,6 +99,8 @@ export function calculateFund(quote: FundQuote) {
   const shares = fundPlan.shares
   const cost = money(fundPlan.cost)
   const cashBalance = 0
+  const averagePrice = money(cost / shares)
+  const purchaseSummary = '2026-10-06 首筆買進 207 股 × NT$115.95；2026-10-14 兩位新成員加碼 36 股 × NT$113.45，買進成本 NT$4,086'
   const validPrice = typeof quote.price === 'number' && Number.isFinite(quote.price) && quote.price > 0
     && quote.quoteDate !== null && quote.quoteDate >= fundPlan.baselineDate
   const marketValue = validPrice ? money(shares * quote.price!) : null
@@ -101,7 +109,7 @@ export function calculateFund(quote: FundQuote) {
   const returnPct = unrealizedPnl === null ? null : money(unrealizedPnl / cost * 100)
   return {
     quote,
-    position: { ...fundPlan, investmentBudget, shares, cost, cashBalance, mode: 'actual' as const },
+    position: { ...fundPlan, investmentBudget, shares, cost, cashBalance, averagePrice, purchaseSummary, mode: 'actual' as const },
     metrics: { marketValue, totalValue, unrealizedPnl, returnPct },
     status: validPrice ? 'ready' as const : 'pending' as const,
   }
