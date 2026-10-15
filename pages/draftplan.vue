@@ -12,7 +12,7 @@ const { data: rankings, pending: rankingsLoading, error: rankingsError, refresh:
         <img src="/cgc-logo.svg" alt="Chanchao Gentleman Club">
         <span>BACK TO CGC</span>
       </a>
-      <a class="draftplan-open" href="https://nba-yahoo-fantasy-draft-game-plan-t.vercel.app/" target="_blank" rel="noopener noreferrer">開新視窗 ↗</a>
+      <div class="draftplan-actions"><NuxtLink to="/yahoo-fantasy">API INFO</NuxtLink><a class="draftplan-open" href="https://nba-yahoo-fantasy-draft-game-plan-t.vercel.app/" target="_blank" rel="noopener noreferrer">開新視窗 ↗</a></div>
     </nav>
 
     <section class="draftplan-hero">
@@ -60,8 +60,7 @@ const { data: rankings, pending: rankingsLoading, error: rankingsError, refresh:
 .draftplan-nav{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:13px 24px;background:rgba(7,16,28,.9);border-bottom:1px solid rgba(240,184,73,.28);backdrop-filter:blur(14px)}
 .draftplan-brand{display:flex;align-items:center;gap:10px;color:#f0b849;text-decoration:none;font:600 .72rem 'DM Mono',monospace;letter-spacing:.08em}
 .draftplan-brand img{width:38px;height:38px;object-fit:cover;border-radius:4px}
-.draftplan-open{color:#dce7f5;text-decoration:none;font-size:.9rem}
-.draftplan-open:hover{color:#f0b849}
+.draftplan-actions{display:flex;align-items:center;gap:16px}.draftplan-actions a{color:#dce7f5;text-decoration:none;font:600 .72rem 'DM Mono',monospace;letter-spacing:.07em}.draftplan-actions a:hover{color:#f0b849}.draftplan-open{font-size:.9rem !important;letter-spacing:0 !important}
 .draftplan-hero{padding:62px min(7vw,72px) 26px;background:radial-gradient(circle at 16% 0,rgba(240,184,73,.18),transparent 34%),linear-gradient(135deg,#101d31,#07101c)}
 .draftplan-hero h1{margin:0 0 12px;font:700 clamp(3.2rem,8vw,7rem)/.9 'Oswald',sans-serif;letter-spacing:-.06em;text-transform:uppercase}
 .draftplan-hero p:last-child{max-width:620px;margin:0;color:#c6d0dd;line-height:1.8}
