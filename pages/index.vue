@@ -1,23 +1,6 @@
 <script setup lang="ts">
 import FundTracker from '../components/FundTracker.vue'
 
-const draftAt = new Date('2026-10-17T22:00:00+08:00').getTime()
-const now = ref(Date.now())
-let clock: ReturnType<typeof setInterval>
-
-onMounted(() => { clock = setInterval(() => { now.value = Date.now() }, 1000) })
-onUnmounted(() => clearInterval(clock))
-
-const countdown = computed(() => {
-  const total = Math.max(0, draftAt - now.value)
-  return {
-    days: Math.floor(total / 86400000),
-    hours: Math.floor(total / 3600000) % 24,
-    minutes: Math.floor(total / 60000) % 60,
-    seconds: Math.floor(total / 1000) % 60,
-  }
-})
-
 const podium = [
   { rank: '02', title: '亞軍', team: '阿肥幹大事', name: 'Vince', image: '/members/vince.jpg' },
   { rank: '01', title: '冠軍', team: 'VICTOR🍋', name: 'Vic', image: '/members/vic.jpg' },
@@ -143,7 +126,7 @@ const resetHonorCard = (event: PointerEvent) => {
     <div class="wrap site-menu-inner">
       <a class="menu-brand" href="#top" aria-label="Chanchao Gentleman Club 首頁"><img src="/cgc-logo.svg" alt="Chanchao Gentleman Club"><span>2026–27</span></a>
       <div class="menu-links">
-        <a href="#countdown">選秀倒數</a><a href="#prizes">積分規則</a><a href="#members">選手牆</a><a href="#alumni">名人堂</a><a href="#current-season">本季戰報</a><a href="#archive">上季回顧</a>
+        <a href="#prizes">積分規則</a><a href="#members">選手牆</a><a href="#alumni">名人堂</a><a href="#current-season">本季戰報</a><a href="#archive">上季回顧</a>
       </div>
     </div>
   </nav>
@@ -154,24 +137,7 @@ const resetHonorCard = (event: PointerEvent) => {
       <div class="hero-content wrap">
         <p class="eyebrow">FANTASY NBA · 2026–27</p>
         <h1>Chanchao<br><em>Gentleman Club</em></h1>
-        <p class="hero-copy">十四位經理人，十四條命運線；當選秀鐘聲敲響，Gentleman Club 的戰火正式覺醒。</p>
-        <div class="draft-line"><span>SEASON DRAFT</span><b>10.17 · 22:00</b><small>TAIPEI TIME</small></div>
-      </div>
-    </section>
-
-    <section id="countdown" class="countdown-section">
-      <div class="wrap countdown-grid">
-        <div><p class="eyebrow ink">COUNTDOWN TO DRAFT</p><h2>選秀開桌倒數</h2><p>2026 年 10 月 17 日，晚上 10 點；手慢的人，明年見。</p></div>
-        <div class="clock flip-clock" aria-label="選秀倒數">
-          <div v-for="(value, label) in countdown" :key="label" class="flip-unit">
-            <div class="flip-frame">
-              <div class="flip-half flip-top" aria-hidden="true" />
-              <div class="flip-half flip-bottom" aria-hidden="true" />
-              <Transition name="flip-digit" mode="out-in"><strong :key="`${label}-${value}`">{{ String(value).padStart(2, '0') }}</strong></Transition>
-            </div>
-            <span>{{ label }}</span>
-          </div>
-        </div>
+        <p class="hero-copy">十四位經理人，十四條命運線；選秀已經落幕，Gentleman Club 的戰火正式覺醒。</p>
       </div>
     </section>
 
@@ -218,11 +184,14 @@ const resetHonorCard = (event: PointerEvent) => {
     </div>
 
     <section id="current-season" class="current-season">
-      <div class="wrap current-season-card"><div><p class="eyebrow">2026–27 SEASON · LIVE SOON</p><h2>本季戰報，選秀後開張</h2><p>每週對戰、九項分類排名與整季交手紀錄，都會從這裡開始逐週累積。</p></div><div class="current-season-status"><span>UP NEXT</span><strong><span>10.17</span><span>22:00</span></strong><small>選秀開桌後啟用</small></div></div>
+      <div class="wrap current-season-card"><div><p class="eyebrow">2026–27 SEASON · NOW UNDERWAY</p><h2>本季戰報，正式開打</h2><p>每週對戰、九項分類排名與整季交手紀錄，會從這裡開始逐週累積。</p></div><div class="current-season-status"><span>SEASON LIVE</span><strong><span>2026</span><span>–27</span></strong><small>每週持續更新</small></div></div>
     </section>
 
     <section id="archive" class="archive wrap">
       <div class="archive-intro"><div><p class="eyebrow ink">2025–26 SEASON ARCHIVE</p><h2>2025–26 上季回顧</h2></div><p>從每週互咬到季後賽，上一季的神操作和崩盤時刻，全都留在這裡。</p></div>
+      <details class="archive-details">
+        <summary><span>展開完整上季成績</span><small>19 週例行賽 · 3 週季後賽 · 9 項分類</small></summary>
+        <div class="archive-details-content">
       <div class="archive-stats"><span><b>19</b> REGULAR WEEKS</span><span><b>3</b> PLAYOFF WEEKS</span><span><b>9</b> CATEGORIES</span></div>
       <div class="season-facts"><article v-for="fact in seasonFacts" :key="fact.label"><p>{{ fact.label }}</p><h3>{{ fact.value }}</h3><span>{{ fact.detail }}</span></article></div>
       <div class="season-track"><div class="regular"><small>WEEK 1</small><span>例行賽</span><small>WEEK 19</small></div><div class="playoffs"><span>季後賽</span><small>WEEK 20–22</small></div></div>
@@ -246,7 +215,9 @@ const resetHonorCard = (event: PointerEvent) => {
         <div class="matchups-scroll"><table class="matchups-table"><thead><tr><th v-for="(header, index) in weeklyData.matchupHeaders" :key="`${header}-${index}`">{{ header }}</th></tr></thead><tbody><tr v-for="(row, rowIndex) in weeklyData.matchupRows" :key="`match-${rowIndex}`"><th>{{ row[0] }}</th><td v-for="(value, valueIndex) in row.slice(1)" :key="valueIndex" :class="matchupState(value)">{{ value === '--' ? '—' : value }}</td></tr></tbody></table></div></div>
         <p class="weekly-note">資料直接來自聯盟週報：同欄位前三名會上色；季後賽沒出賽的隊伍就讓它安靜顯示「—」。</p>
       </div>
-      <div class="archive-footer"><p>等本季開打，這裡會繼續堆滿「本週對戰」和新的恩怨紀錄。</p><div class="archive-footer-links"><NuxtLink to="/season-archive">獨立頁查看上季戰績</NuxtLink><a href="https://docs.google.com/spreadsheets/d/1GBUHLrH2pGYnfdqfvMKgkv55kb7PnV0IPs6-M3s1C28/edit?gid=1309906405#gid=1309906405" target="_blank" rel="noreferrer">打開上季完整週報</a></div></div>
+      <div class="archive-footer"><p>本季開打後，這裡會繼續堆滿「本週對戰」和新的恩怨紀錄。</p><div class="archive-footer-links"><NuxtLink to="/season-archive">獨立頁查看上季戰績</NuxtLink><a href="https://docs.google.com/spreadsheets/d/1GBUHLrH2pGYnfdqfvMKgkv55kb7PnV0IPs6-M3s1C28/edit?gid=1309906405#gid=1309906405" target="_blank" rel="noreferrer">打開上季完整週報</a></div></div>
+        </div>
+      </details>
     </section>
     <section id="medals" class="medal-totals">
       <div class="wrap">

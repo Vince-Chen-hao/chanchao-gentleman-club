@@ -1,6 +1,13 @@
 .archive-intro { display:flex; gap:80px; justify-content:space-between; align-items:end; }
 .archive-intro h2 { margin-bottom:0; }
 .archive-intro > p { max-width:430px; font-size:1.05rem; line-height:1.8; color:#5d6570; margin:0; }
+.archive-details { margin-top:32px; border-top:1px solid #d3cfc2; border-bottom:1px solid #d3cfc2; }
+.archive-details summary { display:flex; align-items:center; justify-content:space-between; gap:20px; padding:20px 0; cursor:pointer; list-style:none; color:#0c1422; font-weight:800; }
+.archive-details summary::-webkit-details-marker { display:none; }
+.archive-details summary::after { content:'+'; order:3; color:#8a7155; font:700 1.35rem/1 'DM Mono',monospace; }
+.archive-details[open] summary::after { content:'−'; }
+.archive-details summary small { color:#7d6b48; font:500 .7rem 'DM Mono',monospace; letter-spacing:.04em; }
+.archive-details-content { padding-bottom:34px; }
 .season-track { display:grid; grid-template-columns:19fr 3fr; gap:6px; margin-top:48px; }
 .season-track > div { min-height:105px; padding:20px; display:flex; justify-content:space-between; align-items:end; }
 .regular { background:var(--navy); color:#fff; }
@@ -51,7 +58,7 @@
 .payout-outside { background:#e2ded5 !important; border-top-color:#a5a096 !important; }
 .payout-1,.payout-2,.payout-3 { background:#eee6d7 !important; }
 .member-card { border:0; padding:0; cursor:zoom-in; text-align:left; font:inherit; color:inherit; }.member-card:focus-visible { outline:3px solid var(--gold); outline-offset:3px; }.photo-dialog { position:fixed; z-index:20; inset:0; display:grid; place-items:center; padding:25px; background:rgba(4,10,18,.86); backdrop-filter:blur(8px); }.photo-dialog-card { position:relative; width:min(760px,100%); max-height:calc(100vh - 50px); overflow:hidden; background:#111; box-shadow:0 24px 80px rgba(0,0,0,.48); }.photo-dialog-card img { display:block; width:100%; max-height:calc(100vh - 50px); object-fit:contain; object-position:center; }.photo-dialog-close { position:absolute; z-index:1; top:10px; right:10px; width:38px; height:38px; border:0; border-radius:50%; background:#101d31; color:#fff; font-size:1.65rem; line-height:1; cursor:pointer; }
-@media (max-width:760px) { html,body { overflow-x:hidden; } .archive-intro,.archive-footer { display:block; } .archive-intro > p { margin-top:20px; } .archive-footer-links { display:block; } .archive-footer a { display:inline-block; max-width:100%; margin-top:18px; white-space:normal; overflow-wrap:anywhere; } .season-track,.season-facts { grid-template-columns:1fr; margin-top:32px; } .season-track > div { min-height:88px; } .standings-wrap { overflow-x:auto; } .standings-heading { display:block; padding:20px; } .standings-heading > p { margin-top:12px; } .standings-table { min-width:560px; } .standings-row { padding:0 18px; } .weekly-vault-head { display:block; padding:20px; } .weekly-vault-head p { max-width:none; } .weekly-vault label { min-width:0; width:100%; margin-top:16px; } .weekly-vault select { width:100%; } .flip-clock .flip-unit { padding:0 2px 9px; } .flip-frame { min-height:66px; } .flip-unit > span { padding-top:7px; font-size:.53rem; } }
+@media (max-width:760px) { html,body { overflow-x:hidden; } .archive-intro,.archive-footer { display:block; } .archive-intro > p { margin-top:20px; } .archive-details summary { display:grid; grid-template-columns:1fr auto; gap:6px 14px; } .archive-details summary small { grid-column:1; } .archive-details summary::after { grid-column:2; grid-row:1 / span 2; align-self:center; } .archive-footer-links { display:block; } .archive-footer a { display:inline-block; max-width:100%; margin-top:18px; white-space:normal; overflow-wrap:anywhere; } .season-track,.season-facts { grid-template-columns:1fr; margin-top:32px; } .season-track > div { min-height:88px; } .standings-wrap { overflow-x:auto; } .standings-heading { display:block; padding:20px; } .standings-heading > p { margin-top:12px; } .standings-table { min-width:560px; } .standings-row { padding:0 18px; } .weekly-vault-head { display:block; padding:20px; } .weekly-vault-head p { max-width:none; } .weekly-vault label { min-width:0; width:100%; margin-top:16px; } .weekly-vault select { width:100%; } }
 
 .podium { align-items:end; padding-top:48px; }
 .honors { background:var(--navy); color:#fff; box-shadow:0 0 0 100vmax var(--navy); clip-path:inset(0 -100vmax); }.honors .eyebrow.ink { color:var(--gold); }
