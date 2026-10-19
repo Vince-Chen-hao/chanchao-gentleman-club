@@ -184,7 +184,7 @@ const resetHonorCard = (event: PointerEvent) => {
     </div>
 
     <section id="current-season" class="current-season">
-      <div class="wrap current-season-card"><div><p class="eyebrow">2026–27 SEASON · NOW UNDERWAY</p><h2>本季戰報，正式開打</h2><p>每週對戰、九項分類排名與整季交手紀錄，會從這裡開始逐週累積。</p></div><div class="current-season-status"><span>SEASON LIVE</span><strong><span>2026</span><span>–27</span></strong><small>每週持續更新</small></div></div>
+      <div class="wrap current-season-card"><div><p class="eyebrow">2026–27 SEASON · NOW UNDERWAY</p><h2>本季戰報，正式開打</h2><p>每週對戰、九項分類排名與整季交手紀錄，會從這裡開始逐週累積。</p></div><div class="current-season-status"><span>CURRENT SEASON</span><strong>2026–27</strong><small>每週持續更新</small></div></div>
     </section>
 
     <section id="archive" class="archive wrap">
