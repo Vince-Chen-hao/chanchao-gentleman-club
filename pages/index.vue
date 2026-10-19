@@ -23,6 +23,22 @@ const members = [
   { team: 'Wei Too Strong', name: '阿瑋', image: '/members/wei.png', rookie: true },
   { team: '尬電鮪魚', name: 'Tim', image: '/members/tim.png', rookie: true },
 ]
+const firstRoundPicks = [
+  { pick: 1, player: 'Nikola Jokić', meta: 'DEN · C', team: '阿肥幹大事', manager: 'Vince', nbaId: '203999' },
+  { pick: 2, player: 'Victor Wembanyama', meta: 'SAS · C', team: '卡店老闆懇求高抬貴手', manager: '卡店老闆', nbaId: '1641705' },
+  { pick: 3, player: 'Luka Dončić', meta: 'LAL · PG, SG', team: 'Jeffrey', manager: 'Jeffery', nbaId: '1629029' },
+  { pick: 4, player: 'Shai Gilgeous-Alexander', meta: 'OKC · PG', team: 'Wintersoldiers', manager: '李董', nbaId: '1628983' },
+  { pick: 5, player: 'Tyrese Maxey', meta: 'PHI · PG', team: 'Wei Too Strong', manager: '阿瑋', nbaId: '1630178' },
+  { pick: 6, player: 'Anthony Edwards', meta: 'MIN · PG, SG', team: 'Sean', manager: '大叔', nbaId: '1630162' },
+  { pick: 7, player: 'Giannis Antetokounmpo', meta: 'MIA · PF, C', team: '思得卓識博聞之士', manager: '主委', nbaId: '203507' },
+  { pick: 8, player: 'Cade Cunningham', meta: 'DET · PG, SG', team: '浪子踢球', manager: 'Alan', nbaId: '1630595' },
+  { pick: 9, player: 'Jayson Tatum', meta: 'BOS · SF, PF', team: '方唐鏡又跳進來了', manager: 'Jesse', nbaId: '1628369' },
+  { pick: 10, player: 'Cooper Flagg', meta: 'DAL · SG, SF, PF', team: 'Gyuumao', manager: '牛魔王', nbaId: '1642843' },
+  { pick: 11, player: 'Karl-Anthony Towns', meta: 'NYK · PF, C', team: '台北胯下大暖流艦隊', manager: '小曹', nbaId: '1626157' },
+  { pick: 12, player: 'Jalen Johnson', meta: 'ATL · SF, PF', team: '尬電鮪魚', manager: 'Tim', nbaId: '1630552' },
+  { pick: 13, player: 'Scottie Barnes', meta: 'TOR · SF, PF, C', team: 'VICTOR🍋', manager: 'Vic', nbaId: '1630567' },
+  { pick: 14, player: 'Tyrese Haliburton', meta: 'IND · PG, SG', team: 'CK', manager: 'CK', nbaId: '1630169' },
+]
 const selectedMember = ref<typeof members[number] | null>(null)
 const prizes = [
   { place: 1, tier: 'contender', group: '爭冠組', title: '總冠軍', amount: '3,000' },
@@ -184,7 +200,19 @@ const resetHonorCard = (event: PointerEvent) => {
     </div>
 
     <section id="current-season" class="current-season">
-      <div class="wrap current-season-card"><div><p class="eyebrow">2026–27 SEASON · NOW UNDERWAY</p><h2>本季戰報，正式開打</h2><p>每週對戰、九項分類排名與整季交手紀錄，會從這裡開始逐週累積。</p></div><div class="current-season-status"><span>CURRENT SEASON</span><strong>2026–27</strong><small>每週持續更新</small></div></div>
+      <div class="wrap">
+        <div class="current-season-card"><div><p class="eyebrow">2026–27 SEASON · NOW UNDERWAY</p><h2>本季戰報，正式開打</h2><p>每週對戰、九項分類排名與整季交手紀錄，會從這裡開始逐週累積。</p></div><div class="current-season-status"><span>CURRENT SEASON</span><strong>2026–27</strong><small>每週持續更新</small></div></div>
+        <div class="first-round-draft">
+          <div class="first-round-heading"><div><p class="eyebrow">DRAFT RESULTS · ROUND 1</p><h3>首輪選秀，一人一張王牌</h3></div><p>14 位經理人的首輪決定，從這裡開始。</p></div>
+          <div class="first-round-grid">
+            <article v-for="draftPick in firstRoundPicks" :key="draftPick.pick" class="first-round-pick">
+              <span class="draft-pick-number">{{ String(draftPick.pick).padStart(2, '0') }}</span>
+              <img :src="`https://cdn.nba.com/headshots/nba/latest/1040x760/${draftPick.nbaId}.png`" :alt="`${draftPick.player} headshot`" class="draft-player-photo">
+              <div class="draft-pick-copy"><strong>{{ draftPick.player }}</strong><small>{{ draftPick.meta }}</small><p>{{ draftPick.team }}</p><em>{{ draftPick.manager }}</em></div>
+            </article>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="archive" class="archive wrap">
