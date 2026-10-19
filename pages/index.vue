@@ -243,18 +243,16 @@ const resetHonorCard = (event: PointerEvent) => {
         <div class="matchups-scroll"><table class="matchups-table"><thead><tr><th v-for="(header, index) in weeklyData.matchupHeaders" :key="`${header}-${index}`">{{ header }}</th></tr></thead><tbody><tr v-for="(row, rowIndex) in weeklyData.matchupRows" :key="`match-${rowIndex}`"><th>{{ row[0] }}</th><td v-for="(value, valueIndex) in row.slice(1)" :key="valueIndex" :class="matchupState(value)">{{ value === '--' ? '—' : value }}</td></tr></tbody></table></div></div>
         <p class="weekly-note">資料直接來自聯盟週報：同欄位前三名會上色；季後賽沒出賽的隊伍就讓它安靜顯示「—」。</p>
       </div>
+      <section id="medals" class="medal-totals archive-medal-totals">
+        <p class="eyebrow ink">2025–26 上季 MEDAL COLLECTION</p><h3>上季累積獎牌榜</h3>
+        <p class="medal-totals-note">上季全季 22 週，含季後賽；把每週全盟比較的金、銀、銅牌通通算進來。依金牌、銀牌、銅牌數排序。</p>
+        <p v-if="medalsLoading" class="weekly-state">正在清點大家的獎牌…</p>
+        <p v-else-if="medalsError" class="weekly-state">獎牌資料暫時無法載入，請稍後重新整理。</p>
+        <div v-else-if="medalTotals" class="medal-totals-scroll"><table class="medal-totals-table"><thead><tr><th>成員</th><th>🥇 金牌</th><th>🥈 銀牌</th><th>🥉 銅牌</th><th>總獎牌</th></tr></thead><tbody><tr v-for="entry in medalTotals.rows" :key="entry.team"><th>{{ entry.team }}</th><td>{{ entry.gold }}</td><td>{{ entry.silver }}</td><td>{{ entry.bronze }}</td><td>{{ entry.total }}</td></tr></tbody></table></div>
+      </section>
       <div class="archive-footer"><p>本季開打後，這裡會繼續堆滿「本週對戰」和新的恩怨紀錄。</p><div class="archive-footer-links"><NuxtLink to="/season-archive">獨立頁查看上季戰績</NuxtLink><a href="https://docs.google.com/spreadsheets/d/1GBUHLrH2pGYnfdqfvMKgkv55kb7PnV0IPs6-M3s1C28/edit?gid=1309906405#gid=1309906405" target="_blank" rel="noreferrer">打開上季完整週報</a></div></div>
         </div>
       </details>
-    </section>
-    <section id="medals" class="medal-totals">
-      <div class="wrap">
-      <p class="eyebrow ink">2025–26 上季 MEDAL COLLECTION</p><h2>上季累積獎牌榜</h2>
-      <p class="medal-totals-note">上季全季 22 週，含季後賽；把每週全盟比較的金、銀、銅牌通通算進來。依金牌、銀牌、銅牌數排序。</p>
-      <p v-if="medalsLoading" class="weekly-state">正在清點大家的獎牌…</p>
-      <p v-else-if="medalsError" class="weekly-state">獎牌資料暫時無法載入，請稍後重新整理。</p>
-      <div v-else-if="medalTotals" class="medal-totals-scroll"><table class="medal-totals-table"><thead><tr><th>成員</th><th>🥇 金牌</th><th>🥈 銀牌</th><th>🥉 銅牌</th><th>總獎牌</th></tr></thead><tbody><tr v-for="entry in medalTotals.rows" :key="entry.team"><th>{{ entry.team }}</th><td>{{ entry.gold }}</td><td>{{ entry.silver }}</td><td>{{ entry.bronze }}</td><td>{{ entry.total }}</td></tr></tbody></table></div>
-      </div>
     </section>
     <footer class="site-footer">
       <div class="wrap"><p>© 2026 Chanchao. All rights reserved.</p></div>
