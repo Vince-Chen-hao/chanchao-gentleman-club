@@ -39,6 +39,31 @@ const firstRoundPicks = [
   { pick: 13, player: 'Scottie Barnes', meta: 'TOR · SF, PF, C', team: 'VICTOR🍋', manager: 'Vic', nbaId: '1630567' },
   { pick: 14, player: 'Tyrese Haliburton', meta: 'IND · PG, SG', team: 'CK', manager: 'CK', nbaId: '1630169' },
 ]
+const weekOneStandings = [
+  { rank: 1, team: '卡店老闆的斑馬PSA10', record: '7–2–0', pct: '.778' },
+  { rank: 2, team: 'Wei Too Strong', record: '7–2–0', pct: '.778' },
+  { rank: 3, team: '蟻人雄兵', record: '7–2–0', pct: '.778' },
+  { rank: 4, team: '浪子踢球', record: '6–3–0', pct: '.667' },
+  { rank: 5, team: '阿肥加班幹大事', record: '5–3–1', pct: '.611' },
+  { rank: 6, team: '字母主委', record: '5–4–0', pct: '.556' },
+  { rank: 7, team: '哈利吸K', record: '5–4–0', pct: '.556' },
+  { rank: 8, team: 'Wintersoldier', record: '4–5–0', pct: '.444' },
+  { rank: 9, team: '台北胯下大暖流艦隊', record: '4–5–0', pct: '.444' },
+  { rank: 10, team: 'Gyuumao', record: '3–5–1', pct: '.389' },
+  { rank: 11, team: '傻逼維特向前衝', record: '3–6–0', pct: '.333' },
+  { rank: 12, team: 'ALOMAR', record: '2–7–0', pct: '.222' },
+  { rank: 13, team: '80年次男性', record: '2–7–0', pct: '.222' },
+  { rank: 14, team: '尬電鮪魚', record: '2–7–0', pct: '.222' },
+]
+const weekOneMatchups = [
+  { left: '阿肥加班幹大事', leftScore: 5, right: 'Gyuumao', rightScore: 3 },
+  { left: '字母主委', leftScore: 5, right: '台北胯下大暖流艦隊', rightScore: 4 },
+  { left: '浪子踢球', leftScore: 6, right: '傻逼維特向前衝', rightScore: 3 },
+  { left: '卡店老闆的斑馬PSA10', leftScore: 7, right: '尬電鮪魚', rightScore: 2 },
+  { left: '哈利吸K', leftScore: 5, right: 'Wintersoldier', rightScore: 4 },
+  { left: 'ALOMAR', leftScore: 2, right: 'Wei Too Strong', rightScore: 7 },
+  { left: '蟻人雄兵', leftScore: 7, right: '80年次男性', rightScore: 2 },
+]
 const selectedMember = ref<typeof members[number] | null>(null)
 const prizes = [
   { place: 1, tier: 'contender', group: '爭冠組', title: '總冠軍', amount: '3,000' },
@@ -202,6 +227,12 @@ const resetHonorCard = (event: PointerEvent) => {
     <section id="current-season" class="current-season">
       <div class="wrap">
         <div class="current-season-card"><div><p class="eyebrow">2026–27 SEASON · NOW UNDERWAY</p><h2>本季戰報，正式開打</h2><p>每週對戰、九項分類排名與整季交手紀錄，會從這裡開始逐週累積。</p></div><div class="current-season-status"><span>CURRENT SEASON</span><strong>2026–27</strong><small>每週持續更新</small></div></div>
+        <div class="week-one-report">
+          <div class="week-one-heading"><div><p class="eyebrow">WEEK 1 · FINAL</p><h3>開幕週結算，先記一筆</h3></div><p>10/20–10/25 · 九項分類 · 14 隊完成首週交手</p></div>
+          <div class="week-one-podium"><article v-for="entry in weekOneStandings.slice(0, 3)" :key="entry.rank" :class="`week-one-rank-${entry.rank}`"><span>第 {{ entry.rank }} 名</span><strong>{{ entry.team }}</strong><em>{{ entry.record }}</em><small>{{ entry.pct }}</small></article></div>
+          <div class="week-one-matchups"><article v-for="matchup in weekOneMatchups" :key="`${matchup.left}-${matchup.right}`"><strong>{{ matchup.left }}</strong><b>{{ matchup.leftScore }}</b><span>：</span><b>{{ matchup.rightScore }}</b><strong>{{ matchup.right }}</strong></article></div>
+          <details class="week-one-standings"><summary><span>查看 Week 1 完整排名</span><small>W–L–T · Yahoo 最終結算</small></summary><div class="week-one-standings-list"><div v-for="entry in weekOneStandings" :key="entry.rank"><b>{{ String(entry.rank).padStart(2, '0') }}</b><strong>{{ entry.team }}</strong><span>{{ entry.record }}</span><em>{{ entry.pct }}</em></div></div></details>
+        </div>
         <div class="first-round-draft">
           <div class="first-round-heading"><div><p class="eyebrow">DRAFT RESULTS · ROUND 1</p><h3>首輪選秀，一人一張王牌</h3></div><p>14 位經理人的首輪決定，從這裡開始。</p></div>
           <div class="first-round-grid">
