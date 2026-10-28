@@ -1,4 +1,6 @@
 <script setup lang="ts">
+definePageMeta({ alias: ['/lastseason'] })
+
 const medalSection = ref<HTMLElement | null>(null)
 const dragonArrived = ref(false)
 const dragonRun = ref(0)
@@ -123,7 +125,7 @@ const matchupState = (value: unknown) => {
   </nav>
   <main id="archive" class="archive-page">
     <section class="archive wrap">
-      <div class="archive-intro"><div><p class="eyebrow ink">2025–26 SEASON ARCHIVE</p><h2>上季戰績獨立頁</h2></div><p>把上季排名、每週數據與全盟對戰比較集中在這裡；首頁同樣保留原本內容。</p></div>
+      <div class="archive-intro"><div><p class="eyebrow ink">2025–26 SEASON ARCHIVE</p><h2>2025–26 上季回顧</h2></div><p>把上季排名、每週數據、全盟對戰與累積獎牌完整集中在這裡。</p></div>
       <div class="archive-stats"><span><b>19</b> REGULAR WEEKS</span><span><b>3</b> PLAYOFF WEEKS</span><span><b>9</b> CATEGORIES</span></div>
       <div class="season-facts"><article v-for="fact in seasonFacts" :key="fact.label"><p>{{ fact.label }}</p><h3>{{ fact.value }}</h3><span>{{ fact.detail }}</span></article></div>
       <div class="season-track"><div class="regular"><small>WEEK 1</small><span>例行賽</span><small>WEEK 19</small></div><div class="playoffs"><span>季後賽</span><small>WEEK 20–22</small></div></div>
