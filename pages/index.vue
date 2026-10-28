@@ -8,36 +8,36 @@ const podium = [
 ]
 
 const members = [
-  { team: '思得卓識博聞之士', name: '主委', image: '/members/leo-eyes-wide.png' },
+  { team: '字母主委', name: '主委', image: '/members/leo-eyes-wide.png' },
   { team: '台北胯下大暖流艦隊', name: '小曹', image: '/members/cao.jpg' },
   { team: '浪子踢球', name: 'Alan', image: '/members/alan.jpg' },
-  { team: 'Wintersoldiers', name: '李董', image: '/members/li.jpg' },
-  { team: 'VICTOR🍋', name: 'Vic', image: '/members/vic.jpg' },
+  { team: 'Wintersoldier', name: '李董', image: '/members/li.jpg' },
+  { team: '傻逼維特向前衝', name: 'Vic', image: '/members/vic.jpg' },
   { team: 'Gyuumao', name: '牛魔王', image: '/members/gyuumao.jpg' },
-  { team: '阿肥幹大事', name: 'Vince', image: '/members/vince.jpg' },
-  { team: '卡店老闆懇求高抬貴手', name: '卡店老闆', image: '/members/cardshop.jpg' },
-  { team: 'CK', name: 'CK', image: '/members/ck.jpg', position: '50% 12%' },
-  { team: 'Sean', name: '大叔', image: '/members/sean.jpg' },
-  { team: 'Jeffrey', name: 'Jeffery', image: '/members/jeffrey.jpg' },
-  { team: '方唐鏡又跳進來了', name: 'Jesse', image: '/members/jesse.jpg' },
+  { team: '阿肥加班幹大事', name: 'Vince', image: '/members/vince.jpg' },
+  { team: '卡店老闆的斑馬PSA10', name: '卡店老闆', image: '/members/cardshop.jpg' },
+  { team: '哈利吸K', name: 'CK', image: '/members/ck.jpg', position: '50% 12%' },
+  { team: '蟻人雄兵', name: '大叔', image: '/members/sean.jpg' },
+  { team: 'ALOMAR', name: 'Jeffery', image: '/members/jeffrey.jpg' },
+  { team: '80年次男性', name: 'Jesse', image: '/members/jesse.jpg' },
   { team: 'Wei Too Strong', name: '阿瑋', image: '/members/wei.png', rookie: true },
   { team: '尬電鮪魚', name: 'Tim', image: '/members/tim.png', rookie: true },
 ]
 const firstRoundPicks = [
-  { pick: 1, player: 'Nikola Jokić', meta: 'DEN · C', team: '阿肥幹大事', manager: 'Vince', nbaId: '203999' },
-  { pick: 2, player: 'Victor Wembanyama', meta: 'SAS · C', team: '卡店老闆懇求高抬貴手', manager: '卡店老闆', nbaId: '1641705' },
-  { pick: 3, player: 'Luka Dončić', meta: 'LAL · PG, SG', team: 'Jeffrey', manager: 'Jeffery', nbaId: '1629029' },
-  { pick: 4, player: 'Shai Gilgeous-Alexander', meta: 'OKC · PG', team: 'Wintersoldiers', manager: '李董', nbaId: '1628983' },
+  { pick: 1, player: 'Nikola Jokić', meta: 'DEN · C', team: '阿肥加班幹大事', manager: 'Vince', nbaId: '203999' },
+  { pick: 2, player: 'Victor Wembanyama', meta: 'SAS · C', team: '卡店老闆的斑馬PSA10', manager: '卡店老闆', nbaId: '1641705' },
+  { pick: 3, player: 'Luka Dončić', meta: 'LAL · PG, SG', team: 'ALOMAR', manager: 'Jeffery', nbaId: '1629029' },
+  { pick: 4, player: 'Shai Gilgeous-Alexander', meta: 'OKC · PG', team: 'Wintersoldier', manager: '李董', nbaId: '1628983' },
   { pick: 5, player: 'Tyrese Maxey', meta: 'PHI · PG', team: 'Wei Too Strong', manager: '阿瑋', nbaId: '1630178' },
-  { pick: 6, player: 'Anthony Edwards', meta: 'MIN · PG, SG', team: 'Sean', manager: '大叔', nbaId: '1630162' },
-  { pick: 7, player: 'Giannis Antetokounmpo', meta: 'MIA · PF, C', team: '思得卓識博聞之士', manager: '主委', nbaId: '203507' },
+  { pick: 6, player: 'Anthony Edwards', meta: 'MIN · PG, SG', team: '蟻人雄兵', manager: '大叔', nbaId: '1630162' },
+  { pick: 7, player: 'Giannis Antetokounmpo', meta: 'MIA · PF, C', team: '字母主委', manager: '主委', nbaId: '203507' },
   { pick: 8, player: 'Cade Cunningham', meta: 'DET · PG, SG', team: '浪子踢球', manager: 'Alan', nbaId: '1630595' },
-  { pick: 9, player: 'Jayson Tatum', meta: 'BOS · SF, PF', team: '方唐鏡又跳進來了', manager: 'Jesse', nbaId: '1628369' },
+  { pick: 9, player: 'Jayson Tatum', meta: 'BOS · SF, PF', team: '80年次男性', manager: 'Jesse', nbaId: '1628369' },
   { pick: 10, player: 'Cooper Flagg', meta: 'DAL · SG, SF, PF', team: 'Gyuumao', manager: '牛魔王', nbaId: '1642843' },
   { pick: 11, player: 'Karl-Anthony Towns', meta: 'NYK · PF, C', team: '台北胯下大暖流艦隊', manager: '小曹', nbaId: '1626157' },
   { pick: 12, player: 'Jalen Johnson', meta: 'ATL · SF, PF', team: '尬電鮪魚', manager: 'Tim', nbaId: '1630552' },
-  { pick: 13, player: 'Scottie Barnes', meta: 'TOR · SF, PF, C', team: 'VICTOR🍋', manager: 'Vic', nbaId: '1630567' },
-  { pick: 14, player: 'Tyrese Haliburton', meta: 'IND · PG, SG', team: 'CK', manager: 'CK', nbaId: '1630169' },
+  { pick: 13, player: 'Scottie Barnes', meta: 'TOR · SF, PF, C', team: '傻逼維特向前衝', manager: 'Vic', nbaId: '1630567' },
+  { pick: 14, player: 'Tyrese Haliburton', meta: 'IND · PG, SG', team: '哈利吸K', manager: 'CK', nbaId: '1630169' },
 ]
 const weekOneStandings = [
   { rank: 1, team: '卡店老闆的斑馬PSA10', record: '7–2–0', pct: '.778' },
@@ -108,7 +108,7 @@ const seasonFacts = [
 const lastSeasonAlumnus = {
   name: 'Jesse Prince',
   nickname: '展昭最帥',
-  team: '方唐鏡又跳進來了',
+  team: '80年次男性',
   image: '/members/jesse.jpg',
 }
 const seasonStandings = [
@@ -285,7 +285,7 @@ const resetHonorCard = (event: PointerEvent) => {
     </section>
 
     <section id="alumni" class="alumnus-section wrap">
-      <article class="alumnus-card"><img :src="lastSeasonAlumnus.image" :alt="lastSeasonAlumnus.nickname"><div><p class="eyebrow ink">HALL OF FAME · COMEBACK TOUR</p><h3>那個男人，又回來了</h3><p class="alumnus-team">{{ lastSeasonAlumnus.team }} · {{ lastSeasonAlumnus.name }}</p><p>當大家以為傳說已是歷史，Jesse 選擇再次走上舞台。方唐鏡又跳進來了，這不是彩蛋，是本季最大種馬。</p></div></article>
+      <article class="alumnus-card"><img :src="lastSeasonAlumnus.image" :alt="lastSeasonAlumnus.nickname"><div><p class="eyebrow ink">HALL OF FAME · COMEBACK TOUR</p><h3>那個男人，又回來了</h3><p class="alumnus-team">{{ lastSeasonAlumnus.team }} · {{ lastSeasonAlumnus.name }}</p><p>當大家以為傳說已是歷史，Jesse 選擇再次走上舞台。80年次男性，這不是彩蛋，是本季最大種馬。</p></div></article>
     </section>
 
     <section id="honors" class="honors wrap">
