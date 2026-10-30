@@ -156,7 +156,9 @@ section[id] { scroll-margin-top:64px; }
 .week-one-stats-table td.stat-place-1 { background:#f4c38c; color:#704116; }.week-one-stats-table td.stat-place-2 { background:#ffe4a3; color:#6c4b07; }.week-one-stats-table td.stat-place-3 { background:#b8d7a8; color:#1e4522; }
 .week-one-legend { color:#5d6570; }.week-one-legend i { background:#d3cfc2; }.week-one-legend .legend-first { background:#f4c38c; color:#704116; }.week-one-legend .legend-second { background:#ffe4a3; color:#6c4b07; }.week-one-legend .legend-third { background:#b8d7a8; color:#1e4522; }
 .week-one-scheduled { border-top-color:#d3cfc2; }.week-one-scheduled > p { color:#7d6b48!important; }
-.week-one-matchups { background:#d3cfc2; }.week-one-matchups article { background:#fffdf8; }.week-one-matchups strong { color:var(--ink); }.week-one-matchups b { color:#8a6017; }.week-one-matchups span { color:#77694f; }
+.week-one-matchups { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; background:transparent; }
+.week-one-matchups article { min-height:62px; padding:12px 15px; border:1px solid #d3cfc2; border-left:3px solid #8a7155; background:#fffdf8; box-shadow:0 2px 8px rgba(28,39,53,.04); }
+.week-one-matchups article:last-child { grid-column:1 / -1; }.week-one-matchups strong { color:var(--ink); }.week-one-matchups b { color:#8a6017; font-size:1.16rem; }.week-one-matchups span { color:#77694f; }
 .week-one-all-play { border-top-color:#d3cfc2; }.week-one-all-play-heading h4 { color:var(--ink); }.week-one-all-play-heading > p { color:#5d6570!important; }
 .weekly-matchups { margin-top:28px; padding-top:24px; border-top:1px solid #d3cfc2; }
 .weekly-matchups-heading { display:flex; align-items:baseline; justify-content:space-between; gap:18px; margin-bottom:13px; }.weekly-matchups-heading h4 { margin:0; color:var(--ink); font-size:1.12rem; }
