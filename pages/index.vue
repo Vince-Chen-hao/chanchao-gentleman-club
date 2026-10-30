@@ -82,6 +82,29 @@ const weekOneTeamStats = [
   { team: '蟻人雄兵', gp: 41, fgm: '175/380', ftm: '107/125', stats: ['.461', '.856', '47', '504', '154', '93', '41', '23', '68'] },
   { team: '80年次男性', gp: 35, fgm: '164/367', ftm: '103/129', stats: ['.447', '.798', '44', '475', '172', '171', '35', '15', '74'] },
 ]
+const weekTwoTeamStats = [
+  { team: '阿肥加班幹大事', gp: 25, fgm: '130/295', ftm: '72/92', stats: ['.441', '.783', '37', '369', '138', '109', '22', '20', '41'] },
+  { team: '浪子踢球', gp: 28, fgm: '116/274', ftm: '58/72', stats: ['.423', '.806', '28', '318', '148', '81', '22', '24', '70'] },
+  { team: '字母主委', gp: 29, fgm: '146/299', ftm: '51/73', stats: ['.488', '.699', '35', '378', '139', '101', '30', '15', '52'] },
+  { team: '卡店老闆的斑馬PSA10', gp: 27, fgm: '177/358', ftm: '85/106', stats: ['.494', '.802', '53', '492', '183', '87', '23', '20', '51'] },
+  { team: '傻逼維特向前衝', gp: 22, fgm: '132/271', ftm: '70/76', stats: ['.487', '.921', '38', '372', '126', '92', '24', '15', '46'] },
+  { team: '哈利吸K', gp: 27, fgm: '135/294', ftm: '55/73', stats: ['.459', '.753', '52', '377', '171', '78', '30', '22', '55'] },
+  { team: 'Gyuumao', gp: 25, fgm: '134/262', ftm: '50/59', stats: ['.511', '.847', '41', '359', '123', '86', '20', '10', '44'] },
+  { team: '尬電鮪魚', gp: 29, fgm: '154/327', ftm: '66/96', stats: ['.471', '.688', '55', '429', '177', '101', '29', '28', '52'] },
+  { team: 'ALOMAR', gp: 24, fgm: '94/200', ftm: '34/43', stats: ['.470', '.791', '30', '252', '92', '77', '17', '13', '31'] },
+  { team: '台北胯下大暖流艦隊', gp: 20, fgm: '95/183', ftm: '46/53', stats: ['.519', '.868', '27', '263', '106', '42', '14', '8', '33'] },
+  { team: 'Wei Too Strong', gp: 25, fgm: '113/263', ftm: '43/55', stats: ['.430', '.782', '31', '300', '112', '68', '28', '7', '25'] },
+  { team: '蟻人快歸來', gp: 25, fgm: '109/231', ftm: '44/65', stats: ['.472', '.677', '30', '292', '93', '56', '17', '12', '39'] },
+  { team: 'Wintersoldier', gp: 29, fgm: '142/311', ftm: '60/78', stats: ['.457', '.769', '54', '398', '107', '83', '23', '14', '48'] },
+  { team: '80年次男性', gp: 29, fgm: '136/316', ftm: '92/108', stats: ['.430', '.852', '42', '406', '140', '112', '25', '10', '54'] },
+]
+const selectedCurrentWeek = ref<'1' | '2'>('1')
+const currentWeekData = {
+  '1': { label: 'WEEK 1 · FINAL', title: '開幕週結算，先記一筆', detail: '10/20–10/25 · 九項分類 · 14 隊完成首週交手', caption: 'WEEK 1 · 2026–27 TEAM STATS', status: '最終結果' },
+  '2': { label: 'WEEK 2 · LIVE', title: '第二週交手，持續累加', detail: '10/26–11/01 · 即時累積中 · 尚有賽程未結束', caption: 'WEEK 2 · 2026–27 TEAM STATS · LIVE', status: '進行中' },
+} as const
+const activeCurrentWeek = computed(() => currentWeekData[selectedCurrentWeek.value])
+const activeCurrentWeekStats = computed(() => selectedCurrentWeek.value === '1' ? weekOneTeamStats : weekTwoTeamStats)
 const selectedMember = ref<typeof members[number] | null>(null)
 const prizes = [
   { place: 1, tier: 'contender', group: '爭冠組', title: '總冠軍', amount: '3,000' },
@@ -154,28 +177,30 @@ const statRank = (rowIndex: number, columnIndex: number) => {
   const place = ordered.indexOf(ownValue) + 1
   return place > 0 && place <= 3 ? `stat-place-${place}` : ''
 }
-const weekOneStatRank = (rowIndex: number, categoryIndex: number) => {
-  const ownValue = Number(weekOneTeamStats[rowIndex]?.stats[categoryIndex])
+const currentWeekStatRank = (rowIndex: number, categoryIndex: number) => {
+  const stats = activeCurrentWeekStats.value
+  const ownValue = Number(stats[rowIndex]?.stats[categoryIndex])
   if (!Number.isFinite(ownValue)) return ''
-  const values = weekOneTeamStats.map(entry => Number(entry.stats[categoryIndex])).filter(Number.isFinite)
+  const values = stats.map(entry => Number(entry.stats[categoryIndex])).filter(Number.isFinite)
   const ordered = [...new Set(values)].sort((a, b) => categoryIndex === 8 ? a - b : b - a)
   const place = ordered.indexOf(ownValue) + 1
   return place > 0 && place <= 3 ? `stat-place-${place}` : ''
 }
-const weekOneAverage = (entry: typeof weekOneTeamStats[number], categoryIndex: number) => {
+const currentWeekAverage = (entry: typeof weekOneTeamStats[number], categoryIndex: number) => {
   const value = Number(entry.stats[categoryIndex])
   return Number.isFinite(value) && entry.gp ? (value / entry.gp).toFixed(2) : '—'
 }
-const weekOneAverageRank = (rowIndex: number, categoryIndex: number) => {
-  const entry = weekOneTeamStats[rowIndex]
+const currentWeekAverageRank = (rowIndex: number, categoryIndex: number) => {
+  const stats = activeCurrentWeekStats.value
+  const entry = stats[rowIndex]
   const ownValue = entry ? Number(entry.stats[categoryIndex]) / entry.gp : Number.NaN
   if (!Number.isFinite(ownValue)) return ''
-  const values = weekOneTeamStats.map(entry => Number(entry.stats[categoryIndex]) / entry.gp).filter(Number.isFinite)
+  const values = stats.map(entry => Number(entry.stats[categoryIndex]) / entry.gp).filter(Number.isFinite)
   const ordered = [...new Set(values)].sort((a, b) => categoryIndex === 8 ? a - b : b - a)
   const place = ordered.indexOf(ownValue) + 1
   return place > 0 && place <= 3 ? `stat-place-${place}` : ''
 }
-const compareWeekOneStats = (left: typeof weekOneTeamStats[number], right: typeof weekOneTeamStats[number]) => {
+const compareCurrentWeekStats = (left: typeof weekOneTeamStats[number], right: typeof weekOneTeamStats[number]) => {
   let wins = 0
   let losses = 0
   let ties = 0
@@ -189,10 +214,10 @@ const compareWeekOneStats = (left: typeof weekOneTeamStats[number], right: typeo
   return { wins, losses, ties, result: `${wins}:${losses}${ties ? `:${ties}` : ''}` }
 }
 // Matrix follows the archive's reading direction: each column is that team's own result against the row opponent.
-const weekOneAllPlayRows = weekOneTeamStats.map(opponent => [opponent.team, ...weekOneTeamStats.map(entry => entry.team === opponent.team ? '—' : compareWeekOneStats(entry, opponent).result)])
-const weekOneAllPlayRanking = weekOneTeamStats.map(entry => {
-  const totals = weekOneTeamStats.filter(opponent => opponent.team !== entry.team).reduce((record, opponent) => {
-    const result = compareWeekOneStats(entry, opponent)
+const buildAllPlayRows = (stats: typeof weekOneTeamStats) => stats.map(opponent => [opponent.team, ...stats.map(entry => entry.team === opponent.team ? '—' : compareCurrentWeekStats(entry, opponent).result)])
+const buildAllPlayRanking = (stats: typeof weekOneTeamStats) => stats.map(entry => {
+  const totals = stats.filter(opponent => opponent.team !== entry.team).reduce((record, opponent) => {
+    const result = compareCurrentWeekStats(entry, opponent)
     if (result.wins > result.losses) return { wins: record.wins + 1, losses: record.losses, ties: record.ties }
     if (result.wins < result.losses) return { wins: record.wins, losses: record.losses + 1, ties: record.ties }
     return { wins: record.wins, losses: record.losses, ties: record.ties + 1 }
@@ -200,13 +225,16 @@ const weekOneAllPlayRanking = weekOneTeamStats.map(entry => {
   return { team: entry.team, ...totals, record: `${totals.wins}–${totals.losses}–${totals.ties}` }
 }).sort((a, b) => {
   if (b.wins !== a.wins) return b.wins - a.wins
-  const directMatchup = compareWeekOneStats(
-    weekOneTeamStats.find(entry => entry.team === a.team)!,
-    weekOneTeamStats.find(entry => entry.team === b.team)!,
+  const directMatchup = compareCurrentWeekStats(
+    stats.find(entry => entry.team === a.team)!,
+    stats.find(entry => entry.team === b.team)!,
   )
   if (directMatchup.wins !== directMatchup.losses) return directMatchup.wins > directMatchup.losses ? -1 : 1
   return a.losses - b.losses || b.ties - a.ties
 }).map((entry, index) => ({ ...entry, rank: index + 1 }))
+const currentWeekAllPlayRows = computed(() => buildAllPlayRows(activeCurrentWeekStats.value))
+const currentWeekAllPlayRanking = computed(() => buildAllPlayRanking(activeCurrentWeekStats.value))
+const weekOneAllPlayRanking = buildAllPlayRanking(weekOneTeamStats)
 const weekOneMedalTotals = weekOneAllPlayRanking.map(entry => ({
   ...entry,
   gold: entry.rank === 1 ? 1 : 0,
@@ -307,10 +335,11 @@ const resetHonorCard = (event: PointerEvent) => {
       <div class="wrap">
         <div class="current-season-card"><div><p class="eyebrow">2026–27 SEASON · NOW UNDERWAY</p><h2>本季戰報，正式開打</h2><p>每週對戰、九項分類排名與整季交手紀錄，會從這裡開始逐週累積。</p></div><div class="current-season-status"><span>CURRENT SEASON</span><strong>2026–27</strong><small>每週持續更新</small></div></div>
         <div class="week-one-report">
-          <div class="week-one-heading"><div><p class="eyebrow">WEEK 1 · FINAL</p><h3>開幕週結算，先記一筆</h3></div><p>10/20–10/25 · 九項分類 · 14 隊完成首週交手</p></div>
-          <div class="week-one-table-wrap"><table class="week-one-stats-table"><caption>WEEK 1 · 2026–27 TEAM STATS</caption><thead><tr><th>Team</th><th>GP</th><th>FGM/A*</th><th>FG%</th><th>FTM/A*</th><th>FT%</th><th v-for="category in weekOneCategories.slice(2)" :key="category">{{ category }}</th><th v-for="category in weekOneAverageCategories" :key="category">{{ category }}</th></tr></thead><tbody><tr v-for="(entry, rowIndex) in weekOneTeamStats" :key="entry.team"><th>{{ entry.team }}</th><td>{{ entry.gp }}</td><td>{{ entry.fgm }}</td><td :class="weekOneStatRank(rowIndex, 0)">{{ entry.stats[0] }}</td><td>{{ entry.ftm }}</td><td :class="weekOneStatRank(rowIndex, 1)">{{ entry.stats[1] }}</td><td v-for="(stat, statOffset) in entry.stats.slice(2)" :key="`${entry.team}-total-${statOffset}`" :class="weekOneStatRank(rowIndex, statOffset + 2)">{{ stat }}</td><td v-for="(category, averageOffset) in weekOneAverageCategories" :key="`${entry.team}-${category}`" :class="weekOneAverageRank(rowIndex, averageOffset + 2)">{{ weekOneAverage(entry, averageOffset + 2) }}</td></tr></tbody></table></div>
+          <div class="current-week-tabs" role="tablist" aria-label="本季週次資料"><button v-for="week in ['1', '2'] as const" :key="week" type="button" :class="{ active: selectedCurrentWeek === week }" @click="selectedCurrentWeek = week">{{ currentWeekData[week].label }}</button></div>
+          <div class="week-one-heading"><div><p class="eyebrow">{{ activeCurrentWeek.label }}</p><h3>{{ activeCurrentWeek.title }}</h3></div><p>{{ activeCurrentWeek.detail }}</p></div>
+          <div class="week-one-table-wrap"><table class="week-one-stats-table"><caption>{{ activeCurrentWeek.caption }}</caption><thead><tr><th>Team</th><th>GP</th><th>FGM/A*</th><th>FG%</th><th>FTM/A*</th><th>FT%</th><th v-for="category in weekOneCategories.slice(2)" :key="category">{{ category }}</th><th v-for="category in weekOneAverageCategories" :key="category">{{ category }}</th></tr></thead><tbody><tr v-for="(entry, rowIndex) in activeCurrentWeekStats" :key="entry.team"><th>{{ entry.team }}</th><td>{{ entry.gp }}</td><td>{{ entry.fgm }}</td><td :class="currentWeekStatRank(rowIndex, 0)">{{ entry.stats[0] }}</td><td>{{ entry.ftm }}</td><td :class="currentWeekStatRank(rowIndex, 1)">{{ entry.stats[1] }}</td><td v-for="(stat, statOffset) in entry.stats.slice(2)" :key="`${entry.team}-total-${statOffset}`" :class="currentWeekStatRank(rowIndex, statOffset + 2)">{{ stat }}</td><td v-for="(category, averageOffset) in weekOneAverageCategories" :key="`${entry.team}-${category}`" :class="currentWeekAverageRank(rowIndex, averageOffset + 2)">{{ currentWeekAverage(entry, averageOffset + 2) }}</td></tr></tbody></table></div>
           <div class="week-one-legend"><span class="legend-first">最佳</span><span class="legend-second">第二</span><span class="legend-third">第三</span><i /><span>九項數據以全盟排名標色；TO 越低越好。</span></div>
-          <div class="week-one-all-play"><div class="week-one-all-play-heading"><div><p class="eyebrow">ALL-PLAY COMPARISON</p><h4>Week 1 · 全盟對戰比較</h4></div><p>上方欄為自己、左側列為對手；九項數據逐隊比較，對 13 隊的勝負數決定排名，同勝場時看直接對戰。</p></div><div class="week-one-podium" aria-label="第一週全盟比較前三名"><article v-for="entry in weekOneAllPlayRanking.slice(0, 3)" :key="entry.rank" :class="`week-one-rank-${entry.rank}`"><span class="week-one-medal">{{ rankMedal(entry.rank) }}</span><div><strong>{{ entry.team }}</strong><em>{{ entry.record }}</em></div></article></div><div class="week-one-all-play-scroll"><table class="week-one-all-play-table"><thead><tr><th>對手 \ 自己</th><th v-for="entry in weekOneTeamStats" :key="entry.team">{{ entry.team }}</th></tr></thead><tbody><tr v-for="row in weekOneAllPlayRows" :key="row[0]"><th>{{ row[0] }}</th><td v-for="(value, valueIndex) in row.slice(1)" :key="valueIndex" :class="matchupState(value)">{{ value }}</td></tr></tbody></table></div><section class="week-one-medal-totals"><p class="eyebrow ink">2026–27 MEDAL COLLECTION</p><h4>本季累積獎牌榜</h4><p>目前累積至 Week 1；每週全盟比較前三名分別獲得金、銀、銅牌。</p><div class="medal-totals-scroll"><table class="medal-totals-table"><thead><tr><th>成員</th><th>🥇 金牌</th><th>🥈 銀牌</th><th>🥉 銅牌</th><th>總獎牌</th></tr></thead><tbody><tr v-for="entry in weekOneMedalTotals" :key="entry.team"><th>{{ entry.team }}</th><td>{{ entry.gold }}</td><td>{{ entry.silver }}</td><td>{{ entry.bronze }}</td><td>{{ entry.total }}</td></tr></tbody></table></div></section></div>
+          <div class="week-one-all-play"><div class="week-one-all-play-heading"><div><p class="eyebrow">ALL-PLAY COMPARISON</p><h4>{{ selectedCurrentWeek === '1' ? 'Week 1' : 'Week 2 · 目前累積' }} · 全盟對戰比較</h4></div><p>上方欄為自己、左側列為對手；九項數據逐隊比較，對 13 隊的勝負數決定排名，同勝場時看直接對戰。</p></div><div class="week-one-podium" aria-label="本週全盟比較前三名"><article v-for="entry in currentWeekAllPlayRanking.slice(0, 3)" :key="entry.rank" :class="`week-one-rank-${entry.rank}`"><span class="week-one-medal">{{ rankMedal(entry.rank) }}</span><div><strong>{{ entry.team }}</strong><em>{{ entry.record }}</em></div></article></div><div class="week-one-all-play-scroll"><table class="week-one-all-play-table"><thead><tr><th>對手 \ 自己</th><th v-for="entry in activeCurrentWeekStats" :key="entry.team">{{ entry.team }}</th></tr></thead><tbody><tr v-for="row in currentWeekAllPlayRows" :key="row[0]"><th>{{ row[0] }}</th><td v-for="(value, valueIndex) in row.slice(1)" :key="valueIndex" :class="matchupState(value)">{{ value }}</td></tr></tbody></table></div><section class="week-one-medal-totals"><p class="eyebrow ink">2026–27 MEDAL COLLECTION</p><h4>本季累積獎牌榜</h4><p>{{ selectedCurrentWeek === '1' ? '目前累積至 Week 1；每週全盟比較前三名分別獲得金、銀、銅牌。' : '目前累積至 Week 1；Week 2 尚在進行中，待週結束後結算獎牌。' }}</p><div class="medal-totals-scroll"><table class="medal-totals-table"><thead><tr><th>成員</th><th>🥇 金牌</th><th>🥈 銀牌</th><th>🥉 銅牌</th><th>總獎牌</th></tr></thead><tbody><tr v-for="entry in weekOneMedalTotals" :key="entry.team"><th>{{ entry.team }}</th><td>{{ entry.gold }}</td><td>{{ entry.silver }}</td><td>{{ entry.bronze }}</td><td>{{ entry.total }}</td></tr></tbody></table></div></section></div>
         </div>
         <div class="first-round-draft">
           <div class="first-round-heading"><div><p class="eyebrow">DRAFT RESULTS · ROUND 1</p><h3>首輪選秀，一人一張王牌</h3></div><p>14 位經理人的首輪決定，從這裡開始。</p></div>

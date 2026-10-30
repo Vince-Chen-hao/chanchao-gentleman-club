@@ -141,6 +141,9 @@ section[id] { scroll-margin-top:64px; }
 .current-season-status { border-color:#d3cfc2; background:#fffdf8; box-shadow:none; }
 .current-season-status > span { color:#8a7155; }.current-season-status strong { color:var(--ink); }.current-season-status small { color:#5d6570; }
 .week-one-report { border-color:#d3cfc2; background:#faf8f3; }
+.current-week-tabs { display:flex; gap:8px; margin-bottom:24px; }
+.current-week-tabs button { padding:9px 13px; border:1px solid #cfc6b7; background:#f3efe6; color:#665b49; cursor:pointer; font:700 .7rem 'DM Mono',monospace; letter-spacing:.06em; }
+.current-week-tabs button:hover,.current-week-tabs button.active { border-color:#6f5630; background:#1f3149; color:#fffdf8; }
 .week-one-heading { border-bottom-color:#d3cfc2; }.week-one-heading h3 { color:var(--ink); }.week-one-heading > p { color:#5d6570!important; }
 .week-one-table-wrap,.week-one-all-play-scroll { border:1px solid #d3cfc2; }
 .week-one-stats-table,.week-one-all-play-table { background:#faf8f3; }
