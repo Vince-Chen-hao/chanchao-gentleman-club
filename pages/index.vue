@@ -252,6 +252,26 @@ const weekOneMedalTotals = weekOneAllPlayRanking.map(entry => ({
   bronze: entry.rank === 3 ? 1 : 0,
   total: entry.rank <= 3 ? 1 : 0,
 }))
+const weekOneAfei = weekOneTeamStats.find(entry => entry.team === '阿肥加班幹大事')!
+const weekOneAfeiStrength = weekOneCategories.map((label, index) => {
+  const value = Number(weekOneAfei.stats[index])
+  const ordered = [...new Set(weekOneTeamStats.map(entry => Number(entry.stats[index])))].sort((a, b) => index === 8 ? a - b : b - a)
+  const rank = ordered.indexOf(value) + 1
+  return { label, value: weekOneAfei.stats[index], rank, strength: Math.round(((weekOneTeamStats.length - rank) / (weekOneTeamStats.length - 1)) * 100) }
+})
+const radarPoint = (index: number, ratio: number) => {
+  const angle = ((Math.PI * 2 * index) / weekOneCategories.length) - (Math.PI / 2)
+  const radius = 90 * ratio
+  return { x: +(130 + Math.cos(angle) * radius).toFixed(2), y: +(130 + Math.sin(angle) * radius).toFixed(2) }
+}
+const radarGuide = (ratio: number) => weekOneCategories.map((_, index) => {
+  const point = radarPoint(index, ratio)
+  return `${point.x},${point.y}`
+}).join(' ')
+const weekOneAfeiRadar = weekOneAfeiStrength.map((stat, index) => {
+  const point = radarPoint(index, Math.max(stat.strength / 100, .07))
+  return `${point.x},${point.y}`
+}).join(' ')
 const rankMedal = (rank: number) => ['🥇', '🥈', '🥉'][rank - 1] || ''
 const matchupState = (value: unknown) => {
   if (typeof value !== 'string' || !value.includes(':')) return ''
@@ -349,6 +369,7 @@ const resetHonorCard = (event: PointerEvent) => {
           <div class="week-one-heading"><div><p class="eyebrow">{{ activeCurrentWeek.label }}</p><h3>{{ activeCurrentWeek.title }}</h3></div><p>{{ activeCurrentWeek.detail }}</p></div>
           <div class="week-one-table-wrap"><table class="week-one-stats-table"><caption>{{ activeCurrentWeek.caption }}</caption><thead><tr><th>Team</th><th>GP</th><th>FGM/A*</th><th>FG%</th><th>FTM/A*</th><th>FT%</th><th v-for="category in weekOneCategories.slice(2)" :key="category">{{ category }}</th><th v-for="category in weekOneAverageCategories" :key="category">{{ category }}</th></tr></thead><tbody><tr v-for="(entry, rowIndex) in activeCurrentWeekStats" :key="entry.team"><th>{{ entry.team }}</th><td>{{ entry.gp }}</td><td>{{ entry.fgm }}</td><td :class="currentWeekStatRank(rowIndex, 0)">{{ entry.stats[0] }}</td><td>{{ entry.ftm }}</td><td :class="currentWeekStatRank(rowIndex, 1)">{{ entry.stats[1] }}</td><td v-for="(stat, statOffset) in entry.stats.slice(2)" :key="`${entry.team}-total-${statOffset}`" :class="currentWeekStatRank(rowIndex, statOffset + 2)">{{ stat }}</td><td v-for="(category, averageOffset) in weekOneAverageCategories" :key="`${entry.team}-${category}`" :class="currentWeekAverageRank(rowIndex, averageOffset + 2)">{{ currentWeekAverage(entry, averageOffset + 2) }}</td></tr></tbody></table></div>
           <div class="week-one-legend"><span class="legend-first">最佳</span><span class="legend-second">第二</span><span class="legend-third">第三</span><i /><span>九項數據以全盟排名標色；TO 越低越好。</span></div>
+          <section v-if="selectedCurrentWeek === '1'" class="player-strength-card"><div class="player-strength-heading"><div><p class="eyebrow ink">WEEK 1 · PLAYER PROFILE</p><h4>阿肥加班幹大事 · 九項強度</h4></div><p>以 Week 1 全盟 14 隊單項名次換算；TO 越低強度越高。</p></div><div class="player-strength-body"><div class="radar-wrap"><svg viewBox="0 0 260 260" role="img" aria-label="阿肥加班幹大事 Week 1 九項數據強度雷達圖"><polygon v-for="guide in [.25, .5, .75, 1]" :key="guide" class="radar-guide" :points="radarGuide(guide)" /><line v-for="(_, index) in weekOneCategories" :key="`axis-${index}`" class="radar-axis" x1="130" y1="130" :x2="radarPoint(index, 1).x" :y2="radarPoint(index, 1).y" /><polygon class="radar-shape" :points="weekOneAfeiRadar" /><circle v-for="(stat, index) in weekOneAfeiStrength" :key="`point-${stat.label}`" class="radar-point" :cx="radarPoint(index, Math.max(stat.strength / 100, .07)).x" :cy="radarPoint(index, Math.max(stat.strength / 100, .07)).y" r="3.5" /><text v-for="(stat, index) in weekOneAfeiStrength" :key="`label-${stat.label}`" class="radar-label" :x="radarPoint(index, 1.2).x" :y="radarPoint(index, 1.2).y">{{ stat.label }}</text></svg></div><div class="strength-list"><article v-for="stat in weekOneAfeiStrength" :key="stat.label"><span>{{ stat.label }}</span><b>{{ stat.value }}</b><em>全盟第 {{ stat.rank }}</em><i><i :style="{ width: `${stat.strength}%` }" /></i></article></div></div></section>
           <div class="week-one-all-play"><div class="week-one-all-play-heading"><div><p class="eyebrow">ALL-PLAY COMPARISON</p><h4>{{ selectedCurrentWeek === '1' ? 'Week 1' : 'Week 2 · 目前累積' }} · 全盟對戰比較</h4></div><p>上方欄為自己、左側列為對手；九項數據逐隊比較，對 13 隊的勝負數決定排名，同勝場時看直接對戰。</p></div><div class="week-one-podium" aria-label="本週全盟比較前三名"><article v-for="entry in currentWeekAllPlayRanking.slice(0, 3)" :key="entry.rank" :class="`week-one-rank-${entry.rank}`"><span class="week-one-medal">{{ rankMedal(entry.rank) }}</span><div><strong>{{ entry.team }}</strong><em>{{ entry.record }}</em></div></article></div><div class="week-one-all-play-scroll"><table class="week-one-all-play-table"><thead><tr><th>對手 \ 自己</th><th v-for="entry in activeCurrentWeekStats" :key="entry.team">{{ entry.team }}</th></tr></thead><tbody><tr v-for="row in currentWeekAllPlayRows" :key="row[0]"><th>{{ row[0] }}</th><td v-for="(value, valueIndex) in row.slice(1)" :key="valueIndex" :class="matchupState(value)">{{ value }}</td></tr></tbody></table></div><section class="weekly-matchups"><div class="weekly-matchups-heading"><p class="eyebrow ink">{{ selectedCurrentWeek === '1' ? 'WEEK 1 · FINAL MATCHUPS' : 'WEEK 2 · LIVE MATCHUPS' }}</p><h4>本週對戰組合</h4></div><div class="week-one-matchups"><article v-for="matchup in activeCurrentWeekMatchups" :key="`${matchup.left}-${matchup.right}`"><strong>{{ matchup.left }}</strong><b>{{ matchup.leftScore }}</b><span>:</span><b>{{ matchup.rightScore }}</b><strong>{{ matchup.right }}</strong></article></div></section><section class="week-one-medal-totals"><p class="eyebrow ink">2026–27 MEDAL COLLECTION</p><h4>本季累積獎牌榜</h4><p>{{ selectedCurrentWeek === '1' ? '目前累積至 Week 1；每週全盟比較前三名分別獲得金、銀、銅牌。' : '目前累積至 Week 1；Week 2 尚在進行中，待週結束後結算獎牌。' }}</p><div class="medal-totals-scroll"><table class="medal-totals-table"><thead><tr><th>成員</th><th>🥇 金牌</th><th>🥈 銀牌</th><th>🥉 銅牌</th><th>總獎牌</th></tr></thead><tbody><tr v-for="entry in weekOneMedalTotals" :key="entry.team"><th>{{ entry.team }}</th><td>{{ entry.gold }}</td><td>{{ entry.silver }}</td><td>{{ entry.bronze }}</td><td>{{ entry.total }}</td></tr></tbody></table></div></section></div>
         </div>
         <div class="first-round-draft">
