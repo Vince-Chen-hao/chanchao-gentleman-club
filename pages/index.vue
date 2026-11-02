@@ -107,7 +107,7 @@ const weekTwoTeamStats = [
   { team: 'Wintersoldier', gp: 48, fgm: '235/514', ftm: '108/134', stats: ['.457', '.806', '88', '666', '181', '127', '37', '20', '80'] },
   { team: '80年次男性', gp: 51, fgm: '229/525', ftm: '177/213', stats: ['.436', '.831', '67', '702', '241', '201', '40', '20', '97'] },
 ]
-const selectedCurrentWeek = ref<'1' | '2'>('1')
+const selectedCurrentWeek = ref<'1' | '2'>('2')
 const currentWeekData = {
   '1': { label: 'WEEK 1 · FINAL', title: '開幕週結算，先記一筆', detail: '10/20–10/25 · 九項分類 · 14 隊完成首週交手', caption: 'WEEK 1 · 2026–27 TEAM STATS', status: '最終結果' },
   '2': { label: 'WEEK 2 · FINAL', title: '第二週結算，排名落袋', detail: '10/26–11/01 · 九項分類 · 14 隊完成第二週交手', caption: 'WEEK 2 · 2026–27 TEAM STATS', status: '最終結果' },
