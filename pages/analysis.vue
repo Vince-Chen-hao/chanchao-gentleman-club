@@ -1,0 +1,95 @@
+<script setup lang="ts">
+type TeamWeek = { team: string; gp: number; fgm: string; ftm: string; stats: string[] }
+
+const categories = ['FG%', 'FT%', '3PTM', 'PTS', 'REB', 'AST', 'ST', 'BLK', 'TO']
+const weekOne: TeamWeek[] = [
+  { team: '阿肥加班幹大事', gp: 41, fgm: '214/447', ftm: '121/161', stats: ['.479', '.752', '47', '596', '195', '138', '41', '26', '81'] },
+  { team: 'Gyuumao', gp: 39, fgm: '193/413', ftm: '108/142', stats: ['.467', '.761', '47', '541', '180', '111', '46', '18', '73'] },
+  { team: '字母主委', gp: 39, fgm: '224/422', ftm: '95/127', stats: ['.531', '.748', '50', '593', '214', '133', '34', '27', '69'] },
+  { team: '台北胯下大暖流艦隊', gp: 41, fgm: '166/352', ftm: '94/124', stats: ['.472', '.758', '42', '468', '203', '81', '39', '31', '65'] },
+  { team: '浪子踢球', gp: 42, fgm: '170/363', ftm: '78/99', stats: ['.468', '.788', '68', '486', '205', '146', '50', '38', '96'] },
+  { team: '傻逼維特向前衝', gp: 42, fgm: '229/522', ftm: '100/127', stats: ['.439', '.787', '64', '622', '249', '149', '49', '24', '111'] },
+  { team: '卡店老闆的斑馬PSA10', gp: 42, fgm: '205/453', ftm: '98/133', stats: ['.453', '.737', '59', '567', '217', '117', '33', '28', '68'] },
+  { team: '尬電鮪魚', gp: 34, fgm: '174/403', ftm: '112/140', stats: ['.432', '.800', '50', '510', '198', '116', '37', '25', '72'] },
+  { team: '哈利吸K', gp: 38, fgm: '197/419', ftm: '98/130', stats: ['.470', '.754', '69', '561', '200', '116', '35', '15', '67'] },
+  { team: 'Wintersoldier', gp: 41, fgm: '187/424', ftm: '106/135', stats: ['.441', '.785', '63', '543', '167', '104', '39', '25', '50'] },
+  { team: 'ALOMAR', gp: 43, fgm: '208/451', ftm: '99/129', stats: ['.461', '.767', '73', '588', '226', '138', '39', '14', '81'] },
+  { team: 'Wei Too Strong', gp: 45, fgm: '232/485', ftm: '106/137', stats: ['.478', '.774', '47', '617', '255', '110', '50', '27', '72'] },
+  { team: '蟻人快歸來', gp: 41, fgm: '175/380', ftm: '107/125', stats: ['.461', '.856', '47', '504', '154', '93', '41', '23', '68'] },
+  { team: '80年次男性', gp: 35, fgm: '164/367', ftm: '103/129', stats: ['.447', '.798', '44', '475', '172', '171', '35', '15', '74'] },
+]
+const weekTwo: TeamWeek[] = [
+  { team: '阿肥加班幹大事', gp: 48, fgm: '234/528', ftm: '128/164', stats: ['.443', '.780', '71', '667', '252', '185', '43', '29', '93'] },
+  { team: '浪子踢球', gp: 48, fgm: '192/452', ftm: '97/117', stats: ['.425', '.829', '65', '546', '247', '146', '50', '41', '109'] },
+  { team: '字母主委', gp: 46, fgm: '213/441', ftm: '66/96', stats: ['.483', '.688', '49', '541', '224', '158', '43', '22', '77'] },
+  { team: '卡店老闆的斑馬PSA10', gp: 47, fgm: '278/579', ftm: '126/160', stats: ['.480', '.787', '85', '767', '258', '135', '36', '31', '82'] },
+  { team: '傻逼維特向前衝', gp: 39, fgm: '226/464', ftm: '119/136', stats: ['.487', '.875', '63', '634', '216', '147', '39', '26', '87'] },
+  { team: '哈利吸K', gp: 46, fgm: '215/490', ftm: '115/147', stats: ['.439', '.782', '81', '626', '268', '135', '49', '30', '88'] },
+  { team: 'Gyuumao', gp: 46, fgm: '246/496', ftm: '106/130', stats: ['.496', '.815', '79', '677', '240', '148', '49', '24', '76'] },
+  { team: '尬電鮪魚', gp: 43, fgm: '234/491', ftm: '107/145', stats: ['.477', '.738', '87', '662', '278', '151', '39', '38', '81'] },
+  { team: 'ALOMAR', gp: 45, fgm: '211/449', ftm: '90/108', stats: ['.470', '.833', '76', '588', '214', '147', '41', '23', '78'] },
+  { team: '台北胯下大暖流艦隊', gp: 37, fgm: '172/336', ftm: '84/101', stats: ['.512', '.832', '58', '486', '180', '77', '30', '19', '61'] },
+  { team: 'Wei Too Strong', gp: 45, fgm: '206/458', ftm: '82/106', stats: ['.450', '.774', '63', '557', '213', '127', '47', '13', '45'] },
+  { team: '蟻人快歸來', gp: 45, fgm: '192/410', ftm: '74/106', stats: ['.468', '.698', '55', '513', '155', '102', '36', '22', '70'] },
+  { team: 'Wintersoldier', gp: 48, fgm: '235/514', ftm: '108/134', stats: ['.457', '.806', '88', '666', '181', '127', '37', '20', '80'] },
+  { team: '80年次男性', gp: 51, fgm: '229/525', ftm: '177/213', stats: ['.436', '.831', '67', '702', '241', '201', '40', '20', '97'] },
+]
+
+const split = (value: string) => value.split('/').map(Number) as [number, number]
+const combined = weekTwo.map(current => {
+  const previous = weekOne.find(entry => entry.team === current.team)!
+  const [fgm1, fga1] = split(previous.fgm); const [fgm2, fga2] = split(current.fgm)
+  const [ftm1, fta1] = split(previous.ftm); const [ftm2, fta2] = split(current.ftm)
+  const sums = current.stats.slice(2).map((value, index) => Number(value) + Number(previous.stats[index + 2]))
+  return { team: current.team, gp: previous.gp + current.gp, stats: [(fgm1 + fgm2) / (fga1 + fga2), (ftm1 + ftm2) / (fta1 + fta2), ...sums] }
+})
+const ranks = combined.map(entry => categories.map((_, index) => {
+  const sorted = [...combined].sort((a, b) => index === 8 ? a.stats[index] - b.stats[index] : b.stats[index] - a.stats[index])
+  return sorted.findIndex(item => item.team === entry.team) + 1
+}))
+const playerCards = combined.map((entry, entryIndex) => ({
+  ...entry,
+  ranks: ranks[entryIndex],
+  highlights: categories.map((label, index) => ({ label, rank: ranks[entryIndex][index], value: index < 2 ? entry.stats[index].toFixed(3).replace(/^0/, '') : entry.stats[index] })).sort((a, b) => a.rank - b.rank).slice(0, 3),
+}))
+const playerStrength = (rank: number) => Math.max(8, Math.round(((combined.length - rank) / (combined.length - 1)) * 100))
+const point = (index: number, strength: number) => {
+  const angle = -Math.PI / 2 + (Math.PI * 2 * index) / categories.length
+  const radius = 72 * strength
+  return `${(100 + Math.cos(angle) * radius).toFixed(1)},${(100 + Math.sin(angle) * radius).toFixed(1)}`
+}
+const radar = (teamIndex: number, scale = 1) => ranks[teamIndex].map((rank, index) => point(index, playerStrength(rank) / 100 * scale)).join(' ')
+const guide = (scale: number) => categories.map((_, index) => point(index, scale)).join(' ')
+const labelPoint = (index: number) => {
+  const angle = -Math.PI / 2 + (Math.PI * 2 * index) / categories.length
+  return { x: 100 + Math.cos(angle) * 91, y: 100 + Math.sin(angle) * 91 }
+}
+</script>
+
+<template>
+  <nav class="site-menu" aria-label="頁面導覽">
+    <div class="wrap site-menu-inner"><NuxtLink class="menu-brand" to="/" aria-label="回 Chanchao Gentleman Club 首頁"><img src="/cgc-logo.svg" alt="Chanchao Gentleman Club"><span>2026–27</span></NuxtLink><div class="menu-links"><NuxtLink to="/">回首頁</NuxtLink><a href="#analysis">深度分析</a><NuxtLink to="/lastseason">上季回顧</NuxtLink></div></div>
+  </nav>
+  <main id="analysis" class="analysis-page">
+    <section class="analysis-hero wrap">
+      <p class="eyebrow">2026–27 SEASON · NOW UNDERWAY</p>
+      <h1>本季戰報，正式開打</h1>
+      <p>每週對戰、九項分類排名與整季交手紀錄，會從這裡開始逐週累積。</p>
+    </section>
+    <section class="analysis-board wrap">
+      <div class="analysis-heading"><div><p class="eyebrow ink">WEEK 1–2 · COMBINED DATA</p><h2>全員九項戰力圖</h2></div><p>兩週原始數據合併後再排名。FG% 與 FT% 以總命中／總出手加權計算；TO 越低越強。</p></div>
+      <div class="analysis-method"><span>14 TEAMS</span><span>2 WEEKS</span><span>9 CATEGORIES</span><span>WEIGHTED %</span></div>
+      <div class="analysis-grid">
+        <article v-for="(player, playerIndex) in playerCards" :key="player.team" class="analysis-card">
+          <div class="analysis-card-head"><div><small>TEAM {{ String(playerIndex + 1).padStart(2, '0') }}</small><h3>{{ player.team }}</h3></div><b>{{ player.gp }}<em> GP</em></b></div>
+          <div class="analysis-radar"><svg viewBox="0 0 200 200" :aria-label="`${player.team} 九項戰力雷達圖`" role="img"><polygon v-for="scale in [.25, .5, .75, 1]" :key="scale" class="analysis-guide" :points="guide(scale)" /><line v-for="(_, index) in categories" :key="`axis-${index}`" class="analysis-axis" x1="100" y1="100" :x2="point(index, 1).split(',')[0]" :y2="point(index, 1).split(',')[1]" /><polygon class="analysis-shape" :points="radar(playerIndex)" /><text v-for="(category, index) in categories" :key="category" class="analysis-label" :x="labelPoint(index).x" :y="labelPoint(index).y">{{ category }}</text></svg></div>
+          <div class="analysis-highlights"><span v-for="item in player.highlights" :key="item.label"><b>{{ item.label }}</b><em>#{{ item.rank }}</em><small>{{ item.value }}</small></span></div>
+        </article>
+      </div>
+    </section>
+  </main>
+</template>
+
+<style scoped>
+.analysis-page{min-height:100vh;background:#f3f0e8;color:#0c1422}.analysis-hero{padding:86px 0 50px}.eyebrow{margin:0;color:#8a6017;font:700 .74rem 'DM Mono',monospace;letter-spacing:.12em}.analysis-hero h1{margin:12px 0 14px;font:900 clamp(2.45rem,6vw,5rem)/1 'Noto Sans TC',sans-serif;letter-spacing:-.05em}.analysis-hero>p:last-child{max-width:680px;margin:0;color:#5d6570;font-size:1.05rem;line-height:1.8}.analysis-board{padding:42px 0 90px;border-top:1px solid #d3cfc2}.analysis-heading{display:flex;justify-content:space-between;gap:40px;align-items:end}.analysis-heading h2{margin:6px 0 0;font:800 2rem/1.1 'Noto Sans TC',sans-serif}.analysis-heading>p{max-width:430px;margin:0;color:#5d6570;line-height:1.75}.analysis-method{display:flex;flex-wrap:wrap;gap:8px;margin:30px 0 18px}.analysis-method span{padding:8px 10px;border:1px solid #d3cfc2;background:#fffdf8;color:#6a542c;font:700 .65rem 'DM Mono',monospace;letter-spacing:.08em}.analysis-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.analysis-card{overflow:hidden;border:1px solid #d3cfc2;background:#fffdf8;box-shadow:0 4px 16px rgba(28,39,53,.06)}.analysis-card-head{display:flex;justify-content:space-between;gap:12px;align-items:start;padding:16px 17px 13px;border-bottom:1px solid #e0dcd1}.analysis-card-head small{color:#8a7155;font:700 .62rem 'DM Mono',monospace;letter-spacing:.08em}.analysis-card-head h3{overflow:hidden;max-width:255px;margin:5px 0 0;font:800 .98rem/1.25 'Noto Sans TC',sans-serif;text-overflow:ellipsis;white-space:nowrap}.analysis-card-head>b{color:#8a6017;font:800 1.05rem 'DM Mono',monospace}.analysis-card-head em{font-size:.58rem;font-style:normal}.analysis-radar{padding:8px 30px 0;background:linear-gradient(145deg,#132742,#1b385d)}.analysis-radar svg{display:block;width:100%;overflow:visible}.analysis-guide{fill:rgba(240,184,73,.04);stroke:rgba(255,247,223,.25);stroke-width:1}.analysis-axis{stroke:rgba(255,247,223,.2);stroke-width:1}.analysis-shape{fill:rgba(240,184,73,.35);stroke:#f0b849;stroke-width:2}.analysis-label{fill:#f7ead0;font:700 7px 'DM Mono',monospace;text-anchor:middle;dominant-baseline:middle}.analysis-highlights{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #d3cfc2}.analysis-highlights span{display:grid;gap:3px;padding:10px;border-right:1px solid #e0dcd1}.analysis-highlights span:last-child{border-right:0}.analysis-highlights b{color:#77694f;font:700 .62rem 'DM Mono',monospace}.analysis-highlights em{color:#8a6017;font:800 .82rem 'DM Mono',monospace;font-style:normal}.analysis-highlights small{color:#5d6570;font:.66rem 'DM Mono',monospace}@media(max-width:900px){.analysis-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:760px){.analysis-hero{padding:60px 0 38px}.analysis-heading{display:block}.analysis-heading>p{margin-top:14px}.analysis-grid{grid-template-columns:1fr}.analysis-card-head h3{max-width:260px}.analysis-radar{padding-right:40px;padding-left:40px}}
+</style>
