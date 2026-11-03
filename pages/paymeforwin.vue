@@ -99,7 +99,7 @@ const matchupSummary = computed(() => {
 
 <template>
   <nav class="site-menu" aria-label="頁面導覽">
-    <div class="wrap site-menu-inner"><NuxtLink class="menu-brand" to="/" aria-label="回 Chanchao Gentleman Club 首頁"><img src="/cgc-logo.svg" alt="Chanchao Gentleman Club"><span>2026–27</span></NuxtLink><div class="menu-links"><NuxtLink to="/">回首頁</NuxtLink><a href="#analysis">深度分析</a><NuxtLink to="/lastseason">上季回顧</NuxtLink></div></div>
+    <div class="wrap site-menu-inner"><NuxtLink class="menu-brand" to="/" aria-label="回 Chanchao Gentleman Club 首頁"><img src="/cgc-logo.svg" alt="Chanchao Gentleman Club"><span>2026–27</span></NuxtLink><div class="menu-links"><NuxtLink to="/">回首頁</NuxtLink><a href="#analysis">paymeforwin</a><NuxtLink to="/lastseason">上季回顧</NuxtLink></div></div>
   </nav>
   <main id="analysis" class="analysis-page">
     <section class="analysis-hero wrap">
