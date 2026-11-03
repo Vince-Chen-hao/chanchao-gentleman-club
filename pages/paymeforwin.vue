@@ -163,5 +163,6 @@ const matchupSummary = computed(() => {
 .matchup-table{table-layout:fixed}
 .matchup-final>span{padding-left:0;text-align:center}
 .matchup-final>strong{font-size:1.95rem}
+.matchup-table td.winner{background:#fbf3df}
 @media(max-width:760px){.matchup-final>span{padding-left:0;text-align:center}.matchup-final>strong{font-size:1.45rem}}
 </style>
