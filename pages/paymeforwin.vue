@@ -160,4 +160,8 @@ const matchupSummary = computed(() => {
 .matchup-final>strong{font-size:2.55rem;line-height:1;text-align:center}
 .matchup-final>em{padding-right:24px;font-size:.88rem}
 @media(max-width:760px){.matchup-final{grid-template-columns:17% 33% 33% 17%;padding:13px 0}.matchup-final>span{padding-left:10px;font-size:.68rem}.matchup-final>strong{font-size:1.8rem}.matchup-final>em{padding-right:10px;font-size:.66rem;white-space:normal}}
+.matchup-table{table-layout:fixed}
+.matchup-final>span{padding-left:0;text-align:center}
+.matchup-final>strong{font-size:1.95rem}
+@media(max-width:760px){.matchup-final>span{padding-left:0;text-align:center}.matchup-final>strong{font-size:1.45rem}}
 </style>
