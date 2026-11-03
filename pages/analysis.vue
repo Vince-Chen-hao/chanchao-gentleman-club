@@ -124,8 +124,8 @@ const matchupSummary = computed(() => {
           <b>VS</b>
           <label><span>右方隊伍</span><select v-model="rightTeam"><option v-for="team in combined" :key="`right-${team.team}`" :value="team.team">{{ team.team }}</option></select></label>
         </div>
-        <div class="matchup-table-wrap"><table class="matchup-table"><thead><tr><th>項目</th><th>{{ leftTeam }}</th><th>{{ rightTeam }}</th><th>單項優勢</th></tr></thead><tbody><tr v-for="row in comparisonRows" :key="row.category"><th class="matchup-category">{{ row.category }}</th><td :class="{ winner: row.winner === 'left' }">{{ row.left }}<small v-if="row.leftAverage">場均 {{ row.leftAverage }}</small></td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}<small v-if="row.rightAverage">場均 {{ row.rightAverage }}</small></td><td><span :class="['matchup-result', row.winner]">{{ row.note }}</span></td></tr></tbody></table></div>
-        <div class="matchup-final" :class="{ draw: matchupSummary.winner === '平手' }"><span>對戰結果</span><strong>{{ matchupSummary.leftWins }} : {{ matchupSummary.rightWins }}</strong><em v-if="matchupSummary.winner === '平手'">九項平手</em><em v-else>{{ matchupSummary.winner }} 勝利<span v-if="matchupSummary.ties"> · {{ matchupSummary.ties }} 項平手</span></em></div>
+        <div class="matchup-table-wrap"><table class="matchup-table"><colgroup><col class="category-col"><col class="score-col"><col class="score-col"><col class="result-col"></colgroup><thead><tr><th>項目</th><th>{{ leftTeam }}</th><th>{{ rightTeam }}</th><th>單項優勢</th></tr></thead><tbody><tr v-for="row in comparisonRows" :key="row.category"><th class="matchup-category">{{ row.category }}</th><td :class="{ winner: row.winner === 'left' }">{{ row.left }}<small v-if="row.leftAverage">場均 {{ row.leftAverage }}</small></td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}<small v-if="row.rightAverage">場均 {{ row.rightAverage }}</small></td><td><span :class="['matchup-result', row.winner]">{{ row.note }}</span></td></tr></tbody></table></div>
+        <div class="matchup-final" :class="{ draw: matchupSummary.winner === '平手' }"><span>對戰結果</span><strong>{{ matchupSummary.leftWins }}</strong><strong>{{ matchupSummary.rightWins }}</strong><em v-if="matchupSummary.winner === '平手'">平手</em><em v-else>{{ matchupSummary.winner }} 優勢<span v-if="matchupSummary.ties"> · {{ matchupSummary.ties }} 項平手</span></em></div>
       </section>
     </section>
   </main>
@@ -152,4 +152,12 @@ const matchupSummary = computed(() => {
 .matchup-final{grid-template-columns:1fr 1fr 1fr}
 .matchup-final>strong{text-align:center}
 .matchup-final>em{text-align:right}
+.matchup-table col.category-col{width:17%}
+.matchup-table col.score-col{width:33%}
+.matchup-table col.result-col{width:17%}
+.matchup-final{grid-template-columns:17% 33% 33% 17%;gap:0;padding:14px 0}
+.matchup-final>span{padding-left:24px;font-size:.92rem}
+.matchup-final>strong{font-size:2.55rem;line-height:1;text-align:center}
+.matchup-final>em{padding-right:24px;font-size:.88rem}
+@media(max-width:760px){.matchup-final{grid-template-columns:17% 33% 33% 17%;padding:13px 0}.matchup-final>span{padding-left:10px;font-size:.68rem}.matchup-final>strong{font-size:1.8rem}.matchup-final>em{padding-right:10px;font-size:.66rem;white-space:normal}}
 </style>
