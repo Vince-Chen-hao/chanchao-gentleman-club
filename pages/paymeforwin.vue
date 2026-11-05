@@ -66,13 +66,15 @@ const labelPoint = (index: number) => {
   return { x: 100 + Math.cos(angle) * 91, y: 100 + Math.sin(angle) * 91 }
 }
 const selectedTeam = ref(playerCards[0].team)
+const isRankModalOpen = ref(false)
 const selectedPlayer = computed(() => playerCards.find(player => player.team === selectedTeam.value)!)
 const selectedRankDetails = computed(() => categories.map((category, index) => ({
   category,
   rank: selectedPlayer.value.ranks[index],
   value: index < 2 ? selectedPlayer.value.stats[index].toFixed(3).replace(/^0/, '') : selectedPlayer.value.stats[index],
 })))
-const selectPlayer = (team: string) => { selectedTeam.value = team }
+const selectPlayer = (team: string) => { selectedTeam.value = team; isRankModalOpen.value = true }
+const closeRankModal = () => { isRankModalOpen.value = false }
 const leftTeam = ref(combined[0].team)
 const rightTeam = ref(combined[1].team)
 const formatStat = (value: number, index: number) => index < 2 ? value.toFixed(3).replace(/^0/, '') : String(value)
@@ -118,15 +120,15 @@ const matchupSummary = computed(() => {
     </section>
     <section class="analysis-board wrap">
       <div class="analysis-heading"><div><p class="eyebrow ink">WEEK 1–2 · COMBINED DATA</p><h2>全員九項戰力圖</h2></div><p>兩週原始數據合併後再排名。FG% 與 FT% 以總命中／總出手加權計算；TO 越低越強。</p></div>
-      <div class="analysis-method"><span>14 TEAMS</span><span>2 WEEKS</span><span>9 CATEGORIES</span><span>14 RANK LEVELS</span><span>點雷達看完整名次</span></div>
+      <div class="analysis-method"><span>14 TEAMS</span><span>2 WEEKS</span><span>9 CATEGORIES</span><span>14 RANK LEVELS</span><span>點雷達開啟完整名次</span></div>
       <div class="analysis-grid">
-        <article v-for="(player, playerIndex) in playerCards" :key="player.team" class="analysis-card" :class="{ active: selectedTeam === player.team }" tabindex="0" role="button" :aria-pressed="selectedTeam === player.team" @click="selectPlayer(player.team)" @keydown.enter="selectPlayer(player.team)" @keydown.space.prevent="selectPlayer(player.team)">
+        <article v-for="(player, playerIndex) in playerCards" :key="player.team" class="analysis-card" :class="{ active: isRankModalOpen && selectedTeam === player.team }" tabindex="0" role="button" :aria-pressed="isRankModalOpen && selectedTeam === player.team" @click="selectPlayer(player.team)" @keydown.enter="selectPlayer(player.team)" @keydown.space.prevent="selectPlayer(player.team)">
           <div class="analysis-card-head"><div><small>TEAM {{ String(playerIndex + 1).padStart(2, '0') }}</small><h3>{{ player.team }}</h3></div><b>{{ player.gp }}<em> GP</em></b></div>
-          <div class="analysis-radar"><svg viewBox="0 0 200 200" :aria-label="`${player.team} 九項戰力雷達圖；每一點顯示 14 隊中的名次`" role="img"><polygon v-for="(scale, guideIndex) in rankGuides" :key="scale" :class="['analysis-guide', { major: (guideIndex + 1) % 3 === 0 || guideIndex === rankGuides.length - 1 }]" :points="guide(scale)" /><line v-for="(_, index) in categories" :key="`axis-${index}`" class="analysis-axis" x1="100" y1="100" :x2="point(index, 1).split(',')[0]" :y2="point(index, 1).split(',')[1]" /><polygon class="analysis-shape" :points="radar(playerIndex)" /><g v-for="(category, index) in categories" :key="`point-${category}`" class="analysis-point"><title>{{ category }}：全盟第 {{ player.ranks[index] }} 名</title><circle :cx="point(index, rankStrength(player.ranks[index])).split(',')[0]" :cy="point(index, rankStrength(player.ranks[index])).split(',')[1]" r="7" /><text :x="point(index, rankStrength(player.ranks[index])).split(',')[0]" :y="Number(point(index, rankStrength(player.ranks[index])).split(',')[1]) + .5">{{ player.ranks[index] }}</text></g><text v-for="(category, index) in categories" :key="category" class="analysis-label" :x="labelPoint(index).x" :y="labelPoint(index).y">{{ category }}</text><text class="analysis-rank-key" x="100" y="109">14</text><text class="analysis-rank-key" x="100" y="28">1</text></svg></div>
+          <div class="analysis-radar"><svg viewBox="0 0 200 200" :aria-label="`${player.team} 九項戰力雷達圖；點選卡片查看完整名次`" role="img"><polygon v-for="(scale, guideIndex) in rankGuides" :key="scale" :class="['analysis-guide', { major: (guideIndex + 1) % 3 === 0 || guideIndex === rankGuides.length - 1 }]" :points="guide(scale)" /><line v-for="(_, index) in categories" :key="`axis-${index}`" class="analysis-axis" x1="100" y1="100" :x2="point(index, 1).split(',')[0]" :y2="point(index, 1).split(',')[1]" /><polygon class="analysis-shape" :points="radar(playerIndex)" /><g v-for="(category, index) in categories" :key="`point-${category}`" class="analysis-point"><title>{{ category }}：點選卡片查看名次</title><circle :cx="point(index, rankStrength(player.ranks[index])).split(',')[0]" :cy="point(index, rankStrength(player.ranks[index])).split(',')[1]" r="3.6" /></g><text v-for="(category, index) in categories" :key="category" class="analysis-label" :x="labelPoint(index).x" :y="labelPoint(index).y">{{ category }}</text></svg></div>
           <div class="analysis-highlights"><span v-for="item in player.highlights" :key="item.label"><b>{{ item.label }}</b><em>#{{ item.rank }}</em><small>{{ item.value }}</small></span></div>
         </article>
       </div>
-      <section class="rank-detail" aria-live="polite"><div class="rank-detail-head"><div><p class="eyebrow ink">RANK INSPECTOR · 14 TEAMS</p><h2>{{ selectedPlayer.team }} 的九項名次</h2></div><p>每個雷達點的數字就是全盟名次：外圈為第 1 名、越往中心名次越後。點選任一張雷達卡即可切換。</p></div><div class="rank-detail-grid"><article v-for="detail in selectedRankDetails" :key="detail.category" :class="['rank-detail-item', { elite: detail.rank <= 3 }]"><span>{{ detail.category }}</span><b>#{{ detail.rank }}</b><small>{{ detail.value }}</small><i :style="{ width: `${rankStrength(detail.rank) * 100}%` }"></i></article></div></section>
+      <section v-if="isRankModalOpen" class="rank-modal" role="dialog" aria-modal="true" :aria-label="`${selectedPlayer.team} 九項名次`" @click.self="closeRankModal"><div class="rank-modal-panel"><button class="rank-modal-close" type="button" aria-label="關閉完整名次" @click="closeRankModal">×</button><div class="rank-detail-head"><div><p class="eyebrow ink">RANK INSPECTOR · 14 TEAMS</p><h2>{{ selectedPlayer.team }} 的九項名次</h2></div><p>外圈代表全盟第 1 名，越往中心名次越後；以下列出本隊九項完整名次與兩週合併數值。</p></div><div class="rank-detail-grid"><article v-for="detail in selectedRankDetails" :key="detail.category" :class="['rank-detail-item', { elite: detail.rank <= 3 }]"><span>{{ detail.category }}</span><b>#{{ detail.rank }}</b><small>{{ detail.value }}</small><i :style="{ width: `${rankStrength(detail.rank) * 100}%` }"></i></article></div></div></section>
       <section class="matchup-lab" aria-labelledby="matchup-title">
         <div class="matchup-heading"><div><p class="eyebrow ink">HEAD TO HEAD · WEEK 1–2</p><h2 id="matchup-title">雙隊九項對位</h2></div><p>FG%、FT% 直接比較命中率；其餘項目同列兩週累計與場均，並以場均判定優勢，TO 越低越好。</p></div>
         <div class="team-selectors">
@@ -198,4 +200,9 @@ const matchupSummary = computed(() => {
 .rank-detail-item.elite i{background:#c18a22}
 @media(max-width:1050px){.rank-detail-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
 @media(max-width:760px){.rank-detail{padding:18px}.rank-detail-head{display:block}.rank-detail-head>p{margin-top:12px}.rank-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.rank-detail-item{min-height:92px}}
+.rank-modal{position:fixed;z-index:50;inset:0;display:grid;place-items:center;padding:24px;background:rgba(12,20,34,.66);backdrop-filter:blur(5px)}
+.rank-modal-panel{position:relative;width:min(840px,100%);max-height:min(720px,calc(100vh - 48px));overflow:auto;padding:34px;border:1px solid #d1bd8b;background:#fffdf8;box-shadow:0 20px 60px rgba(0,0,0,.28)}
+.rank-modal-close{position:absolute;top:12px;right:14px;width:34px;height:34px;border:1px solid #cfc5b3;border-radius:50%;background:#fffdf8;color:#142843;font:500 1.75rem/1 'DM Mono',monospace;cursor:pointer}
+.rank-modal-close:hover,.rank-modal-close:focus-visible{border-color:#8a6017;color:#8a6017;outline:0}
+@media(max-width:760px){.rank-modal{padding:12px}.rank-modal-panel{max-height:calc(100vh - 24px);padding:26px 18px}.rank-modal-close{top:9px;right:9px}}
 </style>
