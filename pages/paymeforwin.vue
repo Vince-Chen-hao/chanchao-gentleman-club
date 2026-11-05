@@ -52,18 +52,27 @@ const playerCards = combined.map((entry, entryIndex) => ({
   ranks: ranks[entryIndex],
   highlights: categories.map((label, index) => ({ label, rank: ranks[entryIndex][index], value: index < 2 ? entry.stats[index].toFixed(3).replace(/^0/, '') : entry.stats[index] })).sort((a, b) => a.rank - b.rank).slice(0, 3),
 }))
-const playerStrength = (rank: number) => Math.max(8, Math.round(((combined.length - rank) / (combined.length - 1)) * 100))
+const rankGuides = Array.from({ length: combined.length }, (_, index) => (index + 1) / combined.length)
+const rankStrength = (rank: number) => (combined.length + 1 - rank) / combined.length
 const point = (index: number, strength: number) => {
   const angle = -Math.PI / 2 + (Math.PI * 2 * index) / categories.length
   const radius = 72 * strength
   return `${(100 + Math.cos(angle) * radius).toFixed(1)},${(100 + Math.sin(angle) * radius).toFixed(1)}`
 }
-const radar = (teamIndex: number, scale = 1) => ranks[teamIndex].map((rank, index) => point(index, playerStrength(rank) / 100 * scale)).join(' ')
+const radar = (teamIndex: number) => ranks[teamIndex].map((rank, index) => point(index, rankStrength(rank))).join(' ')
 const guide = (scale: number) => categories.map((_, index) => point(index, scale)).join(' ')
 const labelPoint = (index: number) => {
   const angle = -Math.PI / 2 + (Math.PI * 2 * index) / categories.length
   return { x: 100 + Math.cos(angle) * 91, y: 100 + Math.sin(angle) * 91 }
 }
+const selectedTeam = ref(playerCards[0].team)
+const selectedPlayer = computed(() => playerCards.find(player => player.team === selectedTeam.value)!)
+const selectedRankDetails = computed(() => categories.map((category, index) => ({
+  category,
+  rank: selectedPlayer.value.ranks[index],
+  value: index < 2 ? selectedPlayer.value.stats[index].toFixed(3).replace(/^0/, '') : selectedPlayer.value.stats[index],
+})))
+const selectPlayer = (team: string) => { selectedTeam.value = team }
 const leftTeam = ref(combined[0].team)
 const rightTeam = ref(combined[1].team)
 const formatStat = (value: number, index: number) => index < 2 ? value.toFixed(3).replace(/^0/, '') : String(value)
@@ -109,14 +118,15 @@ const matchupSummary = computed(() => {
     </section>
     <section class="analysis-board wrap">
       <div class="analysis-heading"><div><p class="eyebrow ink">WEEK 1–2 · COMBINED DATA</p><h2>全員九項戰力圖</h2></div><p>兩週原始數據合併後再排名。FG% 與 FT% 以總命中／總出手加權計算；TO 越低越強。</p></div>
-      <div class="analysis-method"><span>14 TEAMS</span><span>2 WEEKS</span><span>9 CATEGORIES</span><span>WEIGHTED %</span></div>
+      <div class="analysis-method"><span>14 TEAMS</span><span>2 WEEKS</span><span>9 CATEGORIES</span><span>14 RANK LEVELS</span><span>點雷達看完整名次</span></div>
       <div class="analysis-grid">
-        <article v-for="(player, playerIndex) in playerCards" :key="player.team" class="analysis-card">
+        <article v-for="(player, playerIndex) in playerCards" :key="player.team" class="analysis-card" :class="{ active: selectedTeam === player.team }" tabindex="0" role="button" :aria-pressed="selectedTeam === player.team" @click="selectPlayer(player.team)" @keydown.enter="selectPlayer(player.team)" @keydown.space.prevent="selectPlayer(player.team)">
           <div class="analysis-card-head"><div><small>TEAM {{ String(playerIndex + 1).padStart(2, '0') }}</small><h3>{{ player.team }}</h3></div><b>{{ player.gp }}<em> GP</em></b></div>
-          <div class="analysis-radar"><svg viewBox="0 0 200 200" :aria-label="`${player.team} 九項戰力雷達圖`" role="img"><polygon v-for="scale in [.25, .5, .75, 1]" :key="scale" class="analysis-guide" :points="guide(scale)" /><line v-for="(_, index) in categories" :key="`axis-${index}`" class="analysis-axis" x1="100" y1="100" :x2="point(index, 1).split(',')[0]" :y2="point(index, 1).split(',')[1]" /><polygon class="analysis-shape" :points="radar(playerIndex)" /><text v-for="(category, index) in categories" :key="category" class="analysis-label" :x="labelPoint(index).x" :y="labelPoint(index).y">{{ category }}</text></svg></div>
+          <div class="analysis-radar"><svg viewBox="0 0 200 200" :aria-label="`${player.team} 九項戰力雷達圖；每一點顯示 14 隊中的名次`" role="img"><polygon v-for="(scale, guideIndex) in rankGuides" :key="scale" :class="['analysis-guide', { major: (guideIndex + 1) % 3 === 0 || guideIndex === rankGuides.length - 1 }]" :points="guide(scale)" /><line v-for="(_, index) in categories" :key="`axis-${index}`" class="analysis-axis" x1="100" y1="100" :x2="point(index, 1).split(',')[0]" :y2="point(index, 1).split(',')[1]" /><polygon class="analysis-shape" :points="radar(playerIndex)" /><g v-for="(category, index) in categories" :key="`point-${category}`" class="analysis-point"><title>{{ category }}：全盟第 {{ player.ranks[index] }} 名</title><circle :cx="point(index, rankStrength(player.ranks[index])).split(',')[0]" :cy="point(index, rankStrength(player.ranks[index])).split(',')[1]" r="7" /><text :x="point(index, rankStrength(player.ranks[index])).split(',')[0]" :y="Number(point(index, rankStrength(player.ranks[index])).split(',')[1]) + .5">{{ player.ranks[index] }}</text></g><text v-for="(category, index) in categories" :key="category" class="analysis-label" :x="labelPoint(index).x" :y="labelPoint(index).y">{{ category }}</text><text class="analysis-rank-key" x="100" y="109">14</text><text class="analysis-rank-key" x="100" y="28">1</text></svg></div>
           <div class="analysis-highlights"><span v-for="item in player.highlights" :key="item.label"><b>{{ item.label }}</b><em>#{{ item.rank }}</em><small>{{ item.value }}</small></span></div>
         </article>
       </div>
+      <section class="rank-detail" aria-live="polite"><div class="rank-detail-head"><div><p class="eyebrow ink">RANK INSPECTOR · 14 TEAMS</p><h2>{{ selectedPlayer.team }} 的九項名次</h2></div><p>每個雷達點的數字就是全盟名次：外圈為第 1 名、越往中心名次越後。點選任一張雷達卡即可切換。</p></div><div class="rank-detail-grid"><article v-for="detail in selectedRankDetails" :key="detail.category" :class="['rank-detail-item', { elite: detail.rank <= 3 }]"><span>{{ detail.category }}</span><b>#{{ detail.rank }}</b><small>{{ detail.value }}</small><i :style="{ width: `${rankStrength(detail.rank) * 100}%` }"></i></article></div></section>
       <section class="matchup-lab" aria-labelledby="matchup-title">
         <div class="matchup-heading"><div><p class="eyebrow ink">HEAD TO HEAD · WEEK 1–2</p><h2 id="matchup-title">雙隊九項對位</h2></div><p>FG%、FT% 直接比較命中率；其餘項目同列兩週累計與場均，並以場均判定優勢，TO 越低越好。</p></div>
         <div class="team-selectors">
@@ -165,4 +175,27 @@ const matchupSummary = computed(() => {
 .matchup-final>strong{font-size:1.95rem}
 .matchup-table td.winner{background:#fbf3df}
 @media(max-width:760px){.matchup-final>span{padding-left:0;text-align:center}.matchup-final>strong{font-size:1.45rem}}
+.analysis-card{cursor:pointer;transition:border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+.analysis-card:hover,.analysis-card:focus-visible,.analysis-card.active{border-color:#b88730;box-shadow:0 9px 22px rgba(55,43,18,.13);outline:0;transform:translateY(-2px)}
+.analysis-card.active .analysis-card-head{border-bottom-color:#b88730}
+.analysis-radar{position:relative}
+.analysis-guide{fill:none;stroke:rgba(255,247,223,.12);stroke-width:.45}
+.analysis-guide.major{stroke:rgba(255,247,223,.3);stroke-width:.85}
+.analysis-point circle{fill:#fff8df;stroke:#e9b83e;stroke-width:1.5}
+.analysis-point text{fill:#132742;font:800 5.4px 'DM Mono',monospace;text-anchor:middle;dominant-baseline:middle}
+.analysis-rank-key{fill:rgba(255,247,223,.62);font:700 5px 'DM Mono',monospace;text-anchor:middle}
+.rank-detail{margin-top:30px;padding:26px;border:1px solid #d3cfc2;background:#fffdf8}
+.rank-detail-head{display:flex;justify-content:space-between;gap:36px;align-items:end}
+.rank-detail-head h2{margin:6px 0 0;font:800 1.55rem/1.2 'Noto Sans TC',sans-serif}
+.rank-detail-head>p{max-width:430px;margin:0;color:#5d6570;line-height:1.7}
+.rank-detail-grid{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:8px;margin-top:22px}
+.rank-detail-item{position:relative;display:grid;gap:3px;min-height:101px;padding:12px 10px;overflow:hidden;border:1px solid #dfd9cb;background:#f9f7f0}
+.rank-detail-item span{z-index:1;color:#77694f;font:700 .62rem 'DM Mono',monospace}
+.rank-detail-item b{z-index:1;color:#142843;font:900 1.35rem/1 'DM Mono',monospace}
+.rank-detail-item small{z-index:1;color:#5d6570;font:700 .68rem 'DM Mono',monospace}
+.rank-detail-item i{position:absolute;bottom:0;left:0;height:4px;background:#8a6017}
+.rank-detail-item.elite{border-color:#d2b46f;background:#fff9e9}
+.rank-detail-item.elite i{background:#c18a22}
+@media(max-width:1050px){.rank-detail-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:760px){.rank-detail{padding:18px}.rank-detail-head{display:block}.rank-detail-head>p{margin-top:12px}.rank-detail-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.rank-detail-item{min-height:92px}}
 </style>
