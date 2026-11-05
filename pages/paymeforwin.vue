@@ -89,6 +89,11 @@ const matchupTeams = computed<MatchupTeam[]>(() => selectedMatchupPeriod.value =
 const activeMatchupPeriod = computed(() => matchupPeriods.find(period => period.id === selectedMatchupPeriod.value)!)
 const leftTeam = ref(combined[0].team)
 const rightTeam = ref(combined[1].team)
+const matchupGames = computed(() => {
+  const left = matchupTeams.value.find(team => team.team === leftTeam.value)!
+  const right = matchupTeams.value.find(team => team.team === rightTeam.value)!
+  return { left: left.gp, right: right.gp }
+})
 const formatStat = (value: number, index: number) => index < 2 ? value.toFixed(3).replace(/^0/, '') : String(value)
 const comparisonRows = computed(() => {
   const left = matchupTeams.value.find(team => team.team === leftTeam.value)!
@@ -109,19 +114,6 @@ const comparisonRows = computed(() => {
       note: result === 0 ? '平手' : result > 0 ? '左方優勢' : '右方優勢',
     }
   })
-})
-const matchupExtraRows = computed(() => {
-  const left = matchupTeams.value.find(team => team.team === leftTeam.value)!
-  const right = matchupTeams.value.find(team => team.team === rightTeam.value)!
-  return [
-    { category: 'GP', left: String(left.gp), right: String(right.gp), kind: '出賽場次' },
-    ...categories.map((category, index) => ({
-      category,
-      left: index < 2 ? formatStat(left.stats[index], index) : (left.stats[index] / left.gp).toFixed(2),
-      right: index < 2 ? formatStat(right.stats[index], index) : (right.stats[index] / right.gp).toFixed(2),
-      kind: index < 2 ? '命中率' : '場均',
-    })),
-  ]
 })
 const matchupSummary = computed(() => {
   const rows = comparisonRows.value
@@ -155,16 +147,16 @@ const matchupSummary = computed(() => {
       </div>
       <section v-if="isRankModalOpen" class="rank-modal" role="dialog" aria-modal="true" :aria-label="`${selectedPlayer.team} 九項名次`" @click.self="closeRankModal"><div class="rank-modal-panel"><button class="rank-modal-close" type="button" aria-label="關閉完整名次" @click="closeRankModal">×</button><div class="rank-detail-head"><div><p class="eyebrow ink">RANK INSPECTOR · 14 TEAMS</p><h2>{{ selectedPlayer.team }} 的九項名次</h2></div><p>外圈代表全盟第 1 名，越往中心名次越後；以下列出本隊九項完整名次與兩週合併數值。</p></div><div class="rank-detail-grid"><article v-for="detail in selectedRankDetails" :key="detail.category" :class="['rank-detail-item', { elite: detail.rank <= 3 }]"><span>{{ detail.category }}</span><b>#{{ detail.rank }}</b><small>{{ detail.value }}</small><i :style="{ width: `${rankStrength(detail.rank) * 100}%` }"></i></article></div></div></section>
       <section class="matchup-lab" aria-labelledby="matchup-title">
-        <div class="matchup-heading"><div><p class="eyebrow ink">HEAD TO HEAD · {{ activeMatchupPeriod.caption }}</p><h2 id="matchup-title">雙隊九項對位</h2></div><p>主表顯示九項基本數據；出賽與場均可在下方展開。優勢判定以場均為準，FG%、FT% 直接比較命中率，TO 越低越好。</p></div>
+        <div class="matchup-heading"><div><p class="eyebrow ink">HEAD TO HEAD · {{ activeMatchupPeriod.caption }}</p><h2 id="matchup-title">雙隊九項對位</h2></div><p>九項總數下直接列出場均；GP 另列於隊伍選擇下方。優勢判定以場均為準，FG%、FT% 直接比較命中率，TO 越低越好。</p></div>
         <div class="matchup-periods" role="tablist" aria-label="對位週次"><button v-for="period in matchupPeriods" :key="period.id" type="button" :class="{ active: selectedMatchupPeriod === period.id }" :aria-selected="selectedMatchupPeriod === period.id" @click="selectedMatchupPeriod = period.id">{{ period.label }}</button></div>
         <div class="team-selectors">
           <label><span>左方隊伍</span><select v-model="leftTeam"><option v-for="team in combined" :key="`left-${team.team}`" :value="team.team">{{ team.team }}</option></select></label>
           <b>VS</b>
           <label><span>右方隊伍</span><select v-model="rightTeam"><option v-for="team in combined" :key="`right-${team.team}`" :value="team.team">{{ team.team }}</option></select></label>
         </div>
-        <div class="matchup-table-wrap"><table class="matchup-table"><colgroup><col class="category-col"><col class="score-col"><col class="score-col"><col class="result-col"></colgroup><thead><tr><th>項目</th><th>{{ leftTeam }}</th><th>{{ rightTeam }}</th><th>單項優勢</th></tr></thead><tbody><tr v-for="row in comparisonRows" :key="row.category"><th class="matchup-category">{{ row.category }}</th><td :class="{ winner: row.winner === 'left' }">{{ row.left }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}</td><td><span :class="['matchup-result', row.winner]">{{ row.note }}</span></td></tr></tbody></table></div>
+        <div class="matchup-games"><span>{{ leftTeam }} · <b>{{ matchupGames.left }}</b> GP</span><em>本期出賽場次</em><span>{{ rightTeam }} · <b>{{ matchupGames.right }}</b> GP</span></div>
+        <div class="matchup-table-wrap"><table class="matchup-table"><colgroup><col class="category-col"><col class="score-col"><col class="score-col"><col class="result-col"></colgroup><thead><tr><th>項目</th><th>{{ leftTeam }}</th><th>{{ rightTeam }}</th><th>單項優勢</th></tr></thead><tbody><tr v-for="row in comparisonRows" :key="row.category"><th class="matchup-category">{{ row.category }}</th><td :class="{ winner: row.winner === 'left' }">{{ row.left }}<small v-if="row.leftAverage">場均 {{ row.leftAverage }}</small></td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}<small v-if="row.rightAverage">場均 {{ row.rightAverage }}</small></td><td><span :class="['matchup-result', row.winner]">{{ row.note }}</span></td></tr></tbody></table></div>
         <div class="matchup-final" :class="{ draw: matchupSummary.winner === '平手' }"><span>對戰結果</span><strong>{{ matchupSummary.leftWins }}</strong><strong>{{ matchupSummary.rightWins }}</strong><em aria-hidden="true"></em></div>
-        <details class="matchup-extra"><summary>展開出賽與場均</summary><div class="matchup-extra-body"><p>FG%、FT% 為命中率；其餘項目為每場平均。</p><table><thead><tr><th>進階資料</th><th>{{ leftTeam }}</th><th>{{ rightTeam }}</th></tr></thead><tbody><tr v-for="row in matchupExtraRows" :key="row.category"><th>{{ row.category }} <small>{{ row.kind }}</small></th><td>{{ row.left }}</td><td>{{ row.right }}</td></tr></tbody></table></div></details>
       </section>
     </section>
   </main>
@@ -236,6 +228,8 @@ const matchupSummary = computed(() => {
 .matchup-periods button{min-width:105px;padding:9px 13px;border:1px solid #cfc5b3;background:#fffdf8;color:#66583e;font:800 .72rem 'DM Mono','Noto Sans TC',sans-serif;letter-spacing:.04em;cursor:pointer}
 .matchup-periods button:hover,.matchup-periods button:focus-visible{border-color:#8a6017;color:#8a6017;outline:0}
 .matchup-periods button.active{border-color:#142843;background:#142843;color:#fffdf8}
+.matchup-games{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;margin:0 0 12px;padding:9px 13px;border:1px solid #d3cfc2;background:#fffdf8;color:#5d6570;font:700 .72rem 'DM Mono','Noto Sans TC',sans-serif}
+.matchup-games span:last-child{text-align:right}.matchup-games b{color:#8a6017;font-size:.95rem}.matchup-games em{color:#8a7155;font-style:normal;white-space:nowrap}
 .matchup-extra{margin-top:14px;border:1px solid #d3cfc2;background:#fffdf8}
 .matchup-extra summary{display:flex;align-items:center;min-height:50px;padding:0 17px;color:#142843;font:800 .84rem 'Noto Sans TC',sans-serif;cursor:pointer}
 .matchup-extra summary::marker{color:#8a6017}
@@ -246,5 +240,5 @@ const matchupSummary = computed(() => {
 .matchup-extra thead th{background:#f0eadb;color:#142843}
 .matchup-extra tbody th{color:#685839}
 .matchup-extra th small{display:block;margin-top:2px;color:#8b8374;font-size:.62rem;font-weight:600}
-@media(max-width:760px){.matchup-periods{overflow-x:auto;padding-bottom:3px}.matchup-periods button{min-width:96px}.matchup-extra-body{padding-right:10px;padding-left:10px}.matchup-extra{overflow-x:auto}.matchup-extra table{min-width:460px}}
+@media(max-width:760px){.matchup-periods{overflow-x:auto;padding-bottom:3px}.matchup-periods button{min-width:96px}.matchup-games{gap:7px;padding:9px 8px;font-size:.62rem}.matchup-games em{font-size:.58rem}.matchup-extra-body{padding-right:10px;padding-left:10px}.matchup-extra{overflow-x:auto}.matchup-extra table{min-width:460px}}
 </style>
