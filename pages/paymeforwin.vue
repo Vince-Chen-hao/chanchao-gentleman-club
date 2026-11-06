@@ -192,9 +192,9 @@ type SprintTotals = { fgm: number; fga: number; ftm: number; fta: number; three:
 type SprintTeam = { team: string; played: number; remaining: number; current: SprintTotals; projection: SprintTotals }
 const finalThreeDay: { left: SprintTeam; right: SprintTeam } = {
   left: {
-    team: '阿肥加班幹大事', played: 24, remaining: 21,
+    team: '阿肥加班幹大事', played: 24, remaining: 22,
     current: { fgm: 131, fga: 273, ftm: 80, fta: 110, three: 33, pts: 375, reb: 113, ast: 82, st: 20, blk: 11, to: 29 },
-    projection: { fgm: 112.2, fga: 234.8, ftm: 63.3, fta: 83.2, three: 30.2, pts: 317.4, reb: 106.3, ast: 71.4, st: 21.7, blk: 10.8, to: 36.7 },
+    projection: { fgm: 116.9, fga: 244.7, ftm: 64.1, fta: 84.8, three: 32.8, pts: 330, reb: 116.1, ast: 74.9, st: 22.7, blk: 11, to: 37.9 },
   },
   right: {
     team: '哈利吸K', played: 26, remaining: 20,
