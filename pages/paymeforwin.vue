@@ -1,6 +1,8 @@
 <script setup lang="ts">
 type TeamWeek = { team: string; gp: number; fgm: string; ftm: string; stats: string[] }
 
+const route = useRoute()
+const forecastOnly = computed(() => route.query.view === 'forecast')
 const categories = ['FG%', 'FT%', '3PTM', 'PTS', 'REB', 'AST', 'ST', 'BLK', 'TO']
 const weekOne: TeamWeek[] = [
   { team: '阿肥加班幹大事', gp: 41, fgm: '214/447', ftm: '121/161', stats: ['.479', '.752', '47', '596', '195', '138', '41', '26', '81'] },
@@ -226,16 +228,17 @@ const finalSprintSummary = computed(() => ({ left: finalSprintRows.value.filter(
 </script>
 
 <template>
-  <nav class="site-menu" aria-label="頁面導覽">
+  <nav v-if="!forecastOnly" class="site-menu" aria-label="頁面導覽">
     <div class="wrap site-menu-inner"><NuxtLink class="menu-brand" to="/" aria-label="回 Chanchao Gentleman Club 首頁"><img src="/cgc-logo.svg" alt="Chanchao Gentleman Club"><span>2026–27</span></NuxtLink><div class="menu-links"><NuxtLink to="/">回首頁</NuxtLink><a href="#analysis">paymeforwin</a><NuxtLink to="/lastseason">上季回顧</NuxtLink></div></div>
   </nav>
-  <main id="analysis" class="analysis-page">
-    <section class="analysis-hero wrap">
+  <main id="analysis" class="analysis-page" :class="{ 'forecast-only': forecastOnly }">
+    <section v-if="!forecastOnly" class="analysis-hero wrap">
       <p class="eyebrow">2026–27 SEASON · NOW UNDERWAY</p>
       <h1>本季戰報，正式開打</h1>
       <p>每週對戰、九項分類排名與整季交手紀錄，會從這裡開始逐週累積。</p>
     </section>
     <section class="analysis-board wrap">
+      <template v-if="!forecastOnly">
       <div class="analysis-heading"><div><p class="eyebrow ink">WEEK 1–2 · COMBINED DATA</p><h2>全員九項戰力圖</h2></div><p>兩週原始數據合併後再排名。FG% 與 FT% 以總命中／總出手加權計算；TO 越低越強。</p></div>
       <div class="analysis-method"><span>14 TEAMS</span><span>2 WEEKS</span><span>9 CATEGORIES</span><span>14 RANK LEVELS</span><span>點雷達開啟完整名次</span></div>
       <div class="analysis-grid">
@@ -258,7 +261,8 @@ const finalSprintSummary = computed(() => ({ left: finalSprintRows.value.filter(
         <div class="matchup-table-wrap"><table class="matchup-table"><colgroup><col class="category-col"><col class="score-col"><col class="score-col"><col class="result-col"></colgroup><thead><tr><th>項目</th><th>{{ leftTeam }}</th><th>{{ rightTeam }}</th><th>單項優勢</th></tr></thead><tbody><tr v-for="row in comparisonRows" :key="row.category"><th class="matchup-category">{{ row.category }}</th><td :class="{ winner: row.winner === 'left' }">{{ row.left }}<small v-if="row.leftAverage">場均 {{ row.leftAverage }}</small></td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}<small v-if="row.rightAverage">場均 {{ row.rightAverage }}</small></td><td><span :class="['matchup-result', row.winner]">{{ row.note }}</span></td></tr></tbody></table></div>
         <div class="matchup-final" :class="{ draw: matchupSummary.winner === '平手' }"><span>對戰結果</span><strong>{{ matchupSummary.leftWins }}</strong><strong>{{ matchupSummary.rightWins }}</strong><em aria-hidden="true"></em></div>
       </section>
-      <section class="projection-lab" aria-labelledby="projection-title">
+      </template>
+      <section v-if="forecastOnly" class="projection-lab" aria-labelledby="projection-title">
         <div class="projection-content" :class="{ obscured: forecastGate !== 'revealed' }"><div class="matchup-heading"><div><p class="eyebrow">FUTURE WINDOW · ROSTER MODEL</p><h2 id="projection-title">未來戰力預測</h2></div><p>用本季場均乘上下一週 NBA 賽程；FG%、FT% 則以預估命中與出手加權。此試行版先收錄兩隊。</p></div>
           <div class="projection-controls"><label><span>預測區間</span><select v-model="projectionRange"><option value="week4">WEEK 4</option><option value="week5">WEEK 5</option><option value="week6">WEEK 6</option><option value="week7">WEEK 7</option></select></label></div>
           <p class="projection-caption">{{ projectionRangeLabels[projectionRange] }} · 依 2026/11/9–12/6 賽程與目前 Yahoo 名單快照估算；包含 BN、不計 IL，尚未扣除每日排陣與傷病缺賽。</p>
@@ -269,7 +273,7 @@ const finalSprintSummary = computed(() => ({ left: finalSprintRows.value.filter(
           <div class="projection-details"><div class="projection-detail-tabs"><button type="button" :class="{ active: activeProjectionDetail === 'left' }" @click="activeProjectionDetail = activeProjectionDetail === 'left' ? null : 'left'">查看 {{ leftProjectionTeam }} 的球員乘算明細</button><button type="button" :class="{ active: activeProjectionDetail === 'right' }" @click="activeProjectionDetail = activeProjectionDetail === 'right' ? null : 'right'">查看 {{ rightProjectionTeam }} 的球員乘算明細</button></div><section v-if="activeProjectionDetail" class="projection-roster"><h3>{{ activeProjectionTeam }} · 球員乘算明細</h3><div class="projection-table-wrap"><table><thead><tr><th>球員</th><th>NBA</th><th>位置</th><th>預計 GP</th><th>3PTM</th><th>PTS</th><th>REB</th><th>AST</th><th>ST</th><th>BLK</th><th>TO</th></tr></thead><tbody><tr v-for="player in activeProjection.players" :key="player.name"><th>{{ player.name }}</th><td>{{ player.nba }}</td><td>{{ player.slot }}</td><td>{{ player.gp }}</td><td>{{ (player.stats[0] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[1] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[2] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[3] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[4] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[5] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[6] * player.gp).toFixed(1) }}</td></tr></tbody></table></div></section></div></div>
         <Transition name="forecast-unlock"><div v-if="forecastGate !== 'revealed'" :class="['forecast-gate', { wrong: forecastGate === 'wrong', correct: forecastGate === 'correct' }]" role="dialog" aria-label="未來戰力預測表解鎖"><template v-if="forecastGate !== 'correct'"><p class="forecast-label">未來戰力預測表</p><p class="forecast-kicker">FORECAST LOCKED · SEASON ORACLE</p><div v-if="forecastGate === 'wrong'" :key="`wrong-mark-${wrongAttempt}`" class="forecast-error-mark">×</div><h3>你認為這季 NBA 總冠軍球隊是哪一支？</h3><p class="forecast-copy">猜對，才有資格查看未來戰力預測。</p><div class="championship-options"><button v-for="team in championOptions" :key="team" type="button" :class="{ selected: championGuess === team }" @click="chooseChampion(team)">{{ team }}</button></div><p v-if="forecastGate === 'wrong'" :key="`wrong-copy-${wrongAttempt}`" class="forecast-error">預言錯誤。再猜一次。</p></template><template v-else><div class="forecast-success-mark">✓</div><p class="forecast-kicker">ORACLE VERIFIED</p><h3>正確答案。</h3><p class="forecast-copy">阿肥加班幹大事，解鎖未來戰力預測。</p></template></div></Transition>
       </section>
-      <section class="sprint-lab" aria-labelledby="sprint-title">
+      <section v-if="forecastOnly" class="sprint-lab" aria-labelledby="sprint-title">
         <div class="sprint-heading"><div><p class="eyebrow">WEEK 3 · THREE-DAY FINISH</p><h2 id="sprint-title">阿肥 vs 哈利吸K｜三日收官預測</h2></div><p>目前即時成績加上 11/6–11/8 剩餘賽程；以 Yahoo 本季場均乘上每名非 IL 球員的預計出賽場次。數字是推演，不含臨場輪休與傷病變動。</p></div>
         <div class="sprint-status"><span><b>{{ finalThreeDay.left.team }}</b> · 已打 {{ finalThreeDay.left.played }} 場／剩 {{ finalThreeDay.left.remaining }} 場</span><strong>目前 5 : 4</strong><span><b>{{ finalThreeDay.right.team }}</b> · 已打 {{ finalThreeDay.right.played }} 場／剩 {{ finalThreeDay.right.remaining }} 場</span></div>
         <div class="sprint-table-wrap"><table class="sprint-table"><thead><tr><th>項目</th><th>{{ finalThreeDay.left.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>{{ finalThreeDay.right.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>預估差距</th></tr></thead><tbody><tr v-for="row in finalSprintRows" :key="row.category"><th>{{ row.category }}</th><td>{{ row.leftCurrent }}</td><td class="sprint-add">+{{ row.leftAdd }}</td><td :class="{ winner: row.winner === 'left' }">{{ row.leftFinal }}</td><td>{{ row.rightCurrent }}</td><td class="sprint-add">+{{ row.rightAdd }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.rightFinal }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
