@@ -142,7 +142,7 @@ const leftProjectionTeam = ref(projectionTeams[0].team)
 const rightProjectionTeam = ref(projectionTeams[1].team)
 const projectionRangeLabels: Record<ProjectionRange, string> = { week4: 'WEEK 4', week5: 'WEEK 5', twoWeeks: '未來兩週合計' }
 const projectionGameCount = (nba: string) => { const games = futureSchedule[nba] || [0, 0]; return projectionRange.value === 'week4' ? games[0] : projectionRange.value === 'week5' ? games[1] : games[0] + games[1] }
-const projectedPlayersFor = (team: string) => projectionTeams.find(entry => entry.team === team)!.players.map(player => ({ ...player, gp: projectionGameCount(player.nba) }))
+const projectedPlayersFor = (team: string) => projectionTeams.find(entry => entry.team === team)!.players.filter(player => player.slot !== 'IL').map(player => ({ ...player, gp: projectionGameCount(player.nba) }))
 const calculateProjection = (team: string) => {
   const totals = projectedPlayersFor(team).reduce((sum, player) => {
     sum.gp += player.gp; sum.fgm += player.fgm * player.gp; sum.fga += player.fga * player.gp; sum.ftm += player.ftm * player.gp; sum.fta += player.fta * player.gp
@@ -186,7 +186,7 @@ const projectionSummary = computed(() => ({ left: projectionRows.value.filter(ro
       <section class="projection-lab" aria-labelledby="projection-title">
         <div class="matchup-heading"><div><p class="eyebrow ink">SCHEDULE OUTLOOK · ROSTER MODEL</p><h2 id="projection-title">未來兩週預估</h2></div><p>每位球員的本季場均乘上 NBA 未來賽程；FG%、FT% 以預估命中與出手加權。此試行版先收錄兩隊。</p></div>
         <div class="projection-controls"><label><span>預測區間</span><select v-model="projectionRange"><option value="twoWeeks">未來兩週合計</option><option value="week4">WEEK 4</option><option value="week5">WEEK 5</option></select></label></div>
-        <p class="projection-caption">{{ projectionRangeLabels[projectionRange] }} · 依 2026/11/9–11/22 賽程與目前 Yahoo 名單快照估算；包含 BN／IL，尚未扣除每日排陣與傷病缺賽。</p>
+        <p class="projection-caption">{{ projectionRangeLabels[projectionRange] }} · 依 2026/11/9–11/22 賽程與目前 Yahoo 名單快照估算；包含 BN、不計 IL，尚未扣除每日排陣與傷病缺賽。</p>
         <div class="team-selectors projection-selectors"><label><span>左方隊伍</span><select v-model="leftProjectionTeam"><option v-for="team in projectionTeams" :key="`projection-left-${team.team}`" :value="team.team">{{ team.team }}</option></select></label><b>VS</b><label><span>右方隊伍</span><select v-model="rightProjectionTeam"><option v-for="team in projectionTeams" :key="`projection-right-${team.team}`" :value="team.team">{{ team.team }}</option></select></label></div>
         <div class="matchup-games projection-games"><span>{{ leftProjectionTeam }} · <b>{{ leftProjection.gp }}</b> 預估 GP</span><em>球員賽程總和</em><span>{{ rightProjectionTeam }} · <b>{{ rightProjection.gp }}</b> 預估 GP</span></div>
         <div class="matchup-table-wrap"><table class="matchup-table projection-table"><colgroup><col class="category-col"><col class="score-col"><col class="score-col"><col class="result-col"></colgroup><thead><tr><th>項目</th><th>{{ leftProjectionTeam }}</th><th>{{ rightProjectionTeam }}</th><th>單項優勢</th></tr></thead><tbody><tr v-for="row in projectionRows" :key="row.category"><th class="matchup-category">{{ row.category }}</th><td :class="{ winner: row.winner === 'left' }">{{ row.left }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}</td><td><span :class="['matchup-result', row.winner]">{{ row.note }}</span></td></tr></tbody></table></div>
