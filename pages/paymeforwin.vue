@@ -125,9 +125,9 @@ const matchupSummary = computed(() => {
 })
 
 type ProjectionPlayer = { name: string; nba: string; slot: string; fgm: number; fga: number; ftm: number; fta: number; stats: number[] }
-type ProjectionRange = 'week4' | 'week5' | 'twoWeeks'
-const futureSchedule: Record<string, [number, number]> = {
-  SAS: [4, 3], GSW: [3, 4], LAL: [3, 3], HOU: [4, 3], DEN: [3, 4], LAC: [3, 3], CLE: [4, 3], NYK: [4, 4], TOR: [4, 3], BKN: [2, 3], POR: [3, 4], IND: [4, 3], ORL: [3, 4], CHA: [3, 2], MEM: [4, 4], MIA: [3, 3], BOS: [3, 4], NOP: [4, 4], OKC: [4, 3], WAS: [4, 4], CHI: [3, 4],
+type ProjectionRange = 'week4' | 'week5' | 'week6' | 'week7' | 'twoWeeks'
+const futureSchedule: Record<string, [number, number, number, number]> = {
+  SAS: [4, 3, 4, 2], GSW: [3, 4, 3, 1], LAL: [3, 3, 3, 2], HOU: [4, 3, 3, 2], DEN: [3, 4, 3, 2], LAC: [3, 3, 4, 2], CLE: [4, 3, 3, 2], NYK: [4, 4, 3, 2], TOR: [4, 3, 3, 2], BKN: [2, 3, 4, 2], POR: [3, 4, 4, 2], IND: [4, 3, 3, 2], ORL: [3, 4, 3, 1], CHA: [3, 2, 3, 2], MEM: [4, 4, 4, 2], MIA: [3, 3, 3, 2], BOS: [3, 4, 3, 2], NOP: [4, 4, 3, 2], OKC: [4, 3, 3, 2], WAS: [4, 4, 2, 2], CHI: [3, 4, 3, 2],
 }
 const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
   { team: '阿肥加班幹大事', players: [
@@ -140,8 +140,12 @@ const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
 const projectionRange = ref<ProjectionRange>('twoWeeks')
 const leftProjectionTeam = ref(projectionTeams[0].team)
 const rightProjectionTeam = ref(projectionTeams[1].team)
-const projectionRangeLabels: Record<ProjectionRange, string> = { week4: 'WEEK 4', week5: 'WEEK 5', twoWeeks: '未來兩週合計' }
-const projectionGameCount = (nba: string) => { const games = futureSchedule[nba] || [0, 0]; return projectionRange.value === 'week4' ? games[0] : projectionRange.value === 'week5' ? games[1] : games[0] + games[1] }
+const projectionRangeLabels: Record<ProjectionRange, string> = { week4: 'WEEK 4', week5: 'WEEK 5', week6: 'WEEK 6', week7: 'WEEK 7', twoWeeks: '未來兩週合計' }
+const projectionGameCount = (nba: string) => {
+  const games = futureSchedule[nba] || [0, 0, 0, 0]
+  if (projectionRange.value === 'twoWeeks') return games[0] + games[1]
+  return games[{ week4: 0, week5: 1, week6: 2, week7: 3 }[projectionRange.value]]
+}
 const projectedPlayersFor = (team: string) => projectionTeams.find(entry => entry.team === team)!.players.filter(player => player.slot !== 'IL').map(player => ({ ...player, gp: projectionGameCount(player.nba) }))
 const calculateProjection = (team: string) => {
   const totals = projectedPlayersFor(team).reduce((sum, player) => {
@@ -185,8 +189,8 @@ const projectionSummary = computed(() => ({ left: projectionRows.value.filter(ro
       <section v-if="isRankModalOpen" class="rank-modal" role="dialog" aria-modal="true" :aria-label="`${selectedPlayer.team} 九項名次`" @click.self="closeRankModal"><div class="rank-modal-panel"><button class="rank-modal-close" type="button" aria-label="關閉完整名次" @click="closeRankModal">×</button><div class="rank-detail-head"><div><p class="eyebrow ink">RANK INSPECTOR · 14 TEAMS</p><h2>{{ selectedPlayer.team }}</h2></div></div><div class="rank-detail-grid"><article v-for="detail in selectedRankDetails" :key="detail.category" :class="['rank-detail-item', { elite: detail.rank <= 3 }]"><span>{{ detail.category }}</span><b>#{{ detail.rank }}</b><small>{{ detail.value }}</small><i :style="{ width: `${rankStrength(detail.rank) * 100}%` }"></i></article></div></div></section>
       <section class="projection-lab" aria-labelledby="projection-title">
         <div class="matchup-heading"><div><p class="eyebrow ink">SCHEDULE OUTLOOK · ROSTER MODEL</p><h2 id="projection-title">未來兩週預估</h2></div><p>每位球員的本季場均乘上 NBA 未來賽程；FG%、FT% 以預估命中與出手加權。此試行版先收錄兩隊。</p></div>
-        <div class="projection-controls"><label><span>預測區間</span><select v-model="projectionRange"><option value="twoWeeks">未來兩週合計</option><option value="week4">WEEK 4</option><option value="week5">WEEK 5</option></select></label></div>
-        <p class="projection-caption">{{ projectionRangeLabels[projectionRange] }} · 依 2026/11/9–11/22 賽程與目前 Yahoo 名單快照估算；包含 BN、不計 IL，尚未扣除每日排陣與傷病缺賽。</p>
+        <div class="projection-controls"><label><span>預測區間</span><select v-model="projectionRange"><option value="twoWeeks">未來兩週合計</option><option value="week4">WEEK 4</option><option value="week5">WEEK 5</option><option value="week6">WEEK 6</option><option value="week7">WEEK 7</option></select></label></div>
+        <p class="projection-caption">{{ projectionRangeLabels[projectionRange] }} · 依 2026/11/9–12/6 賽程與目前 Yahoo 名單快照估算；包含 BN、不計 IL，尚未扣除每日排陣與傷病缺賽。</p>
         <div class="team-selectors projection-selectors"><label><span>左方隊伍</span><select v-model="leftProjectionTeam"><option v-for="team in projectionTeams" :key="`projection-left-${team.team}`" :value="team.team">{{ team.team }}</option></select></label><b>VS</b><label><span>右方隊伍</span><select v-model="rightProjectionTeam"><option v-for="team in projectionTeams" :key="`projection-right-${team.team}`" :value="team.team">{{ team.team }}</option></select></label></div>
         <div class="matchup-games projection-games"><span>{{ leftProjectionTeam }} · <b>{{ leftProjection.gp }}</b> 預估 GP</span><em>球員賽程總和</em><span>{{ rightProjectionTeam }} · <b>{{ rightProjection.gp }}</b> 預估 GP</span></div>
         <div class="matchup-table-wrap"><table class="matchup-table projection-table"><colgroup><col class="category-col"><col class="score-col"><col class="score-col"><col class="result-col"></colgroup><thead><tr><th>項目</th><th>{{ leftProjectionTeam }}</th><th>{{ rightProjectionTeam }}</th><th>單項優勢</th></tr></thead><tbody><tr v-for="row in projectionRows" :key="row.category"><th class="matchup-category">{{ row.category }}</th><td :class="{ winner: row.winner === 'left' }">{{ row.left }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}</td><td><span :class="['matchup-result', row.winner]">{{ row.note }}</span></td></tr></tbody></table></div>
@@ -216,7 +220,7 @@ const projectionSummary = computed(() => ({ left: projectionRows.value.filter(ro
 <style scoped>
 /* 對位比較收斂為：暖白、海軍藍、低飽和金。 */
 .team-selectors select{border-color:#b7aa93;border-radius:4px;background:#fffdf8;box-shadow:none}
-.team-selectors select,.projection-controls select{appearance:none;padding-right:48px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='m2 2 5 5 5-5' fill='none' stroke='%23142843' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:calc(100% - 17px) 50%;background-size:14px 9px}
+.team-selectors label,.projection-controls label{position:relative}.team-selectors label::after,.projection-controls label::after{content:'';position:absolute;right:20px;bottom:24px;width:8px;height:8px;border-right:2px solid #142843;border-bottom:2px solid #142843;transform:rotate(45deg);pointer-events:none}.team-selectors select,.projection-controls select{appearance:none;padding-right:48px;background-image:none}
 .team-selectors>b{color:#8a6017}
 .matchup-table-wrap{border-color:#cfc5b3;border-radius:4px 4px 0 0;background:#fffdf8;box-shadow:none}
 .matchup-table thead th,.matchup-table thead th:nth-child(2),.matchup-table thead th:nth-child(3){background:#142843;color:#fffdf8}
