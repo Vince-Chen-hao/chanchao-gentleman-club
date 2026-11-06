@@ -216,6 +216,7 @@ const projectionSummary = computed(() => ({ left: projectionRows.value.filter(ro
 <style scoped>
 /* 對位比較收斂為：暖白、海軍藍、低飽和金。 */
 .team-selectors select{border-color:#b7aa93;border-radius:4px;background:#fffdf8;box-shadow:none}
+.team-selectors select,.projection-controls select{appearance:none;padding-right:48px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='m2 2 5 5 5-5' fill='none' stroke='%23142843' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.8'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:calc(100% - 17px) 50%;background-size:14px 9px}
 .team-selectors>b{color:#8a6017}
 .matchup-table-wrap{border-color:#cfc5b3;border-radius:4px 4px 0 0;background:#fffdf8;box-shadow:none}
 .matchup-table thead th,.matchup-table thead th:nth-child(2),.matchup-table thead th:nth-child(3){background:#142843;color:#fffdf8}
