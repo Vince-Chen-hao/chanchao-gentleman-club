@@ -195,9 +195,9 @@ const finalThreeDay: { left: SprintTeam; right: SprintTeam } = {
     projection: { fgm: 112.2, fga: 234.8, ftm: 63.3, fta: 83.2, three: 30.2, pts: 317.4, reb: 106.3, ast: 71.4, st: 21.7, blk: 10.8, to: 36.7 },
   },
   right: {
-    team: '哈利吸K', played: 26, remaining: 18,
+    team: '哈利吸K', played: 26, remaining: 20,
     current: { fgm: 109, fga: 245, ftm: 46, fta: 70, three: 46, pts: 310, reb: 116, ast: 77, st: 23, blk: 14, to: 46 },
-    projection: { fgm: 81, fga: 177.7, ftm: 39.7, fta: 54.7, three: 35.7, pts: 236.6, reb: 91.8, ast: 48, st: 17, blk: 10.2, to: 27.7 },
+    projection: { fgm: 85.6, fga: 187.2, ftm: 43.5, fta: 59, three: 36.1, pts: 250, reb: 99.7, ast: 51, st: 18, blk: 10.8, to: 30 },
   },
 }
 const sprintValue = (totals: SprintTotals, index: number) => {
