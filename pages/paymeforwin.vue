@@ -223,7 +223,9 @@ const projectionSummary = computed(() => ({ left: projectionRows.value.filter(ro
 .matchup-table tbody tr:nth-child(even){background:transparent}
 .matchup-table th,.matchup-table td{border-bottom-color:#e4ddd0}
 .matchup-table td.winner{color:#8a6017}
-.matchup-result,.matchup-result.left,.matchup-result.right{border:1px solid #d2bf93;border-radius:3px;background:#fffdf8;color:#6f5a31}
+.matchup-result{border:1px solid #d2bf93;border-radius:3px;background:#fffdf8;color:#6f5a31}
+.matchup-result.left{border-color:#a9caae;background:#edf6ed;color:#2d6740}
+.matchup-result.right{border-color:#adc1d8;background:#eff4fa;color:#315a81}
 .matchup-final,.matchup-final.draw{border-color:#142843;border-radius:0 0 4px 4px;background:#142843;color:#fffdf8}
 .matchup-final>span,.matchup-final strong{color:#e9c66e}
 .matchup-final em{color:#fffdf8}
