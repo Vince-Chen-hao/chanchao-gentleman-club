@@ -190,19 +190,18 @@ const projectionSummary = computed(() => ({ left: projectionRows.value.filter(ro
 
 type SprintTotals = { fgm: number; fga: number; ftm: number; fta: number; three: number; pts: number; reb: number; ast: number; st: number; blk: number; to: number }
 type SprintTeam = { team: string; played: number; remaining: number; current: SprintTotals; projection: SprintTotals }
-// Yahoo Week 3 totals after 11/6 games; remaining Yahoo dates: 11/7–11/8.
-// Season averages read 2026-11-07 (Asia/Taipei). BN included; IL and removed players excluded.
-// Allen's 11/7 availability is unconfirmed; his one scheduled game is included.
-const finalThreeDay: { left: SprintTeam; right: SprintTeam } = {
+// Yahoo Week 3 totals through 11/7; remaining games are on Yahoo 11/8 (Taipei 11/9).
+// Remaining player counts include bench players and exclude IL and players without a game.
+const finalSprint: { left: SprintTeam; right: SprintTeam } = {
   left: {
-    team: '阿肥加班幹大事', played: 32, remaining: 13,
-    current: { fgm: 167, fga: 347, ftm: 108, fta: 147, three: 45, pts: 487, reb: 147, ast: 108, st: 29, blk: 13, to: 49 },
-    projection: { fgm: 75, fga: 158, ftm: 44.2, fta: 57, three: 21.5, pts: 215.1, reb: 75.9, ast: 49.5, st: 14.7, blk: 7.5, to: 27.3 },
+    team: "阿肥加班幹大事", played: 43, remaining: 4,
+    current: { fgm: 213, fga: 468, ftm: 132, fta: 177, three: 60, pts: 618, reb: 212, ast: 151, st: 36, blk: 18, to: 69 },
+    projection: { fgm: 18.3, fga: 35.9, ftm: 10.4, fta: 12.8, three: 7.4, pts: 54.1, reb: 19.5, ast: 9.7, st: 3, blk: 1.3, to: 6.8 },
   },
   right: {
-    team: '哈利吸K', played: 34, remaining: 12,
-    current: { fgm: 139, fga: 304, ftm: 56, fta: 85, three: 58, pts: 392, reb: 150, ast: 112, st: 26, blk: 15, to: 55 },
-    projection: { fgm: 53.1, fga: 111.3, ftm: 28.1, fta: 37.8, three: 21.7, pts: 155.9, reb: 59.9, ast: 33.7, st: 10.9, blk: 6.6, to: 19.4 },
+    team: "哈利吸K", played: 41, remaining: 5,
+    current: { fgm: 171, fga: 390, ftm: 75, fta: 107, three: 68, pts: 485, reb: 182, ast: 130, st: 32, blk: 18, to: 64 },
+    projection: { fgm: 18.3, fga: 41.8, ftm: 11, fta: 15.7, three: 7.4, pts: 55, reb: 29.1, ast: 12.2, st: 4.4, blk: 2.6, to: 7.1 },
   },
 }
 const sprintValue = (totals: SprintTotals, index: number) => {
@@ -213,17 +212,17 @@ const sprintValue = (totals: SprintTotals, index: number) => {
 const sprintFinal = (team: SprintTeam): SprintTotals => Object.fromEntries(Object.keys(team.current).map(key => [key, team.current[key as keyof SprintTotals] + team.projection[key as keyof SprintTotals]])) as SprintTotals
 const formatSprint = (value: number, index: number, projected = false) => index < 2 ? value.toFixed(3).replace(/^0/, '') : projected ? value.toFixed(1).replace(/\.0$/, '') : String(Math.round(value))
 const finalSprintRows = computed(() => {
-  const leftFinal = sprintFinal(finalThreeDay.left); const rightFinal = sprintFinal(finalThreeDay.right)
+  const leftFinal = sprintFinal(finalSprint.left); const rightFinal = sprintFinal(finalSprint.right)
   return categories.map((category, index) => {
     const left = sprintValue(leftFinal, index); const right = sprintValue(rightFinal, index)
     const result = index === 8 ? right - left : left - right
     const gap = Math.abs(result)
     return {
       category,
-      leftCurrent: formatSprint(sprintValue(finalThreeDay.left.current, index), index), leftAdd: formatSprint(sprintValue(finalThreeDay.left.projection, index), index, true), leftFinal: formatSprint(left, index, true),
-      rightCurrent: formatSprint(sprintValue(finalThreeDay.right.current, index), index), rightAdd: formatSprint(sprintValue(finalThreeDay.right.projection, index), index, true), rightFinal: formatSprint(right, index, true),
+      leftCurrent: formatSprint(sprintValue(finalSprint.left.current, index), index), leftAdd: formatSprint(sprintValue(finalSprint.left.projection, index), index, true), leftFinal: formatSprint(left, index, true),
+      rightCurrent: formatSprint(sprintValue(finalSprint.right.current, index), index), rightAdd: formatSprint(sprintValue(finalSprint.right.projection, index), index, true), rightFinal: formatSprint(right, index, true),
       winner: result === 0 ? 'tie' : result > 0 ? 'left' : 'right',
-      edge: result === 0 ? '平手' : `${result > 0 ? finalThreeDay.left.team : finalThreeDay.right.team} +${formatSprint(gap, index, true)}`,
+      edge: result === 0 ? '平手' : `${result > 0 ? finalSprint.left.team : finalSprint.right.team} +${formatSprint(gap, index, true)}`,
     }
   })
 })
@@ -277,11 +276,11 @@ const finalSprintSummary = computed(() => ({ left: finalSprintRows.value.filter(
         <Transition name="forecast-unlock"><div v-if="forecastGate !== 'revealed'" :class="['forecast-gate', { wrong: forecastGate === 'wrong', correct: forecastGate === 'correct' }]" role="dialog" aria-label="未來戰力預測表解鎖"><template v-if="forecastGate !== 'correct'"><p class="forecast-label">未來戰力預測表</p><p class="forecast-kicker">FORECAST LOCKED · SEASON ORACLE</p><div v-if="forecastGate === 'wrong'" :key="`wrong-mark-${wrongAttempt}`" class="forecast-error-mark">×</div><h3>你認為這季 NBA 總冠軍球隊是哪一支？</h3><p class="forecast-copy">猜對，才有資格查看未來戰力預測。</p><div class="championship-options"><button v-for="team in championOptions" :key="team" type="button" :class="{ selected: championGuess === team }" @click="chooseChampion(team)">{{ team }}</button></div><p v-if="forecastGate === 'wrong'" :key="`wrong-copy-${wrongAttempt}`" class="forecast-error">預言錯誤。再猜一次。</p></template><template v-else><div class="forecast-success-mark">✓</div><p class="forecast-kicker">ORACLE VERIFIED</p><h3>正確答案。</h3><p class="forecast-copy">阿肥加班幹大事，解鎖未來戰力預測。</p></template></div></Transition>
       </section>
       <section v-if="forecastOnly" class="sprint-lab" aria-labelledby="sprint-title">
-        <div class="sprint-heading"><div><p class="eyebrow">WEEK 3 · TWO-DAY FINISH</p><h2 id="sprint-title">阿肥 vs 哈利吸K｜兩日收官預測</h2></div><p>11/6 賽事已結束的累計成績，加上 Yahoo 11/7–11/8 剩餘賽程（台灣時間 11/8–11/9）；以 Yahoo 本季場均乘上每名非 IL 球員的預計出賽場次。數字是推演，不含臨場輪休與傷病變動。</p></div>
-        <div class="sprint-status"><span><b>{{ finalThreeDay.left.team }}</b> · 已打 {{ finalThreeDay.left.played }} 場／剩 {{ finalThreeDay.left.remaining }} 場</span><strong>目前 5 : 4</strong><span><b>{{ finalThreeDay.right.team }}</b> · 已打 {{ finalThreeDay.right.played }} 場／剩 {{ finalThreeDay.right.remaining }} 場</span></div>
-        <div class="sprint-table-wrap"><table class="sprint-table"><thead><tr><th>項目</th><th>{{ finalThreeDay.left.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>{{ finalThreeDay.right.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>預估差距</th></tr></thead><tbody><tr v-for="row in finalSprintRows" :key="row.category"><th>{{ row.category }}</th><td>{{ row.leftCurrent }}</td><td class="sprint-add">+{{ row.leftAdd }}</td><td :class="{ winner: row.winner === 'left' }">{{ row.leftFinal }}</td><td>{{ row.rightCurrent }}</td><td class="sprint-add">+{{ row.rightAdd }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.rightFinal }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
-        <div class="sprint-result"><span>預估收官</span><strong>{{ finalSprintSummary.left }} : {{ finalSprintSummary.right }}</strong><b>{{ finalThreeDay.left.team }} 優勢</b></div>
-        <p class="sprint-footnote">計算範圍：兩隊現有可排陣球員與板凳皆計入；IL 欄位與已移除球員不列入。Mario Hezonja 計入 1 場，Gary Payton II 不計入。Allen 下一場是否出賽尚未確認，本模型先計入 1 場；若缺席須扣除。命中率以預估命中／預估出手加權，不以個人百分比平均。</p>
+        <div class="sprint-heading"><div><p class="eyebrow">WEEK 3 · FINAL DAY</p><h2 id="sprint-title">阿肥 vs 哈利吸K｜最後一日收官預測</h2></div><p>Yahoo 11/7 賽事結束後的累計成績，加上 Yahoo 11/8 最後一天賽程（台灣時間 11/9）；以 Yahoo 本季場均乘上每名非 IL 球員的預計出賽場次。數字是推演，不含臨場輪休與傷病變動。</p></div>
+        <div class="sprint-status"><span><b>{{ finalSprint.left.team }}</b> · 已打 {{ finalSprint.left.played }} 場／剩 {{ finalSprint.left.remaining }} 場</span><strong>目前 6 : 2 : 1</strong><span><b>{{ finalSprint.right.team }}</b> · 已打 {{ finalSprint.right.played }} 場／剩 {{ finalSprint.right.remaining }} 場</span></div>
+        <div class="sprint-table-wrap"><table class="sprint-table"><thead><tr><th>項目</th><th>{{ finalSprint.left.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>{{ finalSprint.right.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>預估差距</th></tr></thead><tbody><tr v-for="row in finalSprintRows" :key="row.category"><th>{{ row.category }}</th><td>{{ row.leftCurrent }}</td><td class="sprint-add">+{{ row.leftAdd }}</td><td :class="{ winner: row.winner === 'left' }">{{ row.leftFinal }}</td><td>{{ row.rightCurrent }}</td><td class="sprint-add">+{{ row.rightAdd }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.rightFinal }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
+        <div class="sprint-result"><span>預估收官</span><strong>{{ finalSprintSummary.left }} : {{ finalSprintSummary.right }}</strong><b>{{ finalSprint.left.team }} 優勢</b></div>
+        <p class="sprint-footnote">計算範圍：兩隊現有可排陣球員與板凳皆計入；IL 欄位與已移除球員不列入。Danny Wolf 計入 1 場；Mario Hezonja 最後一天無賽程。命中率以預估命中／預估出手加權，不以個人百分比平均。</p>
       </section>
     </section>
   </main>
