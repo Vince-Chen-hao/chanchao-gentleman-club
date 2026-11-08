@@ -199,9 +199,9 @@ const finalSprint: { left: SprintTeam; right: SprintTeam } = {
     projection: { fgm: 18.3, fga: 35.9, ftm: 10.4, fta: 12.8, three: 7.4, pts: 54.1, reb: 19.5, ast: 9.7, st: 3, blk: 1.3, to: 6.8 },
   },
   right: {
-    team: "哈利吸K", played: 41, remaining: 5,
+    team: "哈利吸K", played: 41, remaining: 6,
     current: { fgm: 171, fga: 390, ftm: 75, fta: 107, three: 68, pts: 485, reb: 182, ast: 130, st: 32, blk: 18, to: 64 },
-    projection: { fgm: 18.3, fga: 41.8, ftm: 11, fta: 15.7, three: 7.4, pts: 55, reb: 29.1, ast: 12.2, st: 4.4, blk: 2.6, to: 7.1 },
+    projection: { fgm: 20.8, fga: 46.3, ftm: 12.5, fta: 19.2, three: 7.4, pts: 61.5, reb: 33.1, ast: 13.7, st: 5.4, blk: 3.6, to: 7.6 },
   },
 }
 const sprintValue = (totals: SprintTotals, index: number) => {
@@ -280,7 +280,7 @@ const finalSprintSummary = computed(() => ({ left: finalSprintRows.value.filter(
         <div class="sprint-status"><span><b>{{ finalSprint.left.team }}</b> · 已打 {{ finalSprint.left.played }} 場／剩 {{ finalSprint.left.remaining }} 場</span><strong>目前 6 : 2 : 1</strong><span><b>{{ finalSprint.right.team }}</b> · 已打 {{ finalSprint.right.played }} 場／剩 {{ finalSprint.right.remaining }} 場</span></div>
         <div class="sprint-table-wrap"><table class="sprint-table"><thead><tr><th>項目</th><th>{{ finalSprint.left.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>{{ finalSprint.right.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>預估差距</th></tr></thead><tbody><tr v-for="row in finalSprintRows" :key="row.category"><th>{{ row.category }}</th><td>{{ row.leftCurrent }}</td><td class="sprint-add">+{{ row.leftAdd }}</td><td :class="{ winner: row.winner === 'left' }">{{ row.leftFinal }}</td><td>{{ row.rightCurrent }}</td><td class="sprint-add">+{{ row.rightAdd }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.rightFinal }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
         <div class="sprint-result"><span>預估收官</span><strong>{{ finalSprintSummary.left }} : {{ finalSprintSummary.right }}</strong><b>{{ finalSprint.left.team }} 優勢</b></div>
-        <p class="sprint-footnote">計算範圍：兩隊現有可排陣球員與板凳皆計入；IL 欄位與已移除球員不列入。Danny Wolf 計入 1 場；Mario Hezonja 最後一天無賽程。命中率以預估命中／預估出手加權，不以個人百分比平均。</p>
+        <p class="sprint-footnote">計算範圍：兩隊現有可排陣球員與板凳皆計入；IL 欄位與已移除球員不列入。Danny Wolf 與 CK 新加入的 Dylan Cardwell 各計入 1 場；Mario Hezonja 最後一天無賽程。命中率以預估命中／預估出手加權，不以個人百分比平均。</p>
       </section>
     </section>
   </main>
