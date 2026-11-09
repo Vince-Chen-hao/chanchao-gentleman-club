@@ -36,23 +36,51 @@ const weekTwo: TeamWeek[] = [
   { team: 'Wintersoldier', gp: 48, fgm: '235/514', ftm: '108/134', stats: ['.457', '.806', '88', '666', '181', '127', '37', '20', '80'] },
   { team: '80年次男性', gp: 51, fgm: '229/525', ftm: '177/213', stats: ['.436', '.831', '67', '702', '241', '201', '40', '20', '97'] },
 ]
+const weekThree: TeamWeek[] = [
+  { team: '阿肥加班幹大事', gp: 48, fgm: '236/510', ftm: '144/195', stats: ['.463', '.738', '68', '684', '233', '159', '38', '21', '73'] },
+  { team: '哈利吸K', gp: 47, fgm: '186/427', ftm: '88/125', stats: ['.436', '.704', '72', '532', '214', '145', '34', '20', '76'] },
+  { team: '字母主委', gp: 46, fgm: '255/538', ftm: '110/145', stats: ['.474', '.759', '66', '686', '251', '182', '43', '39', '96'] },
+  { team: 'Gyuumao', gp: 49, fgm: '230/548', ftm: '139/176', stats: ['.420', '.790', '63', '662', '277', '177', '53', '20', '81'] },
+  { team: '浪子踢球', gp: 47, fgm: '183/421', ftm: '79/100', stats: ['.435', '.790', '69', '514', '225', '137', '54', '36', '83'] },
+  { team: '尬電鮪魚', gp: 45, fgm: '235/498', ftm: '119/146', stats: ['.472', '.815', '78', '667', '246', '140', '40', '30', '76'] },
+  { team: '傻逼維特向前衝', gp: 45, fgm: '245/536', ftm: '116/159', stats: ['.457', '.730', '70', '676', '245', '180', '40', '19', '94'] },
+  { team: '80年次男性屬羊', gp: 46, fgm: '212/475', ftm: '125/155', stats: ['.446', '.806', '66', '615', '237', '186', '44', '23', '95'] },
+  { team: '卡店老闆的斑馬PSA10', gp: 52, fgm: '258/547', ftm: '148/186', stats: ['.472', '.796', '65', '729', '287', '162', '46', '50', '91'] },
+  { team: '台北胯下大暖流艦隊', gp: 46, fgm: '190/365', ftm: '88/114', stats: ['.521', '.772', '53', '521', '222', '77', '28', '33', '62'] },
+  { team: 'ALOMAR', gp: 42, fgm: '256/551', ftm: '117/145', stats: ['.465', '.807', '87', '716', '203', '148', '42', '26', '89'] },
+  { team: '螞蟻雄兵閃身步絕地大反擊', gp: 45, fgm: '216/448', ftm: '130/153', stats: ['.482', '.850', '51', '613', '211', '109', '35', '14', '54'] },
+  { team: 'Wei Too Strong', gp: 48, fgm: '195/411', ftm: '86/103', stats: ['.474', '.835', '52', '528', '230', '146', '49', '18', '67'] },
+  { team: 'Wintersoldier', gp: 48, fgm: '256/597', ftm: '149/185', stats: ['.429', '.805', '96', '757', '234', '157', '36', '26', '92'] },
+]
 
 const split = (value: string) => value.split('/').map(Number) as [number, number]
-const combined = weekTwo.map(current => {
-  const previous = weekOne.find(entry => entry.team === current.team)!
-  const [fgm1, fga1] = split(previous.fgm); const [fgm2, fga2] = split(current.fgm)
-  const [ftm1, fta1] = split(previous.ftm); const [ftm2, fta2] = split(current.ftm)
-  const sums = current.stats.slice(2).map((value, index) => Number(value) + Number(previous.stats[index + 2]))
-  return { team: current.team, gp: previous.gp + current.gp, stats: [(fgm1 + fgm2) / (fga1 + fga2), (ftm1 + ftm2) / (fta1 + fta2), ...sums] }
+const canonicalTeam = (team: string) => ({
+  '蟻人快歸來': '螞蟻雄兵閃身步絕地大反擊',
+  '80年次男性': '80年次男性屬羊',
+}[team] || team)
+const combined = weekThree.map(current => {
+  const entries = [weekOne, weekTwo, weekThree].map(week => week.find(entry => canonicalTeam(entry.team) === canonicalTeam(current.team))!)
+  const shooting = entries.map(entry => ({ fg: split(entry.fgm), ft: split(entry.ftm) }))
+  const sums = current.stats.slice(2).map((_, index) => entries.reduce((total, entry) => total + Number(entry.stats[index + 2]), 0))
+  return {
+    team: current.team,
+    gp: entries.reduce((total, entry) => total + entry.gp, 0),
+    stats: [
+      shooting.reduce((total, entry) => total + entry.fg[0], 0) / shooting.reduce((total, entry) => total + entry.fg[1], 0),
+      shooting.reduce((total, entry) => total + entry.ft[0], 0) / shooting.reduce((total, entry) => total + entry.ft[1], 0),
+      ...sums,
+    ],
+  }
 })
-type MatchupPeriod = 'combined' | 'weekOne' | 'weekTwo'
+type MatchupPeriod = 'combined' | 'weekOne' | 'weekTwo' | 'weekThree'
 type MatchupTeam = { team: string; gp: number; stats: number[] }
-const normalizeWeek = (entries: TeamWeek[]): MatchupTeam[] => entries.map(entry => ({ team: entry.team, gp: entry.gp, stats: entry.stats.map(Number) }))
-const weeklyMatchupData = { weekOne: normalizeWeek(weekOne), weekTwo: normalizeWeek(weekTwo) }
+const normalizeWeek = (entries: TeamWeek[]): MatchupTeam[] => entries.map(entry => ({ team: canonicalTeam(entry.team), gp: entry.gp, stats: entry.stats.map(Number) }))
+const weeklyMatchupData = { weekOne: normalizeWeek(weekOne), weekTwo: normalizeWeek(weekTwo), weekThree: normalizeWeek(weekThree) }
 const matchupPeriods: { id: MatchupPeriod; label: string; caption: string }[] = [
-  { id: 'combined', label: '兩週合計', caption: 'WEEK 1–2 · COMBINED' },
+  { id: 'combined', label: '三週合計', caption: 'WEEK 1–3 · COMBINED' },
   { id: 'weekOne', label: 'WEEK 1', caption: 'WEEK 1 · FINAL' },
   { id: 'weekTwo', label: 'WEEK 2', caption: 'WEEK 2 · FINAL' },
+  { id: 'weekThree', label: 'WEEK 3', caption: 'WEEK 3 · FINAL' },
 ]
 const ranks = combined.map(entry => categories.map((_, index) => {
   const sorted = [...combined].sort((a, b) => index === 8 ? a.stats[index] - b.stats[index] : b.stats[index] - a.stats[index])
@@ -256,8 +284,8 @@ const finalSprintSummary = computed(() => ({ left: finalSprintRows.value.filter(
     </section>
     <section class="analysis-board wrap">
       <template v-if="!forecastOnly">
-      <div class="analysis-heading"><div><p class="eyebrow ink">WEEK 1–2 · COMBINED DATA</p><h2>全員九項戰力圖</h2></div><p>兩週原始數據合併後再排名。FG% 與 FT% 以總命中／總出手加權計算；TO 越低越強。</p></div>
-      <div class="analysis-method"><span>14 TEAMS</span><span>2 WEEKS</span><span>9 CATEGORIES</span><span>14 RANK LEVELS</span><span>點雷達開啟完整名次</span></div>
+      <div class="analysis-heading"><div><p class="eyebrow ink">WEEK 1–3 · COMBINED DATA</p><h2>全員九項戰力圖</h2></div><p>三週原始數據合併後再排名。FG% 與 FT% 以總命中／總出手加權計算；TO 越低越強。</p></div>
+      <div class="analysis-method"><span>14 TEAMS</span><span>3 WEEKS</span><span>9 CATEGORIES</span><span>14 RANK LEVELS</span><span>點雷達開啟完整名次</span></div>
       <div class="analysis-grid">
         <article v-for="(player, playerIndex) in playerCards" :key="player.team" class="analysis-card" :class="{ active: isRankModalOpen && selectedTeam === player.team }" tabindex="0" role="button" :aria-pressed="isRankModalOpen && selectedTeam === player.team" @click="selectPlayer(player.team)" @keydown.enter="selectPlayer(player.team)" @keydown.space.prevent="selectPlayer(player.team)">
           <div class="analysis-card-head"><div><small>TEAM {{ String(playerIndex + 1).padStart(2, '0') }}</small><h3>{{ player.team }}</h3></div><b>{{ player.gp }}<em> GP</em></b></div>
