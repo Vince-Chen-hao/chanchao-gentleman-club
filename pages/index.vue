@@ -347,7 +347,7 @@ const resetHonorCard = (event: PointerEvent) => {
     <div class="wrap site-menu-inner">
       <a class="menu-brand" href="#top" aria-label="Chanchao Gentleman Club 首頁"><img src="/cgc-logo.svg" alt="Chanchao Gentleman Club"><span>2026–27</span></a>
       <div class="menu-links">
-        <a href="#prizes">積分規則</a><a href="#members">選手牆</a><a href="#alumni">名人堂</a><a href="#current-season">本季戰報</a><NuxtLink to="/paymeforwin">paymeforwin</NuxtLink><NuxtLink to="/lastseason">上季回顧</NuxtLink>
+        <a href="#prizes">積分規則</a><a href="#members">選手牆</a><a href="#alumni">名人堂</a><a href="#current-season">本季戰報</a><NuxtLink to="/lastseason">上季回顧</NuxtLink>
       </div>
     </div>
   </nav>
