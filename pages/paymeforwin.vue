@@ -157,7 +157,7 @@ const matchupSummary = computed(() => {
 type ProjectionPlayer = { name: string; nba: string; slot: string; fgm: number; fga: number; ftm: number; fta: number; stats: number[] }
 type ProjectionRange = 'week4' | 'week5' | 'week6' | 'week7'
 const futureSchedule: Record<string, [number, number, number, number]> = {
-  SAC: [3, 3, 3, 2], SAS: [4, 3, 4, 2], GSW: [3, 4, 3, 1], LAL: [3, 3, 3, 2], HOU: [4, 3, 3, 2], DEN: [3, 4, 3, 2], LAC: [3, 3, 4, 2], CLE: [4, 3, 3, 2], NYK: [4, 4, 3, 2], TOR: [4, 3, 3, 2], BKN: [2, 3, 4, 2], POR: [3, 4, 4, 2], IND: [4, 3, 3, 2], ORL: [3, 4, 3, 1], CHA: [3, 2, 3, 2], MEM: [4, 4, 4, 2], MIA: [3, 3, 3, 2], BOS: [3, 4, 3, 2], NOP: [4, 4, 3, 2], OKC: [4, 3, 3, 2], WAS: [4, 4, 2, 2], CHI: [3, 4, 3, 2], PHX: [4, 3, 3, 2],
+  SAC: [3, 3, 3, 2], SAS: [4, 3, 4, 2], GSW: [3, 4, 3, 1], LAL: [3, 3, 3, 2], HOU: [4, 3, 3, 2], DEN: [3, 4, 3, 2], LAC: [3, 3, 4, 2], CLE: [4, 3, 3, 2], NYK: [4, 4, 3, 2], TOR: [4, 3, 3, 2], BKN: [2, 3, 4, 2], POR: [3, 4, 4, 2], IND: [4, 3, 3, 2], ORL: [3, 4, 3, 1], CHA: [3, 2, 3, 2], MEM: [4, 4, 4, 2], MIA: [3, 3, 3, 2], BOS: [3, 4, 3, 2], NOP: [4, 4, 3, 2], OKC: [4, 3, 3, 2], WAS: [4, 4, 2, 2], CHI: [3, 4, 3, 2], PHX: [4, 3, 3, 2], PHI: [3, 4, 3, 2],
 }
 const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
   { team: '阿肥加班幹大事', players: [
@@ -174,6 +174,7 @@ const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
     { name: "Jarrett Allen", nba: 'CLE', slot: 'Util', fgm: 5.1, fga: 8.3, ftm: 2.8, fta: 4, stats: [0.3, 13.3, 7.8, 1.3, 0.6, 1.5, 0.9] },
     { name: "Deni Avdija", nba: 'POR', slot: 'SF', fgm: 7.2, fga: 15.3, ftm: 6.2, fta: 9.3, stats: [1.7, 22.3, 6.4, 6.3, 0.9, 0.1, 3] },
     { name: "Luke Kennard", nba: 'PHX', slot: 'Util', fgm: 2.8, fga: 6.5, ftm: 0.7, fta: 0.8, stats: [1.8, 8.3, 1.4, 2, 0.3, 0.1, 0.8] },
+    { name: "Kentavious Caldwell-Pope", nba: 'PHI', slot: 'Util', fgm: 3.1, fga: 7.2, ftm: 1, fta: 1.2, stats: [1.4, 8.6, 2.6, 1.7, 1.1, 0.4, 0.8] },
     { name: "Julius Randle", nba: 'BKN', slot: 'BN', fgm: 6.6, fga: 14.8, ftm: 6, fta: 7.3, stats: [1.7, 20.8, 7, 5.1, 0.9, 0.1, 4.1] },
     { name: "Jalen Suggs", nba: 'ORL', slot: 'IL', fgm: 3.3, fga: 9.3, ftm: 1, fta: 1.3, stats: [0.3, 8, 5, 5.7, 2, 0.3, 3] },
   ] },
