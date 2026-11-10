@@ -6,6 +6,6 @@
 
 <style scoped>
 .private-forecast-page{min-height:100vh;background:#f3f0e8}
-iframe{display:block;width:100%;height:2800px;border:0;background:#f3f0e8}
-@media(max-width:760px){iframe{height:3600px}}
+iframe{display:block;width:100%;height:4200px;border:0;background:#f3f0e8}
+@media(max-width:760px){iframe{height:6000px}}
 </style>
