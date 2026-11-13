@@ -214,25 +214,25 @@ type LiveProjection = { gp: number; fgm: number; fga: number; ftm: number; fta: 
 // Yahoo Week 4 schedule read player-by-player on Nov. 13. Bench players are included; IL players are excluded.
 const weekFourRemainingGames: Record<string, Record<string, number>> = {
   '阿肥加班幹大事': {
-    'Jordan Goodwin': 1, 'Deni Avdija': 2, 'Jalen Brunson': 2, 'Zaccharie Risacher': 2,
-    'Obi Toppin': 2, 'Tari Eason': 2, 'Jarrett Allen': 2, 'Brook Lopez': 2,
-    'RJ Barrett': 1, 'Meleek Thomas': 2, "De'Aaron Fox": 2, 'Ziaire Williams': 1,
+    'Jordan Goodwin': 1, 'Deni Avdija': 1, 'Jalen Brunson': 1, 'Zaccharie Risacher': 2,
+    'Obi Toppin': 1, 'Tari Eason': 1, 'Jarrett Allen': 1, 'Brook Lopez': 1,
+    'RJ Barrett': 1, 'Meleek Thomas': 1, "De'Aaron Fox": 1, 'Ziaire Williams': 1,
     'Julius Randle': 1, 'Nikola Jokić': 1,
   },
   '80年次男性屬羊': {
-    'James Harden': 2, 'Andrew Nembhard': 2, 'Trae Young': 1, 'Cedric Coward': 2,
-    'Franz Wagner': 1, 'Aaron Nesmith': 2, 'Jalen Smith': 2, 'Neemias Queta': 1,
-    'Dejounte Murray': 2, 'Walter Clayton Jr.': 2, 'Bam Adebayo': 2, 'Coby White': 1,
+    'James Harden': 1, 'Andrew Nembhard': 1, 'Trae Young': 1, 'Cedric Coward': 1,
+    'Aaron Nesmith': 1, 'Jalen Smith': 1, 'Neemias Queta': 1,
+    'Dejounte Murray': 1, 'Walter Clayton Jr.': 2, 'Bam Adebayo': 1, 'Coby White': 1,
     'Jamison Battle': 1, 'Jayson Tatum': 1,
   },
 }
-// Live Yahoo totals captured before Friday's remaining games begin.
+// Live Yahoo totals captured after Friday's completed games.
 const weekFourLive: Record<string, LiveProjection> = {
   '阿肥加班幹大事': {
-    gp: 25, fgm: 158, fga: 325, ftm: 52, fta: 69, stats: [41, 409, 138, 97, 25, 16, 33],
+    gp: 28, fgm: 166, fga: 346, ftm: 52, fta: 69, stats: [46, 430, 147, 101, 28, 17, 34],
   },
   '80年次男性屬羊': {
-    gp: 24, fgm: 123, fga: 287, ftm: 89, fta: 105, stats: [48, 383, 111, 112, 19, 11, 48],
+    gp: 28, fgm: 134, fga: 319, ftm: 103, fta: 119, stats: [52, 423, 115, 123, 19, 11, 55],
   },
 }
 const projectedPlayersFor = (team: string) => {
