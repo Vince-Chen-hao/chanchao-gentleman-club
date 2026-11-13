@@ -166,6 +166,7 @@ const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
     { name: "Ziaire Williams", nba: 'LAL', slot: 'SG', fgm: 3.6, fga: 6.6, ftm: 1.3, fta: 1.4, stats: [1.9, 10.3, 3, 1.9, 1.6, 0.1, 0.6] },
     { name: "RJ Barrett", nba: 'TOR', slot: 'G', fgm: 8.1, fga: 17.1, ftm: 3.8, fta: 5.9, stats: [1.6, 21.6, 6.1, 3.9, 0.4, 0.4, 1.8] },
     { name: 'Zaccharie Risacher', nba: 'DAL', slot: 'SF', fgm: 2.7, fga: 7, ftm: 0.9, fta: 1.7, stats: [0.8, 7.1, 4.9, 1.4, 1.3, 1.1, 1.1] },
+    { name: 'Obi Toppin', nba: 'IND', slot: 'PF', fgm: 3.3, fga: 6.9, ftm: 1, fta: 1.4, stats: [1.1, 8.7, 3.7, 1.6, 0.5, 0.3, 0.8] },
     { name: "Tari Eason", nba: 'HOU', slot: 'F', fgm: 3.6, fga: 8.4, ftm: 1.4, fta: 1.5, stats: [0.8, 9.4, 6.1, 1.3, 1.1, 1.2, 1.4] },
     { name: "Brook Lopez", nba: 'LAC', slot: 'C', fgm: 5.3, fga: 9.4, ftm: 1.6, fta: 2.4, stats: [1.4, 13.5, 5.1, 1, 0.5, 1.1, 1.3] },
     { name: "Nikola Jokić", nba: 'DEN', slot: 'C', fgm: 8.9, fga: 18.4, ftm: 4.1, fta: 4.6, stats: [1, 22.9, 10.1, 9.1, 2, 1.1, 3.3] },
@@ -178,7 +179,7 @@ const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
     { name: "Jalen Suggs", nba: 'ORL', slot: 'IL', fgm: 3.3, fga: 9.3, ftm: 1, fta: 1.3, stats: [0.3, 8, 5, 5.7, 2, 0.3, 3] },
   ] },
   { team: '80年次男性屬羊', players: [
-    { name: 'Mikel Brown Jr.', nba: 'BKN', slot: 'PG', fgm: 3.8, fga: 11.3, ftm: 2.5, fta: 3, stats: [1.8, 12, 2.3, 4, .7, .2, 2.2] }, { name: 'Coby White', nba: 'CHA', slot: 'SG', fgm: 2.5, fga: 9, ftm: 0, fta: 0, stats: [.5, 5.5, 2.5, 2.5, 0, .5, 2.5] }, { name: 'James Harden', nba: 'CLE', slot: 'G', fgm: 4.9, fga: 12.9, ftm: 4.3, fta: 5.1, stats: [2.6, 16.6, 5.3, 6.3, .9, .5, 3] }, { name: 'Cedric Coward', nba: 'MEM', slot: 'SF', fgm: 5.3, fga: 11.1, ftm: 1, fta: 1.4, stats: [2.7, 14.3, 8.7, 2.7, 1.6, .1, 1.4] }, { name: 'Jamison Battle', nba: 'TOR', slot: 'PF', fgm: 1.8, fga: 4.3, ftm: .4, fta: .5, stats: [1.1, 5.1, 1.8, 1.2, .7, .2, .5] }, { name: 'Franz Wagner', nba: 'ORL', slot: 'F', fgm: 7.4, fga: 17.7, ftm: 4.4, fta: 5.6, stats: [1, 20.3, 6.1, 7.6, .9, 0, 4.1] }, { name: 'Bam Adebayo', nba: 'MIA', slot: 'C', fgm: 7, fga: 13.1, ftm: 4, fta: 5.3, stats: [.6, 18.6, 8.3, 3.5, 2.1, .6, 2.1] }, { name: 'Neemias Queta', nba: 'BOS', slot: 'C', fgm: 3.5, fga: 6, ftm: 2.5, fta: 4, stats: [.3, 9.8, 6.3, 1.4, .3, 1.5, 1] }, { name: 'Andrew Nembhard', nba: 'IND', slot: 'Util', fgm: 6.3, fga: 13.6, ftm: 4, fta: 4.4, stats: [2.4, 19, 2.1, 6.9, .7, .1, 2.4] }, { name: 'Dejounte Murray', nba: 'NOP', slot: 'Util', fgm: 6.6, fga: 13.8, ftm: 4.2, fta: 4.4, stats: [.8, 18.2, 6.2, 5.6, 2.4, .8, 3] }, { name: 'Trae Young', nba: 'WAS', slot: 'Util', fgm: 5.4, fga: 13.3, ftm: 7, fta: 8.3, stats: [1.9, 19.6, 3.4, 9.5, 1.1, .3, 3] }, { name: 'Jayson Tatum', nba: 'BOS', slot: 'SF', fgm: 8.4, fga: 20.1, ftm: 8.6, fta: 9.9, stats: [1.6, 27, 6, 7.9, .7, .4, 3] }, { name: 'Jalen Smith', nba: 'CHI', slot: 'BN', fgm: 4.3, fga: 9, ftm: 1.1, fta: 1.5, stats: [1.4, 11, 7.8, 1.8, .4, .9, .8] }, { name: 'Walter Clayton Jr.', nba: 'DAL', slot: 'BN', fgm: 2.5, fga: 5.3, ftm: 0.9, fta: 1.3, stats: [1.3, 7.2, 3.2, 3.4, 0.7, 0.2, 1.3] }, { name: 'Aaron Nesmith', nba: 'IND', slot: 'BN', fgm: 4.1, fga: 10.3, ftm: 2.7, fta: 3.3, stats: [1.7, 12.7, 2, 1.9, 1, .3, 1.6] },
+    { name: 'Mikel Brown Jr.', nba: 'BKN', slot: 'IL', fgm: 3.8, fga: 11.3, ftm: 2.5, fta: 3, stats: [1.8, 12, 2.3, 4, .7, .2, 2.2] }, { name: 'Coby White', nba: 'CHA', slot: 'SG', fgm: 2.5, fga: 9, ftm: 0, fta: 0, stats: [.5, 5.5, 2.5, 2.5, 0, .5, 2.5] }, { name: 'James Harden', nba: 'CLE', slot: 'G', fgm: 4.9, fga: 12.9, ftm: 4.3, fta: 5.1, stats: [2.6, 16.6, 5.3, 6.3, .9, .5, 3] }, { name: 'Cedric Coward', nba: 'MEM', slot: 'SF', fgm: 5.3, fga: 11.1, ftm: 1, fta: 1.4, stats: [2.7, 14.3, 8.7, 2.7, 1.6, .1, 1.4] }, { name: 'Jamison Battle', nba: 'TOR', slot: 'PF', fgm: 1.8, fga: 4.3, ftm: .4, fta: .5, stats: [1.1, 5.1, 1.8, 1.2, .7, .2, .5] }, { name: 'Franz Wagner', nba: 'ORL', slot: 'F', fgm: 7.4, fga: 17.7, ftm: 4.4, fta: 5.6, stats: [1, 20.3, 6.1, 7.6, .9, 0, 4.1] }, { name: 'Bam Adebayo', nba: 'MIA', slot: 'C', fgm: 7, fga: 13.1, ftm: 4, fta: 5.3, stats: [.6, 18.6, 8.3, 3.5, 2.1, .6, 2.1] }, { name: 'Neemias Queta', nba: 'BOS', slot: 'C', fgm: 3.5, fga: 6, ftm: 2.5, fta: 4, stats: [.3, 9.8, 6.3, 1.4, .3, 1.5, 1] }, { name: 'Andrew Nembhard', nba: 'IND', slot: 'Util', fgm: 6.3, fga: 13.6, ftm: 4, fta: 4.4, stats: [2.4, 19, 2.1, 6.9, .7, .1, 2.4] }, { name: 'Dejounte Murray', nba: 'NOP', slot: 'Util', fgm: 6.6, fga: 13.8, ftm: 4.2, fta: 4.4, stats: [.8, 18.2, 6.2, 5.6, 2.4, .8, 3] }, { name: 'Trae Young', nba: 'WAS', slot: 'Util', fgm: 5.4, fga: 13.3, ftm: 7, fta: 8.3, stats: [1.9, 19.6, 3.4, 9.5, 1.1, .3, 3] }, { name: 'Jayson Tatum', nba: 'BOS', slot: 'SF', fgm: 8.4, fga: 20.1, ftm: 8.6, fta: 9.9, stats: [1.6, 27, 6, 7.9, .7, .4, 3] }, { name: 'Jalen Smith', nba: 'CHI', slot: 'BN', fgm: 4.3, fga: 9, ftm: 1.1, fta: 1.5, stats: [1.4, 11, 7.8, 1.8, .4, .9, .8] }, { name: 'Walter Clayton Jr.', nba: 'DAL', slot: 'BN', fgm: 2.5, fga: 5.3, ftm: 0.9, fta: 1.3, stats: [1.3, 7.2, 3.2, 3.4, 0.7, 0.2, 1.3] }, { name: 'Aaron Nesmith', nba: 'IND', slot: 'BN', fgm: 4.1, fga: 10.3, ftm: 2.7, fta: 3.3, stats: [1.7, 12.7, 2, 1.9, 1, .3, 1.6] },
   ] },
 ]
 const latestProjectionRange = (): ProjectionRange => {
@@ -209,23 +210,36 @@ const projectionGameCount = (nba: string) => {
   const games = futureSchedule[nba] || [0, 0, 0, 0]
   return games[{ week4: 0, week5: 1, week6: 2, week7: 3 }[projectionRange.value]]
 }
-type LiveProjection = { gp: number; fgm: number; fga: number; ftm: number; fta: number; stats: number[]; playedGames: Record<string, number> }
-// Week 4, Day 3 final Yahoo totals. Each player's completed games are removed from the remaining schedule projection.
-const weekFourLive: Record<string, LiveProjection> = {
+type LiveProjection = { gp: number; fgm: number; fga: number; ftm: number; fta: number; stats: number[] }
+// Yahoo Week 4 schedule read player-by-player on Nov. 13. Bench players are included; IL players are excluded.
+const weekFourRemainingGames: Record<string, Record<string, number>> = {
   '阿肥加班幹大事': {
-    gp: 25, fgm: 142, fga: 301, ftm: 51, fta: 67, stats: [41, 405, 133, 97, 25, 16, 32],
-    playedGames: { "De'Aaron Fox": 2, 'Ziaire Williams': 2, 'RJ Barrett': 2, 'Mario Hezonja': 1, 'Tari Eason': 2, 'Brook Lopez': 1, 'Nikola Jokić': 2, 'Jalen Brunson': 2, 'Meleek Thomas': 2, 'Jarrett Allen': 2, 'Deni Avdija': 2, 'Luke Kennard': 1, 'Kentavious Caldwell-Pope': 1, 'Julius Randle': 1 },
+    'Jordan Goodwin': 1, 'Deni Avdija': 2, 'Jalen Brunson': 2, 'Zaccharie Risacher': 2,
+    'Obi Toppin': 2, 'Tari Eason': 2, 'Jarrett Allen': 2, 'Brook Lopez': 2,
+    'RJ Barrett': 1, 'Meleek Thomas': 2, "De'Aaron Fox": 2, 'Ziaire Williams': 1,
+    'Julius Randle': 1, 'Nikola Jokić': 1,
   },
   '80年次男性屬羊': {
-    gp: 24, fgm: 112, fga: 263, ftm: 80, fta: 96, stats: [48, 377, 111, 111, 19, 10, 47],
-    playedGames: { 'Coby White': 1, 'James Harden': 2, 'Cedric Coward': 2, 'Franz Wagner': 2, 'Bam Adebayo': 1, 'Neemias Queta': 2, 'Andrew Nembhard': 2, 'Dejounte Murray': 2, 'Alex Caruso': 2, 'Trae Young': 2, 'Jalen Smith': 1, 'Quentin Grimes': 1 },
+    'James Harden': 2, 'Andrew Nembhard': 2, 'Trae Young': 1, 'Cedric Coward': 2,
+    'Franz Wagner': 1, 'Aaron Nesmith': 2, 'Jalen Smith': 2, 'Neemias Queta': 1,
+    'Dejounte Murray': 2, 'Walter Clayton Jr.': 2, 'Bam Adebayo': 2, 'Coby White': 1,
+    'Jamison Battle': 1, 'Jayson Tatum': 1,
+  },
+}
+// Live Yahoo totals captured before Friday's remaining games begin.
+const weekFourLive: Record<string, LiveProjection> = {
+  '阿肥加班幹大事': {
+    gp: 25, fgm: 158, fga: 325, ftm: 52, fta: 69, stats: [41, 409, 138, 97, 25, 16, 33],
+  },
+  '80年次男性屬羊': {
+    gp: 24, fgm: 123, fga: 287, ftm: 89, fta: 105, stats: [48, 383, 111, 112, 19, 11, 48],
   },
 }
 const projectedPlayersFor = (team: string) => {
   const live = projectionRange.value === 'week4' ? weekFourLive[team] : undefined
   return projectionTeams.find(entry => entry.team === team)!.players.filter(player => player.slot !== 'IL').map(player => ({
     ...player,
-    gp: Math.max(0, projectionGameCount(player.nba) - (live?.playedGames[player.name] || 0)),
+    gp: live ? (weekFourRemainingGames[team]?.[player.name] || 0) : projectionGameCount(player.nba),
   }))
 }
 const calculateProjection = (team: string) => {
