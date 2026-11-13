@@ -335,9 +335,9 @@ const weiForecastSources: Record<WeiForecastSource, { label: string; caption: st
   },
   last14: {
     label: '最近 14 天平均',
-    caption: 'Yahoo 最近 14 天的球員場均乘上 Week 5 賽程；包含 BN，不計 IL 與目前無數據的 O 球員。',
+    caption: 'Yahoo 最近 14 天的球員場均套用同一份 Week 5 賽程；GP 固定，僅切換球員平均數據。包含 BN，不計 IL 與目前無數據的 O 球員。',
     left: { team: '阿肥加班幹大事', gp: 45, values: [.478, .759, 75, 710, 242, 167, 44, 20, 74] },
-    right: { team: 'Wei Too Strong', gp: 54, values: [.491, .820, 64, 662, 294, 186, 58, 24, 67] },
+    right: { team: 'Wei Too Strong', gp: 46, values: [.491, .820, 55, 564, 251, 159, 49, 20, 57] },
   },
 }
 const weiWeekFive = computed(() => weiForecastSources[weiForecastSource.value])
