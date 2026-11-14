@@ -161,25 +161,38 @@ const futureSchedule: Record<string, [number, number, number, number]> = {
 }
 const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
   { team: '阿肥加班幹大事', players: [
-    { name: "De'Aaron Fox", nba: 'SAS', slot: 'PG', fgm: 4.5, fga: 8.6, ftm: 3.9, fta: 4.8, stats: [0.9, 13.8, 3.9, 5.9, 1.3, 0.6, 2.6] },
-    { name: "Devin Vassell", nba: 'SAS', slot: 'IL', fgm: 3.9, fga: 9.6, ftm: 2.5, fta: 2.6, stats: [1.6, 11.9, 3.8, 3.1, 1.7, 0.3, 1] },
-    { name: "Ziaire Williams", nba: 'LAL', slot: 'SG', fgm: 3.6, fga: 6.6, ftm: 1.3, fta: 1.4, stats: [1.9, 10.3, 3, 1.9, 1.6, 0.1, 0.6] },
-    { name: "RJ Barrett", nba: 'TOR', slot: 'G', fgm: 8.1, fga: 17.1, ftm: 3.8, fta: 5.9, stats: [1.6, 21.6, 6.1, 3.9, 0.4, 0.4, 1.8] },
-    { name: 'Zaccharie Risacher', nba: 'DAL', slot: 'SF', fgm: 2.7, fga: 7, ftm: 0.9, fta: 1.7, stats: [0.8, 7.1, 4.9, 1.4, 1.3, 1.1, 1.1] },
-    { name: 'Obi Toppin', nba: 'IND', slot: 'PF', fgm: 3.3, fga: 6.9, ftm: 1, fta: 1.4, stats: [1.1, 8.7, 3.7, 1.6, 0.5, 0.3, 0.8] },
-    { name: "Tari Eason", nba: 'HOU', slot: 'F', fgm: 3.6, fga: 8.4, ftm: 1.4, fta: 1.5, stats: [0.8, 9.4, 6.1, 1.3, 1.1, 1.2, 1.4] },
-    { name: "Brook Lopez", nba: 'LAC', slot: 'C', fgm: 5.3, fga: 9.4, ftm: 1.6, fta: 2.4, stats: [1.4, 13.5, 5.1, 1, 0.5, 1.1, 1.3] },
-    { name: "Nikola Jokić", nba: 'DEN', slot: 'C', fgm: 8.9, fga: 18.4, ftm: 4.1, fta: 4.6, stats: [1, 22.9, 10.1, 9.1, 2, 1.1, 3.3] },
-    { name: "Jalen Brunson", nba: 'NYK', slot: 'Util', fgm: 8.8, fga: 20.8, ftm: 5.9, fta: 7.8, stats: [2.8, 26.2, 3, 5.6, 0.7, 0.3, 1.7] },
-    { name: "Meleek Thomas", nba: 'CLE', slot: 'Util', fgm: 4.6, fga: 10.1, ftm: 0.6, fta: 0.6, stats: [2.6, 12.3, 2.6, 1, 1, 0.1, 1.1] },
-    { name: "Jarrett Allen", nba: 'CLE', slot: 'Util', fgm: 5.1, fga: 8.3, ftm: 2.8, fta: 4, stats: [0.3, 13.3, 7.8, 1.3, 0.6, 1.5, 0.9] },
-    { name: "Deni Avdija", nba: 'POR', slot: 'SF', fgm: 7.2, fga: 15.3, ftm: 6.2, fta: 9.3, stats: [1.7, 22.3, 6.4, 6.3, 0.9, 0.1, 3] },
-    { name: 'Jordan Goodwin', nba: 'PHX', slot: 'SG', fgm: 2.2, fga: 5.3, ftm: 0.7, fta: 1, stats: [0.7, 5.8, 3.6, 2.4, 1.2, 0.3, 1] },
-    { name: "Julius Randle", nba: 'BKN', slot: 'BN', fgm: 6.6, fga: 14.8, ftm: 6, fta: 7.3, stats: [1.7, 20.8, 7, 5.1, 0.9, 0.1, 4.1] },
-    { name: "Jalen Suggs", nba: 'ORL', slot: 'IL', fgm: 3.3, fga: 9.3, ftm: 1, fta: 1.3, stats: [0.3, 8, 5, 5.7, 2, 0.3, 3] },
+    {"name":"De'Aaron Fox","nba":"SAS","slot":"PG","fgm":4.8,"fga":9.3,"ftm":3.6,"fta":4.4,"stats":[1.1,14.2,4.3,6.2,1.3,0.5,2.3]},
+    {"name":"Deni Avdija","nba":"POR","slot":"SG","fgm":7.5,"fga":15.7,"ftm":6.2,"fta":8.9,"stats":[1.9,23,6.1,6.5,1.2,0.3,3.2]},
+    {"name":"Jalen Brunson","nba":"NYK","slot":"G","fgm":8.9,"fga":20.7,"ftm":5.5,"fta":7.1,"stats":[2.6,26,3.1,5.2,0.6,0.4,1.6]},
+    {"name":"Obi Toppin","nba":"IND","slot":"PF","fgm":4.8,"fga":9.3,"ftm":1.4,"fta":2,"stats":[1.8,12.8,4.8,1.6,0.2,0.2,0.9]},
+    {"name":"Tari Eason","nba":"HOU","slot":"F","fgm":3.6,"fga":8.8,"ftm":1.3,"fta":1.4,"stats":[0.8,9.3,5.8,1.3,1.1,1.2,1.3]},
+    {"name":"Jarrett Allen","nba":"CLE","slot":"C","fgm":5,"fga":7.8,"ftm":2.6,"fta":3.7,"stats":[0.3,12.9,8.3,1.4,0.6,1.4,0.8]},
+    {"name":"Brook Lopez","nba":"LAC","slot":"C","fgm":5.3,"fga":9.3,"ftm":1.7,"fta":2.6,"stats":[1.3,13.6,5.2,1,0.4,0.9,1]},
+    {"name":"Meleek Thomas","nba":"CLE","slot":"Util","fgm":5,"fga":10.4,"ftm":0.4,"fta":0.4,"stats":[2.7,13.1,2.8,1.2,1.2,0.3,1]},
+    {"name":"Devin Vassell","nba":"SAS","slot":"Util","fgm":3.9,"fga":9.6,"ftm":2.5,"fta":2.6,"stats":[1.6,11.9,3.8,3.1,1.7,0.3,1]},
+    {"name":"RJ Barrett","nba":"TOR","slot":"Util","fgm":8.2,"fga":17.6,"ftm":3.4,"fta":5.5,"stats":[1.6,21.3,6.7,4.1,0.5,0.5,1.8]},
+    {"name":"Zaccharie Risacher","nba":"DAL","slot":"BN","fgm":3.3,"fga":7.8,"ftm":0.6,"fta":1,"stats":[1.1,8.3,5,1.5,1.3,1.1,1.1]},
+    {"name":"Ziaire Williams","nba":"LAL","slot":"BN","fgm":4,"fga":7.1,"ftm":1,"fta":1.2,"stats":[2,11,2.6,2,1.5,0.2,0.4]},
+    {"name":"Julius Randle","nba":"BKN","slot":"BN","fgm":6.4,"fga":14.5,"ftm":5.6,"fta":7.1,"stats":[1.4,19.7,6.5,5,0.7,0.2,3.8]},
+    {"name":"Nikola Jokić","nba":"DEN","slot":"BN","fgm":9.2,"fga":18.4,"ftm":4.1,"fta":4.7,"stats":[1,23.5,10.8,9,1.8,1.2,3]},
+    {"name":"Jalen Suggs","nba":"ORL","slot":"IL","fgm":3.3,"fga":9.3,"ftm":1,"fta":1.3,"stats":[0.3,8,5,5.7,2,0.3,3]},
   ] },
   { team: '80年次男性屬羊', players: [
-    { name: 'Mikel Brown Jr.', nba: 'BKN', slot: 'IL', fgm: 3.8, fga: 11.3, ftm: 2.5, fta: 3, stats: [1.8, 12, 2.3, 4, .7, .2, 2.2] }, { name: 'Coby White', nba: 'CHA', slot: 'SG', fgm: 2.5, fga: 9, ftm: 0, fta: 0, stats: [.5, 5.5, 2.5, 2.5, 0, .5, 2.5] }, { name: 'James Harden', nba: 'CLE', slot: 'G', fgm: 4.9, fga: 12.9, ftm: 4.3, fta: 5.1, stats: [2.6, 16.6, 5.3, 6.3, .9, .5, 3] }, { name: 'Cedric Coward', nba: 'MEM', slot: 'SF', fgm: 5.3, fga: 11.1, ftm: 1, fta: 1.4, stats: [2.7, 14.3, 8.7, 2.7, 1.6, .1, 1.4] }, { name: 'Jamison Battle', nba: 'TOR', slot: 'PF', fgm: 1.8, fga: 4.3, ftm: .4, fta: .5, stats: [1.1, 5.1, 1.8, 1.2, .7, .2, .5] }, { name: 'Franz Wagner', nba: 'ORL', slot: 'F', fgm: 7.4, fga: 17.7, ftm: 4.4, fta: 5.6, stats: [1, 20.3, 6.1, 7.6, .9, 0, 4.1] }, { name: 'Bam Adebayo', nba: 'MIA', slot: 'C', fgm: 7, fga: 13.1, ftm: 4, fta: 5.3, stats: [.6, 18.6, 8.3, 3.5, 2.1, .6, 2.1] }, { name: 'Neemias Queta', nba: 'BOS', slot: 'C', fgm: 3.5, fga: 6, ftm: 2.5, fta: 4, stats: [.3, 9.8, 6.3, 1.4, .3, 1.5, 1] }, { name: 'Andrew Nembhard', nba: 'IND', slot: 'Util', fgm: 6.3, fga: 13.6, ftm: 4, fta: 4.4, stats: [2.4, 19, 2.1, 6.9, .7, .1, 2.4] }, { name: 'Dejounte Murray', nba: 'NOP', slot: 'Util', fgm: 6.6, fga: 13.8, ftm: 4.2, fta: 4.4, stats: [.8, 18.2, 6.2, 5.6, 2.4, .8, 3] }, { name: 'Trae Young', nba: 'WAS', slot: 'Util', fgm: 5.4, fga: 13.3, ftm: 7, fta: 8.3, stats: [1.9, 19.6, 3.4, 9.5, 1.1, .3, 3] }, { name: 'Jayson Tatum', nba: 'BOS', slot: 'SF', fgm: 8.4, fga: 20.1, ftm: 8.6, fta: 9.9, stats: [1.6, 27, 6, 7.9, .7, .4, 3] }, { name: 'Jalen Smith', nba: 'CHI', slot: 'BN', fgm: 4.3, fga: 9, ftm: 1.1, fta: 1.5, stats: [1.4, 11, 7.8, 1.8, .4, .9, .8] }, { name: 'Walter Clayton Jr.', nba: 'DAL', slot: 'BN', fgm: 2.5, fga: 5.3, ftm: 0.9, fta: 1.3, stats: [1.3, 7.2, 3.2, 3.4, 0.7, 0.2, 1.3] }, { name: 'Aaron Nesmith', nba: 'IND', slot: 'BN', fgm: 4.1, fga: 10.3, ftm: 2.7, fta: 3.3, stats: [1.7, 12.7, 2, 1.9, 1, .3, 1.6] },
+    {"name":"James Harden","nba":"CLE","slot":"PG","fgm":4.8,"fga":12.2,"ftm":4.5,"fta":5.3,"stats":[2.7,16.7,4.6,5.6,0.8,0.5,2.9]},
+    {"name":"Andrew Nembhard","nba":"IND","slot":"SG","fgm":5.8,"fga":12.5,"ftm":3.1,"fta":3.5,"stats":[2.4,17.1,2.1,7.8,0.5,0.2,2.2]},
+    {"name":"Cedric Coward","nba":"MEM","slot":"G","fgm":4.7,"fga":10.5,"ftm":1.1,"fta":1.4,"stats":[2.3,12.8,8.7,2.7,1.5,0.2,1.5]},
+    {"name":"Franz Wagner","nba":"ORL","slot":"SF","fgm":8.5,"fga":18.6,"ftm":5.1,"fta":6.2,"stats":[1.3,23.5,6.5,7.9,1.4,0,4.4]},
+    {"name":"Leaky Black","nba":"SAC","slot":"PF","fgm":1.7,"fga":4.1,"ftm":0.1,"fta":0.3,"stats":[1.4,5,3,1.6,1.3,0.4,0]},
+    {"name":"Gradey Dick","nba":"LAC","slot":"F","fgm":2.7,"fga":5.3,"ftm":1.1,"fta":1.3,"stats":[0.8,7.3,3,0.7,0.7,0.2,0.8]},
+    {"name":"Bam Adebayo","nba":"MIA","slot":"C","fgm":6.5,"fga":12.7,"ftm":4.4,"fta":5.8,"stats":[0.5,17.8,8.4,3.3,2.2,0.7,1.6]},
+    {"name":"Jalen Smith","nba":"CHI","slot":"C","fgm":4.9,"fga":9.2,"ftm":1.2,"fta":1.6,"stats":[1.8,12.8,7.4,1.9,0.3,1.1,0.6]},
+    {"name":"Aaron Nesmith","nba":"IND","slot":"Util","fgm":3.8,"fga":10.3,"ftm":2.3,"fta":2.9,"stats":[1.8,11.7,2.2,1.7,0.8,0.3,1.5]},
+    {"name":"Kenrich Williams","nba":"OKC","slot":"Util","fgm":2.3,"fga":5.3,"ftm":0.8,"fta":1,"stats":[1.4,6.8,3.5,1.2,0.1,0.2,0.3]},
+    {"name":"Neemias Queta","nba":"BOS","slot":"BN","fgm":3.3,"fga":6,"ftm":2.3,"fta":3.5,"stats":[0.3,9.2,6.7,1.8,0.3,1.3,1.3]},
+    {"name":"Trae Young","nba":"WAS","slot":"BN","fgm":5.4,"fga":13.7,"ftm":6.8,"fta":7.9,"stats":[2.2,19.7,3.1,8.8,1.1,0.2,3.2]},
+    {"name":"Coby White","nba":"CHA","slot":"BN","fgm":3.4,"fga":10.8,"ftm":2.2,"fta":2.4,"stats":[0.8,9.8,2.2,3.6,0,0.2,3]},
+    {"name":"Jayson Tatum","nba":"BOS","slot":"BN","fgm":8,"fga":19.4,"ftm":7.9,"fta":8.9,"stats":[2.4,26.3,6.1,7.5,0.6,0.8,2.8]},
+    {"name":"Dejounte Murray","nba":"NOP","slot":"IL","fgm":4.9,"fga":11.3,"ftm":2.8,"fta":3,"stats":[0.9,13.4,4.6,4.4,1.6,0.6,2.3]},
   ] },
 ]
 const latestProjectionRange = (): ProjectionRange => {
@@ -211,32 +224,75 @@ const projectionGameCount = (nba: string) => {
   return games[{ week4: 0, week5: 1, week6: 2, week7: 3 }[projectionRange.value]]
 }
 type LiveProjection = { gp: number; fgm: number; fga: number; ftm: number; fta: number; stats: number[] }
-// Yahoo Week 4 schedule read player-by-player on Nov. 13. Bench players are included; IL players are excluded.
+// Unstarted games on Yahoo dates Nov. 13–15; bench included, IL excluded.
 const weekFourRemainingGames: Record<string, Record<string, number>> = {
-  '阿肥加班幹大事': {
-    'Jordan Goodwin': 1, 'Deni Avdija': 1, 'Jalen Brunson': 1, 'Zaccharie Risacher': 2,
-    'Obi Toppin': 1, 'Tari Eason': 1, 'Jarrett Allen': 1, 'Brook Lopez': 1,
-    'RJ Barrett': 1, 'Meleek Thomas': 1, "De'Aaron Fox": 1, 'Ziaire Williams': 1,
-    'Julius Randle': 1, 'Nikola Jokić': 1,
+  "阿肥加班幹大事": {
+    "Brook Lopez": 2,
+    "Zaccharie Risacher": 2,
+    "Julius Randle": 1,
+    "Jarrett Allen": 1,
+    "Nikola Jokić": 1,
+    "Meleek Thomas": 1,
+    "De'Aaron Fox": 1,
+    "Ziaire Williams": 1,
+    "Jalen Brunson": 1,
+    "Obi Toppin": 1,
+    "Tari Eason": 1,
+    "RJ Barrett": 1,
+    "Devin Vassell": 1
   },
-  '80年次男性屬羊': {
-    'James Harden': 1, 'Andrew Nembhard': 1, 'Trae Young': 1, 'Cedric Coward': 1,
-    'Aaron Nesmith': 1, 'Jalen Smith': 1, 'Neemias Queta': 1,
-    'Dejounte Murray': 1, 'Walter Clayton Jr.': 2, 'Bam Adebayo': 1, 'Coby White': 1,
-    'Jamison Battle': 1, 'Jayson Tatum': 1,
-  },
+  "80年次男性屬羊": {
+    "Gradey Dick": 2,
+    "Kenrich Williams": 2,
+    "James Harden": 1,
+    "Cedric Coward": 1,
+    "Bam Adebayo": 1,
+    "Jalen Smith": 1,
+    "Andrew Nembhard": 1,
+    "Leaky Black": 1,
+    "Aaron Nesmith": 1,
+    "Neemias Queta": 1,
+    "Trae Young": 1,
+    "Coby White": 1,
+    "Jayson Tatum": 1
+  }
 }
-// Live Yahoo totals captured after Friday's completed games.
 const weekFourLive: Record<string, LiveProjection> = {
-  '阿肥加班幹大事': {
-    gp: 28, fgm: 166, fga: 346, ftm: 52, fta: 69, stats: [46, 430, 147, 101, 28, 17, 34],
+  "阿肥加班幹大事": {
+    "gp": 30,
+    "fgm": 195,
+    "fga": 400,
+    "ftm": 64,
+    "fta": 83,
+    "stats": [
+      54,
+      508,
+      173,
+      119,
+      33,
+      17,
+      42
+    ]
   },
-  '80年次男性屬羊': {
-    gp: 28, fgm: 134, fga: 319, ftm: 103, fta: 119, stats: [52, 423, 115, 123, 19, 11, 55],
-  },
+  "80年次男性屬羊": {
+    "gp": 31,
+    "fgm": 184,
+    "fga": 420,
+    "ftm": 137,
+    "fta": 154,
+    "stats": [
+      63,
+      568,
+      171,
+      161,
+      27,
+      12,
+      71
+    ]
+  }
 }
-const projectedPlayersFor = (team: string) => {
-  const live = projectionRange.value === 'week4' ? weekFourLive[team] : undefined
+const projectedPlayersFor = (team: string, range = projectionRange.value) => {
+  const live = range === 'week4' ? weekFourLive[team] : undefined
   return projectionTeams.find(entry => entry.team === team)!.players.filter(player => player.slot !== 'IL').map(player => ({
     ...player,
     gp: live ? (weekFourRemainingGames[team]?.[player.name] || 0) : projectionGameCount(player.nba),
@@ -276,7 +332,7 @@ const liveSprint = (team: string): SprintTotals => {
   const live = weekFourLive[team]
   return { fgm: live.fgm, fga: live.fga, ftm: live.ftm, fta: live.fta, three: live.stats[0], pts: live.stats[1], reb: live.stats[2], ast: live.stats[3], st: live.stats[4], blk: live.stats[5], to: live.stats[6] }
 }
-const remainingSprint = (team: string): SprintTotals => projectedPlayersFor(team).reduce((sum, player) => {
+const remainingSprint = (team: string): SprintTotals => projectedPlayersFor(team, 'week4').reduce((sum, player) => {
   sum.fgm += player.fgm * player.gp; sum.fga += player.fga * player.gp; sum.ftm += player.ftm * player.gp; sum.fta += player.fta * player.gp
   sum.three += player.stats[0] * player.gp; sum.pts += player.stats[1] * player.gp; sum.reb += player.stats[2] * player.gp; sum.ast += player.stats[3] * player.gp; sum.st += player.stats[4] * player.gp; sum.blk += player.stats[5] * player.gp; sum.to += player.stats[6] * player.gp
   return sum
@@ -289,13 +345,13 @@ const finalSprint = computed<{ left: SprintTeam; right: SprintTeam }>(() => {
   const leftProjection = remainingSprint(leftTeam)
   const rightProjection = remainingSprint(rightTeam)
   return {
-    left: { team: leftTeam, played: leftLive.gp, remaining: projectedPlayersFor(leftTeam).reduce((sum, player) => sum + player.gp, 0), current: liveSprint(leftTeam), projection: leftProjection },
-    right: { team: rightTeam, played: rightLive.gp, remaining: projectedPlayersFor(rightTeam).reduce((sum, player) => sum + player.gp, 0), current: liveSprint(rightTeam), projection: rightProjection },
+    left: { team: leftTeam, played: leftLive.gp, remaining: projectedPlayersFor(leftTeam, 'week4').reduce((sum, player) => sum + player.gp, 0), current: liveSprint(leftTeam), projection: leftProjection },
+    right: { team: rightTeam, played: rightLive.gp, remaining: projectedPlayersFor(rightTeam, 'week4').reduce((sum, player) => sum + player.gp, 0), current: liveSprint(rightTeam), projection: rightProjection },
   }
 })
 const activeSprintDetail = ref<'left' | 'right' | null>(null)
 const activeSprintTeam = computed(() => activeSprintDetail.value === 'left' ? finalSprint.value.left.team : finalSprint.value.right.team)
-const activeSprintPlayers = computed(() => activeSprintDetail.value ? projectedPlayersFor(activeSprintTeam.value) : [])
+const activeSprintPlayers = computed(() => activeSprintDetail.value ? projectedPlayersFor(activeSprintTeam.value, 'week4').filter(player => player.gp > 0) : [])
 const sprintValue = (totals: SprintTotals, index: number) => {
   if (index === 0) return totals.fgm / totals.fga
   if (index === 1) return totals.ftm / totals.fta
@@ -395,19 +451,19 @@ const weiWeekFiveSummary = computed(() => ({ left: weiWeekFiveRows.value.filter(
         <div class="projection-content" :class="{ obscured: forecastGate !== 'revealed' }"><div class="matchup-heading"><div><p class="eyebrow">FUTURE WINDOW · ROSTER MODEL</p><h2 id="projection-title">未來戰力預測</h2></div><p>用本季場均乘上下一週 NBA 賽程；FG%、FT% 則以預估命中與出手加權。此試行版先收錄兩隊。</p></div>
           <div class="projection-controls"><label><span>預測區間</span><select v-model="projectionRange"><option value="week4">WEEK 4</option><option value="week5">WEEK 5</option><option value="week6">WEEK 6</option><option value="week7">WEEK 7</option></select></label></div>
           <p class="projection-caption">{{ projectionRangeLabels[projectionRange] }} · 依 2026/11/9–12/6 賽程與目前 Yahoo 名單快照估算；包含 BN、不計 IL，尚未扣除每日排陣與傷病缺賽。</p>
-          <div v-if="projectionRange === 'week4'" class="projection-live"><span>DAY 3 · FINAL</span><strong>阿肥加班幹大事 <b>6 : 3</b> 80年次男性屬羊</strong><em>已打完的 49 場 GP 已納入下方 Week 4 推估</em></div>
+          <div v-if="projectionRange === 'week4'" class="projection-live"><span>WEEK 4 · LIVE SNAPSHOT</span><strong>阿肥加班幹大事 <b>5 : 4</b> 80年次男性屬羊</strong><em>已納入 Yahoo 即時累計（含開打中的比賽）</em></div>
           <div class="team-selectors projection-selectors"><label><span>左方隊伍</span><select v-model="leftProjectionTeam"><option v-for="team in projectionTeams" :key="`projection-left-${team.team}`" :value="team.team">{{ team.team }}</option></select></label><b>VS</b><label><span>右方隊伍</span><select v-model="rightProjectionTeam"><option v-for="team in projectionTeams" :key="`projection-right-${team.team}`" :value="team.team">{{ team.team }}</option></select></label></div>
-          <div class="matchup-games projection-games"><span>{{ leftProjectionTeam }} · <b>{{ leftProjection.gp }}</b> 預計總 GP</span><em>{{ projectionRange === 'week4' ? 'Day 3 實績＋剩餘賽程' : '球員賽程總和' }}</em><span>{{ rightProjectionTeam }} · <b>{{ rightProjection.gp }}</b> 預計總 GP</span></div>
+          <div class="matchup-games projection-games"><span>{{ leftProjectionTeam }} · <b>{{ leftProjection.gp }}</b> 預計總 GP</span><em>{{ projectionRange === 'week4' ? '即時實績＋未開打賽程' : '球員賽程總和' }}</em><span>{{ rightProjectionTeam }} · <b>{{ rightProjection.gp }}</b> 預計總 GP</span></div>
           <div class="matchup-table-wrap"><table class="matchup-table projection-table"><colgroup><col class="category-col"><col class="score-col"><col class="score-col"><col class="result-col"></colgroup><thead><tr><th>項目</th><th>{{ leftProjectionTeam }}</th><th>{{ rightProjectionTeam }}</th><th>單項優勢</th></tr></thead><tbody><tr v-for="row in projectionRows" :key="row.category"><th class="matchup-category">{{ row.category }}</th><td :class="{ winner: row.winner === 'left' }">{{ row.left }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}</td><td><span :class="['matchup-result', row.winner]">{{ row.note }}</span></td></tr></tbody></table></div>
           <div class="matchup-final projection-final"><span>預測對位</span><strong>{{ projectionSummary.left }}</strong><strong>{{ projectionSummary.right }}</strong><em aria-hidden="true"></em></div>
           <div class="projection-details"><div class="projection-detail-tabs"><button type="button" :class="{ active: activeProjectionDetail === 'left' }" @click="activeProjectionDetail = activeProjectionDetail === 'left' ? null : 'left'">查看 {{ leftProjectionTeam }} 的球員乘算明細</button><button type="button" :class="{ active: activeProjectionDetail === 'right' }" @click="activeProjectionDetail = activeProjectionDetail === 'right' ? null : 'right'">查看 {{ rightProjectionTeam }} 的球員乘算明細</button></div><section v-if="activeProjectionDetail" class="projection-roster"><h3>{{ activeProjectionTeam }} · 球員乘算明細</h3><div class="projection-table-wrap"><table><thead><tr><th>球員</th><th>NBA</th><th>位置</th><th>預計 GP</th><th>3PTM</th><th>PTS</th><th>REB</th><th>AST</th><th>ST</th><th>BLK</th><th>TO</th></tr></thead><tbody><tr v-for="player in activeProjection.players" :key="player.name"><th>{{ player.name }}</th><td>{{ player.nba }}</td><td>{{ player.slot }}</td><td>{{ player.gp }}</td><td>{{ (player.stats[0] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[1] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[2] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[3] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[4] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[5] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[6] * player.gp).toFixed(1) }}</td></tr></tbody></table></div></section></div></div>
         <Transition name="forecast-unlock"><div v-if="forecastGate !== 'revealed'" :class="['forecast-gate', { wrong: forecastGate === 'wrong', correct: forecastGate === 'correct' }]" role="dialog" aria-label="未來戰力預測表解鎖"><template v-if="forecastGate !== 'correct'"><p class="forecast-label">未來戰力預測表</p><p class="forecast-kicker">FORECAST LOCKED · SEASON ORACLE</p><div v-if="forecastGate === 'wrong'" :key="`wrong-mark-${wrongAttempt}`" class="forecast-error-mark">×</div><h3>你認為這季 NBA 總冠軍球隊是哪一支？</h3><p class="forecast-copy">猜對，才有資格查看未來戰力預測。</p><div class="championship-options"><button v-for="team in championOptions" :key="team" type="button" :class="{ selected: championGuess === team }" @click="chooseChampion(team)">{{ team }}</button></div><p v-if="forecastGate === 'wrong'" :key="`wrong-copy-${wrongAttempt}`" class="forecast-error">預言錯誤。再猜一次。</p></template><template v-else><div class="forecast-success-mark">✓</div><p class="forecast-kicker">ORACLE VERIFIED</p><h3>正確答案。</h3><p class="forecast-copy">阿肥加班幹大事，解鎖未來戰力預測。</p></template></div></Transition>
       </section>
       <section v-if="forecastOnly" class="sprint-lab" aria-labelledby="sprint-title">
-        <div class="sprint-heading"><div><p class="eyebrow">WEEK 4 · LIVE MATCHUP</p><h2 id="sprint-title">阿肥 vs 80年次男性｜本週對戰推演</h2></div><p>已納入 Day 3 的 Yahoo 最終數據；其餘賽程以目前可排陣球員的場均乘上剩餘出賽數估算。板凳會計入，IL 不計入。</p></div>
-        <div class="sprint-status"><span><b>{{ finalSprint.left.team }}</b> · 已打 {{ finalSprint.left.played }} 場／預計再打 {{ finalSprint.left.remaining }} 場</span><strong>目前 6 : 3</strong><span><b>{{ finalSprint.right.team }}</b> · 已打 {{ finalSprint.right.played }} 場／預計再打 {{ finalSprint.right.remaining }} 場</span></div>
+        <div class="sprint-heading"><div><p class="eyebrow">WEEK 4 · LIVE MATCHUP</p><h2 id="sprint-title">阿肥 vs 80年次男性｜本週對戰推演</h2></div><p>Yahoo 11/13–11/15（台灣時間 11/14–11/16）收官推估。已開打的比賽只採計快照當下數據；未開打場次以 Yahoo 本季場均估算。包含板凳，不計 IL；Aaron Nesmith（出賽存疑）暫計 1 場。</p></div>
+        <div class="sprint-status"><span><b>{{ finalSprint.left.team }}</b> · 已打 {{ finalSprint.left.played }} 場／預計再打 {{ finalSprint.left.remaining }} 場</span><strong>目前 5 : 4</strong><span><b>{{ finalSprint.right.team }}</b> · 已打 {{ finalSprint.right.played }} 場／預計再打 {{ finalSprint.right.remaining }} 場</span></div>
         <div class="sprint-table-wrap"><table class="sprint-table"><thead><tr><th>項目</th><th>{{ finalSprint.left.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>{{ finalSprint.right.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>預估差距</th></tr></thead><tbody><tr v-for="row in finalSprintRows" :key="row.category"><th>{{ row.category }}</th><td>{{ row.leftCurrent }}</td><td class="sprint-add">+{{ row.leftAdd }}</td><td :class="{ winner: row.winner === 'left' }">{{ row.leftFinal }}</td><td>{{ row.rightCurrent }}</td><td class="sprint-add">+{{ row.rightAdd }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.rightFinal }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
-        <div class="sprint-result"><span>預估收官</span><strong>{{ finalSprintSummary.left }} : {{ finalSprintSummary.right }}</strong><b>{{ finalSprint.left.team }} 優勢</b></div>
+        <div class="sprint-result"><span>預估收官</span><strong>{{ finalSprintSummary.left }} : {{ finalSprintSummary.right }}</strong><b>{{ finalSprintSummary.left === finalSprintSummary.right ? '平手' : (finalSprintSummary.left > finalSprintSummary.right ? finalSprint.left.team : finalSprint.right.team) + ' 優勢' }}</b></div>
         <div class="sprint-details">
           <div class="projection-detail-tabs"><button type="button" :class="{ active: activeSprintDetail === 'left' }" @click="activeSprintDetail = activeSprintDetail === 'left' ? null : 'left'">查看 {{ finalSprint.left.team }} 的剩餘球員明細</button><button type="button" :class="{ active: activeSprintDetail === 'right' }" @click="activeSprintDetail = activeSprintDetail === 'right' ? null : 'right'">查看 {{ finalSprint.right.team }} 的剩餘球員明細</button></div>
           <section v-if="activeSprintDetail" class="projection-roster"><h3>{{ activeSprintTeam }} · 剩餘賽程球員乘算明細</h3><div class="projection-table-wrap"><table><thead><tr><th>球員</th><th>NBA</th><th>位置</th><th>剩餘 GP</th><th>3PTM</th><th>PTS</th><th>REB</th><th>AST</th><th>ST</th><th>BLK</th><th>TO</th></tr></thead><tbody><tr v-for="player in activeSprintPlayers" :key="`sprint-${player.name}`"><th>{{ player.name }}</th><td>{{ player.nba }}</td><td>{{ player.slot }}</td><td>{{ player.gp }}</td><td>{{ (player.stats[0] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[1] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[2] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[3] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[4] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[5] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[6] * player.gp).toFixed(1) }}</td></tr></tbody></table></div></section>
