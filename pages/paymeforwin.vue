@@ -224,14 +224,10 @@ const projectionGameCount = (nba: string) => {
   return games[{ week4: 0, week5: 1, week6: 2, week7: 3 }[projectionRange.value]]
 }
 type LiveProjection = { gp: number; fgm: number; fga: number; ftm: number; fta: number; stats: number[] }
-// Unstarted games on Yahoo dates Nov. 14–15; bench included, IL excluded.
+// Unstarted games on Yahoo dates Nov. 15; bench included, IL excluded.
 const weekFourRemainingGames: Record<string, Record<string, number>> = {
   "阿肥加班幹大事": {
-    "Zaccharie Risacher": 2,
-    "Julius Randle": 1,
-    "Jarrett Allen": 1,
-    "Nikola Jokić": 1,
-    "Meleek Thomas": 1,
+    "Zaccharie Risacher": 1,
     "De'Aaron Fox": 1,
     "Ziaire Williams": 1,
     "Jalen Brunson": 1,
@@ -242,11 +238,6 @@ const weekFourRemainingGames: Record<string, Record<string, number>> = {
     "Devin Vassell": 1
   },
   "80年次男性屬羊": {
-    "James Harden": 1,
-    "Cedric Coward": 1,
-    "Bam Adebayo": 1,
-    "Jalen Smith": 1,
-    "Joan Beringer": 1,
     "Andrew Nembhard": 1,
     "Gradey Dick": 1,
     "Aaron Nesmith": 1,
@@ -259,35 +250,35 @@ const weekFourRemainingGames: Record<string, Record<string, number>> = {
 }
 const weekFourLive: Record<string, LiveProjection> = {
   "阿肥加班幹大事": {
-    "gp": 37,
-    "fgm": 221,
-    "fga": 445,
-    "ftm": 78,
-    "fta": 99,
+    "gp": 41,
+    "fgm": 248,
+    "fga": 497,
+    "ftm": 89,
+    "fta": 114,
     "stats": [
-      61,
-      581,
-      190,
-      130,
-      34,
+      69,
+      654,
+      208,
+      147,
+      41,
       20,
-      46
+      58
     ]
   },
   "80年次男性屬羊": {
-    "gp": 38,
-    "fgm": 196,
-    "fga": 444,
-    "ftm": 138,
-    "fta": 157,
+    "gp": 42,
+    "fgm": 209,
+    "fga": 466,
+    "ftm": 152,
+    "fta": 178,
     "stats": [
-      65,
-      595,
-      185,
-      166,
-      31,
-      14,
-      72
+      70,
+      640,
+      207,
+      174,
+      37,
+      18,
+      75
     ]
   }
 }
@@ -451,7 +442,7 @@ const weiWeekFiveSummary = computed(() => ({ left: weiWeekFiveRows.value.filter(
         <div class="projection-content" :class="{ obscured: forecastGate !== 'revealed' }"><div class="matchup-heading"><div><p class="eyebrow">FUTURE WINDOW · ROSTER MODEL</p><h2 id="projection-title">未來戰力預測</h2></div><p>用本季場均乘上下一週 NBA 賽程；FG%、FT% 則以預估命中與出手加權。此試行版先收錄兩隊。</p></div>
           <div class="projection-controls"><label><span>預測區間</span><select v-model="projectionRange"><option value="week4">WEEK 4</option><option value="week5">WEEK 5</option><option value="week6">WEEK 6</option><option value="week7">WEEK 7</option></select></label></div>
           <p class="projection-caption">{{ projectionRangeLabels[projectionRange] }} · 依 2026/11/9–12/6 賽程與目前 Yahoo 名單快照估算；包含 BN、不計 IL，尚未扣除每日排陣與傷病缺賽。</p>
-          <div v-if="projectionRange === 'week4'" class="projection-live"><span>WEEK 4 · TWO DAYS LEFT</span><strong>阿肥加班幹大事 <b>5 : 4</b> 80年次男性屬羊</strong><em>已納入 Yahoo 11/13 完賽累計</em></div>
+          <div v-if="projectionRange === 'week4'" class="projection-live"><span>WEEK 4 · FINAL DAY</span><strong>阿肥加班幹大事 <b>6 : 3</b> 80年次男性屬羊</strong><em>已納入 Yahoo 11/14 完賽累計</em></div>
           <div class="team-selectors projection-selectors"><label><span>左方隊伍</span><select v-model="leftProjectionTeam"><option v-for="team in projectionTeams" :key="`projection-left-${team.team}`" :value="team.team">{{ team.team }}</option></select></label><b>VS</b><label><span>右方隊伍</span><select v-model="rightProjectionTeam"><option v-for="team in projectionTeams" :key="`projection-right-${team.team}`" :value="team.team">{{ team.team }}</option></select></label></div>
           <div class="matchup-games projection-games"><span>{{ leftProjectionTeam }} · <b>{{ leftProjection.gp }}</b> 預計總 GP</span><em>{{ projectionRange === 'week4' ? '完賽實績＋最後兩天賽程' : '球員賽程總和' }}</em><span>{{ rightProjectionTeam }} · <b>{{ rightProjection.gp }}</b> 預計總 GP</span></div>
           <div class="matchup-table-wrap"><table class="matchup-table projection-table"><colgroup><col class="category-col"><col class="score-col"><col class="score-col"><col class="result-col"></colgroup><thead><tr><th>項目</th><th>{{ leftProjectionTeam }}</th><th>{{ rightProjectionTeam }}</th><th>單項優勢</th></tr></thead><tbody><tr v-for="row in projectionRows" :key="row.category"><th class="matchup-category">{{ row.category }}</th><td :class="{ winner: row.winner === 'left' }">{{ row.left }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}</td><td><span :class="['matchup-result', row.winner]">{{ row.note }}</span></td></tr></tbody></table></div>
@@ -460,8 +451,8 @@ const weiWeekFiveSummary = computed(() => ({ left: weiWeekFiveRows.value.filter(
         <Transition name="forecast-unlock"><div v-if="forecastGate !== 'revealed'" :class="['forecast-gate', { wrong: forecastGate === 'wrong', correct: forecastGate === 'correct' }]" role="dialog" aria-label="未來戰力預測表解鎖"><template v-if="forecastGate !== 'correct'"><p class="forecast-label">未來戰力預測表</p><p class="forecast-kicker">FORECAST LOCKED · SEASON ORACLE</p><div v-if="forecastGate === 'wrong'" :key="`wrong-mark-${wrongAttempt}`" class="forecast-error-mark">×</div><h3>你認為這季 NBA 總冠軍球隊是哪一支？</h3><p class="forecast-copy">猜對，才有資格查看未來戰力預測。</p><div class="championship-options"><button v-for="team in championOptions" :key="team" type="button" :class="{ selected: championGuess === team }" @click="chooseChampion(team)">{{ team }}</button></div><p v-if="forecastGate === 'wrong'" :key="`wrong-copy-${wrongAttempt}`" class="forecast-error">預言錯誤。再猜一次。</p></template><template v-else><div class="forecast-success-mark">✓</div><p class="forecast-kicker">ORACLE VERIFIED</p><h3>正確答案。</h3><p class="forecast-copy">阿肥加班幹大事，解鎖未來戰力預測。</p></template></div></Transition>
       </section>
       <section v-if="forecastOnly" class="sprint-lab" aria-labelledby="sprint-title">
-        <div class="sprint-heading"><div><p class="eyebrow">WEEK 4 · LIVE MATCHUP</p><h2 id="sprint-title">阿肥 vs 80年次男性｜本週對戰推演</h2></div><p>採計 Yahoo 11/13 完賽數據，以及 11/14–11/15（台灣時間 11/15–11/16）賽程。以 Yahoo 本季場均估算，包含板凳、不計 IL；Jalen Smith、Aaron Nesmith 出賽存疑，各暫計 1 場。</p></div>
-        <div class="sprint-status"><span><b>{{ finalSprint.left.team }}</b> · 已打 {{ finalSprint.left.played }} 場／預計再打 {{ finalSprint.left.remaining }} 場</span><strong>目前 5 : 4</strong><span><b>{{ finalSprint.right.team }}</b> · 已打 {{ finalSprint.right.played }} 場／預計再打 {{ finalSprint.right.remaining }} 場</span></div>
+        <div class="sprint-heading"><div><p class="eyebrow">WEEK 4 · LIVE MATCHUP</p><h2 id="sprint-title">阿肥 vs 80年次男性｜本週對戰推演</h2></div><p>採計 Yahoo 11/14 完賽數據，以及 11/15（台灣時間 11/16）賽程。以 Yahoo 本季場均估算，包含板凳、不計 IL；Andrew Nembhard、Aaron Nesmith 出賽存疑，各暫計 1 場。</p></div>
+        <div class="sprint-status"><span><b>{{ finalSprint.left.team }}</b> · 已打 {{ finalSprint.left.played }} 場／預計再打 {{ finalSprint.left.remaining }} 場</span><strong>目前 6 : 3</strong><span><b>{{ finalSprint.right.team }}</b> · 已打 {{ finalSprint.right.played }} 場／預計再打 {{ finalSprint.right.remaining }} 場</span></div>
         <div class="sprint-table-wrap"><table class="sprint-table"><thead><tr><th>項目</th><th>{{ finalSprint.left.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>{{ finalSprint.right.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>預估差距</th></tr></thead><tbody><tr v-for="row in finalSprintRows" :key="row.category"><th>{{ row.category }}</th><td>{{ row.leftCurrent }}</td><td class="sprint-add">+{{ row.leftAdd }}</td><td :class="{ winner: row.winner === 'left' }">{{ row.leftFinal }}</td><td>{{ row.rightCurrent }}</td><td class="sprint-add">+{{ row.rightAdd }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.rightFinal }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
         <div class="sprint-result"><span>預估收官</span><strong>{{ finalSprintSummary.left }} : {{ finalSprintSummary.right }}</strong><b>{{ finalSprintSummary.left === finalSprintSummary.right ? '平手' : (finalSprintSummary.left > finalSprintSummary.right ? finalSprint.left.team : finalSprint.right.team) + ' 優勢' }}</b></div>
         <div class="sprint-details">
