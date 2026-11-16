@@ -336,14 +336,21 @@ const projectionRows = computed(() => categories.map((category, index) => {
 }))
 const projectionSummary = computed(() => ({ left: projectionRows.value.filter(row => row.winner === 'left').length, right: projectionRows.value.filter(row => row.winner === 'right').length }))
 
+type WeekFiveSource = 'season' | 'last14'
+const weekFiveSource = ref<WeekFiveSource>('season')
+const recentFormMultiplier: Record<string, { fgm: number; ftm: number; stats: number[] }> = {
+  '阿肥加班幹大事': { fgm: 1.037, ftm: 1.004, stats: [1.23, 1.109, 1.085, 1.057, 1.1, 0.8, 0.914] },
+  'Wei Too Strong': { fgm: 1.049, ftm: 1.035, stats: [1.038, 1.016, 1.101, 1.272, 1.021, 1.053, 0.95] },
+}
 const weekFiveRosterForecast = computed(() => {
   const makeTeam = (team: string) => {
     const players = projectedPlayersFor(team, 'week5')
+    const form = weekFiveSource.value === 'last14' ? recentFormMultiplier[team] : undefined
     const totals = players.reduce((sum, player) => {
       sum.gp += player.gp
-      sum.fgm += player.fgm * player.gp; sum.fga += player.fga * player.gp
-      sum.ftm += player.ftm * player.gp; sum.fta += player.fta * player.gp
-      player.stats.forEach((value, index) => { sum.stats[index] += value * player.gp })
+      sum.fgm += player.fgm * (form?.fgm || 1) * player.gp; sum.fga += player.fga * player.gp
+      sum.ftm += player.ftm * (form?.ftm || 1) * player.gp; sum.fta += player.fta * player.gp
+      player.stats.forEach((value, index) => { sum.stats[index] += value * (form?.stats[index] || 1) * player.gp })
       return sum
     }, { gp: 0, fgm: 0, fga: 0, ftm: 0, fta: 0, stats: Array(7).fill(0) as number[] })
     return { team, players, gp: totals.gp, values: [totals.fgm / totals.fga, totals.ftm / totals.fta, ...totals.stats] }
@@ -359,6 +366,7 @@ const weekFiveRosterRows = computed(() => categories.map((category, index) => {
 const weekFiveRosterSummary = computed(() => ({ left: weekFiveRosterRows.value.filter(row => row.winner === 'left').length, right: weekFiveRosterRows.value.filter(row => row.winner === 'right').length }))
 const activeWeekFiveDetail = ref<'left' | 'right' | null>(null)
 const activeWeekFiveTeam = computed(() => activeWeekFiveDetail.value === 'left' ? weekFiveRosterForecast.value.left : weekFiveRosterForecast.value.right)
+const weekFivePlayerStat = (team: string, player: ProjectionPlayer, index: number) => player.stats[index] * (weekFiveSource.value === 'last14' ? recentFormMultiplier[team].stats[index] : 1) * player.gp
 
 type SprintTotals = { fgm: number; fga: number; ftm: number; fta: number; three: number; pts: number; reb: number; ast: number; st: number; blk: number; to: number }
 type SprintTeam = { team: string; played: number; remaining: number; current: SprintTotals; projection: SprintTotals }
@@ -494,11 +502,12 @@ const weiWeekFiveSummary = computed(() => ({ left: weiWeekFiveRows.value.filter(
         <Transition name="forecast-unlock"><div v-if="forecastGate !== 'revealed'" :class="['forecast-gate', { wrong: forecastGate === 'wrong', correct: forecastGate === 'correct' }]" role="dialog" aria-label="未來戰力預測表解鎖"><template v-if="forecastGate !== 'correct'"><p class="forecast-label">未來戰力預測表</p><p class="forecast-kicker">FORECAST LOCKED · SEASON ORACLE</p><div v-if="forecastGate === 'wrong'" :key="`wrong-mark-${wrongAttempt}`" class="forecast-error-mark">×</div><h3>你認為這季 NBA 總冠軍球隊是哪一支？</h3><p class="forecast-copy">猜對，才有資格查看未來戰力預測。</p><div class="championship-options"><button v-for="team in championOptions" :key="team" type="button" :class="{ selected: championGuess === team }" @click="chooseChampion(team)">{{ team }}</button></div><p v-if="forecastGate === 'wrong'" :key="`wrong-copy-${wrongAttempt}`" class="forecast-error">預言錯誤。再猜一次。</p></template><template v-else><div class="forecast-success-mark">✓</div><p class="forecast-kicker">ORACLE VERIFIED</p><h3>正確答案。</h3><p class="forecast-copy">阿肥加班幹大事，解鎖未來戰力預測。</p></template></div></Transition>
       </section>
       <section v-if="forecastOnly" class="sprint-lab" aria-labelledby="week-five-roster-title">
-        <div class="sprint-heading"><div><p class="eyebrow">WEEK 5 · LIVE ROSTER MODEL</p><h2 id="week-five-roster-title">阿肥 vs Wei Too Strong｜本週戰力推演</h2></div><p>以目前 Yahoo 名單、Week 5 賽程與球員場均推算；包含板凳，不計 IL。</p></div>
+        <div class="sprint-heading"><div><p class="eyebrow">WEEK 5 · LIVE ROSTER MODEL</p><h2 id="week-five-roster-title">阿肥 vs Wei Too Strong｜本週戰力推演</h2></div><p>以目前 Yahoo 名單與 Week 5 賽程推算；包含板凳，不計 IL。</p></div>
+        <div class="forecast-source week-five-source"><span>球員數據基準</span><div><button type="button" :class="{ active: weekFiveSource === 'season' }" @click="weekFiveSource = 'season'">整季平均</button><button type="button" :class="{ active: weekFiveSource === 'last14' }" @click="weekFiveSource = 'last14'">最近 14 天平均</button></div><p>{{ weekFiveSource === 'season' ? '以整季場均 × 本週預計出賽場次計算。' : '以 Yahoo 最近 14 天的球員近況趨勢 × 相同出賽場次計算。' }}</p></div>
         <div class="sprint-status"><span><b>{{ weekFiveRosterForecast.left.team }}</b> · 預計 {{ weekFiveRosterForecast.left.gp }} 場</span><strong>WEEK 5</strong><span><b>{{ weekFiveRosterForecast.right.team }}</b> · 預計 {{ weekFiveRosterForecast.right.gp }} 場</span></div>
         <div class="sprint-table-wrap"><table class="sprint-table"><thead><tr><th>項目</th><th>{{ weekFiveRosterForecast.left.team }}<small>預測總和</small></th><th>{{ weekFiveRosterForecast.right.team }}<small>預測總和</small></th><th>預測差距</th></tr></thead><tbody><tr v-for="row in weekFiveRosterRows" :key="`week-five-${row.category}`"><th>{{ row.category }}</th><td :class="{ winner: row.winner === 'left' }">{{ row.left }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
         <div class="sprint-result"><span>預測對位</span><strong>{{ weekFiveRosterSummary.left }} : {{ weekFiveRosterSummary.right }}</strong><b>{{ weekFiveRosterSummary.left === weekFiveRosterSummary.right ? '平手' : (weekFiveRosterSummary.left > weekFiveRosterSummary.right ? weekFiveRosterForecast.left.team : weekFiveRosterForecast.right.team) + ' 優勢' }}</b></div>
-        <div class="sprint-details"><div class="projection-detail-tabs"><button type="button" :class="{ active: activeWeekFiveDetail === 'left' }" @click="activeWeekFiveDetail = activeWeekFiveDetail === 'left' ? null : 'left'">查看 {{ weekFiveRosterForecast.left.team }} 的球員加總明細</button><button type="button" :class="{ active: activeWeekFiveDetail === 'right' }" @click="activeWeekFiveDetail = activeWeekFiveDetail === 'right' ? null : 'right'">查看 {{ weekFiveRosterForecast.right.team }} 的球員加總明細</button></div><section v-if="activeWeekFiveDetail" class="projection-roster"><h3>{{ activeWeekFiveTeam.team }} · 球員乘算明細</h3><div class="projection-table-wrap"><table><thead><tr><th>球員</th><th>NBA</th><th>位置</th><th>預計 GP</th><th>3PTM</th><th>PTS</th><th>REB</th><th>AST</th><th>ST</th><th>BLK</th><th>TO</th></tr></thead><tbody><tr v-for="player in activeWeekFiveTeam.players" :key="`week-five-${player.name}`"><th>{{ player.name }}</th><td>{{ player.nba }}</td><td>{{ player.slot }}</td><td>{{ player.gp }}</td><td>{{ (player.stats[0] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[1] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[2] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[3] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[4] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[5] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[6] * player.gp).toFixed(1) }}</td></tr></tbody></table></div></section></div>
+        <div class="sprint-details"><div class="projection-detail-tabs"><button type="button" :class="{ active: activeWeekFiveDetail === 'left' }" @click="activeWeekFiveDetail = activeWeekFiveDetail === 'left' ? null : 'left'">查看 {{ weekFiveRosterForecast.left.team }} 的球員加總明細</button><button type="button" :class="{ active: activeWeekFiveDetail === 'right' }" @click="activeWeekFiveDetail = activeWeekFiveDetail === 'right' ? null : 'right'">查看 {{ weekFiveRosterForecast.right.team }} 的球員加總明細</button></div><section v-if="activeWeekFiveDetail" class="projection-roster"><h3>{{ activeWeekFiveTeam.team }} · 球員乘算明細</h3><div class="projection-table-wrap"><table><thead><tr><th>球員</th><th>NBA</th><th>位置</th><th>預計 GP</th><th>3PTM</th><th>PTS</th><th>REB</th><th>AST</th><th>ST</th><th>BLK</th><th>TO</th></tr></thead><tbody><tr v-for="player in activeWeekFiveTeam.players" :key="`week-five-${player.name}`"><th>{{ player.name }}</th><td>{{ player.nba }}</td><td>{{ player.slot }}</td><td>{{ player.gp }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 0).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 1).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 2).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 3).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 4).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 5).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 6).toFixed(1) }}</td></tr></tbody></table></div></section></div>
       </section>
       <section v-if="false" class="sprint-lab" aria-labelledby="sprint-title">
         <div class="sprint-heading"><div><p class="eyebrow">WEEK 4 · LIVE MATCHUP</p><h2 id="sprint-title">阿肥 vs 80年次男性｜本週對戰推演</h2></div><p>採計 Yahoo 11/14 完賽數據，以及 11/15（台灣時間 11/16）賽程。以 Yahoo 本季場均估算，包含板凳、不計 IL；Andrew Nembhard、Aaron Nesmith 出賽存疑，各暫計 1 場。</p></div>
