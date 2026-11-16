@@ -214,6 +214,75 @@ const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
     {"name":"Jusuf Nurkić","nba":"UTA","slot":"IL","fgm":2.5,"fga":5.2,"ftm":1.4,"fta":2.1,"stats":[0.2,6.6,7.1,3.5,0.7,0.8,1.5]},
   ] },
 ]
+type ProjectionAverage = Pick<ProjectionPlayer, 'fgm' | 'fga' | 'ftm' | 'fta' | 'stats'>
+// Yahoo roster page audit — 2026-11-16. These are player-level per-game values,
+// never a team-wide multiplier. IL players are excluded before this data is summed.
+const verifiedWeekFiveAverages: Record<WeekFiveSource, Record<string, ProjectionAverage>> = {
+  season: {
+    'Jalen Suggs': { fgm: 2.8, fga: 9, ftm: 0.8, fta: 1, stats: [0.5, 6.8, 4.3, 5, 1.5, 0.3, 2.5] },
+    'Jordan Goodwin': { fgm: 3.3, fga: 7.8, ftm: 0.9, fta: 1.1, stats: [2.3, 9.6, 4, 2.8, 1.5, 0.1, 0.9] },
+    'Jalen Brunson': { fgm: 9.1, fga: 20.9, ftm: 5.8, fta: 7.2, stats: [2.8, 26.7, 2.8, 5.9, 0.8, 0.3, 1.8] },
+    'Deni Avdija': { fgm: 7.8, fga: 15.5, ftm: 6.4, fta: 8.9, stats: [2, 23.9, 6.1, 6.3, 1.1, 0.3, 3.2] },
+    'Julius Randle': { fgm: 6.5, fga: 14.6, ftm: 5.4, fta: 7, stats: [1.5, 19.9, 6.3, 5, 0.9, 0.2, 3.8] },
+    'Tari Eason': { fgm: 4.2, fga: 9.5, ftm: 1.3, fta: 1.4, stats: [1.1, 10.8, 6.2, 1.3, 0.9, 1, 1.2] },
+    'Nikola Jokić': { fgm: 9.2, fga: 18, ftm: 4.4, fta: 4.9, stats: [1, 23.7, 10.5, 9.1, 1.9, 1.1, 3.1] },
+    'Jarrett Allen': { fgm: 4.8, fga: 7.5, ftm: 2.6, fta: 3.7, stats: [0.3, 12.5, 8.3, 1.4, 0.6, 1.4, 0.8] },
+    'RJ Barrett': { fgm: 8, fga: 17.1, ftm: 3.3, fta: 5.2, stats: [1.5, 20.8, 6.5, 4.2, 0.5, 0.5, 2.1] },
+    'Meleek Thomas': { fgm: 5.3, fga: 10.8, ftm: 0.5, fta: 0.5, stats: [2.6, 13.6, 2.6, 1.5, 1.1, 0.3, 1.2] },
+    'Devin Vassell': { fgm: 3.8, fga: 9.4, ftm: 2.2, fta: 2.3, stats: [1.3, 11, 3.8, 2.8, 1.7, 0.3, 0.9] },
+    'Ziaire Williams': { fgm: 3.8, fga: 6.7, ftm: 1.1, fta: 1.3, stats: [1.8, 10.5, 2.5, 2.1, 1.5, 0.2, 0.5] },
+    'Brook Lopez': { fgm: 5.6, fga: 10.3, ftm: 1.5, fta: 2.5, stats: [1.4, 14.1, 5.3, 1.8, 0.5, 0.9, 1] },
+    'Zaccharie Risacher': { fgm: 3.6, fga: 7.7, ftm: 0.6, fta: 1, stats: [1.1, 8.8, 4.8, 1.3, 1.2, 0.9, 1] },
+    'Tyrese Maxey': { fgm: 9, fga: 18.1, ftm: 6.1, fta: 7.1, stats: [2.6, 26.7, 3.4, 5.6, 1.3, 0.6, 1.9] },
+    'Brandin Podziemski': { fgm: 5.8, fga: 12.6, ftm: 2, fta: 2.8, stats: [2.8, 16.5, 4.9, 3.8, 1.2, 0.5, 1.2] },
+    'VJ Edgecombe': { fgm: 5.2, fga: 11.3, ftm: 0.8, fta: 1.2, stats: [1.5, 12.8, 6.2, 3.7, 1.6, 0.5, 1] },
+    'Christian Braun': { fgm: 4.9, fga: 10.3, ftm: 1.5, fta: 1.9, stats: [1.5, 12.8, 4.4, 2.3, 2.2, 0.3, 1.1] },
+    'Jaime Jaquez Jr.': { fgm: 5.6, fga: 11.9, ftm: 2.5, fta: 3.3, stats: [2, 15.8, 5.6, 2.9, 0.7, 0.1, 2.1] },
+    'Sidy Cissoko': { fgm: 2.4, fga: 5.3, ftm: 1.7, fta: 2.3, stats: [1.3, 7.8, 3.6, 1.9, 0.4, 0.3, 0.6] },
+    'Anthony Davis': { fgm: 9.4, fga: 18.3, ftm: 5.1, fta: 5.9, stats: [0.8, 24.7, 10.3, 2.3, 1.3, 1.1, 2] },
+    'Draymond Green': { fgm: 1.4, fga: 3.4, ftm: 0.3, fta: 0.5, stats: [0.3, 3.3, 4.7, 7.1, 0.9, 0.8, 2.8] },
+    'Andre Drummond': { fgm: 1.6, fga: 3.8, ftm: 0.5, fta: 0.9, stats: [0, 3.8, 7.5, 1.2, 0.3, 0.6, 0.7] },
+    'Dyson Daniels': { fgm: 4.2, fga: 8.7, ftm: 0.9, fta: 1.6, stats: [0.1, 9.5, 7.4, 5.6, 2.9, 0.3, 1.3] },
+    'Anfernee Simons': { fgm: 3.6, fga: 8.3, ftm: 0.9, fta: 1, stats: [2.4, 10.4, 2.1, 1.1, 0.4, 0.1, 0.5] },
+    'Keldon Johnson': { fgm: 3.4, fga: 7.1, ftm: 1.9, fta: 2.6, stats: [0.4, 8.9, 5.9, 2.4, 0.8, 0, 1.1] },
+    'Isaiah Jackson': { fgm: 3.5, fga: 6, ftm: 1.2, fta: 1.8, stats: [0.2, 8.3, 5.3, 2.1, 1.2, 0.9, 1.6] },
+    'Quenton Jackson': { fgm: 3.4, fga: 7.1, ftm: 1.6, fta: 1.9, stats: [1.1, 9.4, 3.8, 3.1, 1.3, 0.2, 1.3] },
+  },
+  last14: {
+    'Jalen Suggs': { fgm: 1, fga: 8, ftm: 0, fta: 0, stats: [1, 3, 2, 3, 0, 0, 1] },
+    'Jordan Goodwin': { fgm: 3.3, fga: 7.8, ftm: 1.8, fta: 2.3, stats: [2.3, 10.5, 4.3, 2.8, 1.3, 0.3, 1.3] },
+    'Jalen Brunson': { fgm: 9.6, fga: 20.4, ftm: 5.3, fta: 6.3, stats: [3.3, 27.7, 2.7, 6.6, 0.6, 0.1, 1.6] },
+    'Deni Avdija': { fgm: 8, fga: 15.9, ftm: 6.4, fta: 8.4, stats: [2.1, 24.6, 5.4, 6.7, 1.1, 0.4, 3.9] },
+    'Julius Randle': { fgm: 6.5, fga: 14.2, ftm: 5, fta: 7, stats: [1, 19, 5.3, 4.7, 1, 0.2, 3.5] },
+    'Tari Eason': { fgm: 4.7, fga: 10.7, ftm: 0.6, fta: 0.7, stats: [1.6, 11.6, 6.1, 1.6, 0.7, 0.7, 1.3] },
+    'Nikola Jokić': { fgm: 10, fga: 18.7, ftm: 4.8, fta: 5.3, stats: [1, 25.8, 11.2, 9, 2.2, 0.8, 2.2] },
+    'Jarrett Allen': { fgm: 3.4, fga: 5.4, ftm: 2.2, fta: 3, stats: [0.2, 9.2, 7.2, 1.2, 0.6, 0.8, 0.4] },
+    'RJ Barrett': { fgm: 8.1, fga: 17.9, ftm: 3.9, fta: 6, stats: [1.4, 21.6, 6.9, 4.3, 0.3, 0.6, 2.4] },
+    'Meleek Thomas': { fgm: 5.4, fga: 11.3, ftm: 0.4, fta: 0.5, stats: [2.8, 13.9, 2.8, 1.6, 1.1, 0.3, 1.3] },
+    'Devin Vassell': { fgm: 3.3, fga: 8.7, ftm: 2.2, fta: 2.3, stats: [1.2, 10, 3.5, 2.2, 1.5, 0.3, 0.3] },
+    'Ziaire Williams': { fgm: 3.7, fga: 6.6, ftm: 0.9, fta: 1, stats: [1.9, 10.1, 2.3, 2, 1.6, 0.1, 0.3] },
+    'Brook Lopez': { fgm: 6.3, fga: 11.7, ftm: 1.3, fta: 3, stats: [1.5, 15.5, 6.2, 2.7, 0.5, 0.8, 0.5] },
+    'Zaccharie Risacher': { fgm: 3.6, fga: 6.8, ftm: 0.1, fta: 0.5, stats: [0.9, 8.3, 3.9, 1, 0.6, 0.4, 0.9] },
+    'Tyrese Maxey': { fgm: 7.7, fga: 15.1, ftm: 5.9, fta: 6.6, stats: [2.6, 23.9, 2.7, 6.7, 0.9, 0.4, 1.6] },
+    'Brandin Podziemski': { fgm: 5.7, fga: 12.3, ftm: 1.8, fta: 2.5, stats: [3.3, 16.5, 4.5, 2.3, 1.2, 0.7, 0.8] },
+    'VJ Edgecombe': { fgm: 6, fga: 11.4, ftm: 0.6, fta: 1, stats: [1.4, 14, 4.9, 4.6, 2, 0.4, 0.9] },
+    'Christian Braun': { fgm: 3.8, fga: 9, ftm: 2.2, fta: 2.8, stats: [0.8, 10.7, 4.5, 2.5, 2, 0.3, 0.5] },
+    'Jaime Jaquez Jr.': { fgm: 5.4, fga: 12.1, ftm: 2.4, fta: 2.9, stats: [2.4, 15.5, 4.5, 2.9, 1, 0.1, 2.1] },
+    'Sidy Cissoko': { fgm: 2.7, fga: 6.3, ftm: 2, fta: 2.4, stats: [1.9, 9.3, 3, 1.7, 0.3, 0.4, 0.6] },
+    'Anthony Davis': { fgm: 10.7, fga: 18.2, ftm: 5.2, fta: 5.7, stats: [0.5, 27, 11.3, 2.3, 1.3, 1.2, 2.2] },
+    'Draymond Green': { fgm: 1.5, fga: 3.5, ftm: 0.3, fta: 0.7, stats: [0.2, 3.5, 4.3, 7, 1, 0.7, 2.2] },
+    'Andre Drummond': { fgm: 0.7, fga: 2.1, ftm: 0.6, fta: 0.6, stats: [0, 2, 7.6, 0.9, 0.4, 0.7, 1] },
+    'Dyson Daniels': { fgm: 4, fga: 8.4, ftm: 0.6, fta: 1, stats: [0.1, 8.7, 9.9, 6.9, 2.7, 0.3, 1.7] },
+    'Anfernee Simons': { fgm: 3.1, fga: 7.3, ftm: 0.7, fta: 0.7, stats: [1.7, 8.7, 2.1, 1, 0, 0, 0.4] },
+    'Keldon Johnson': { fgm: 3.3, fga: 7.3, ftm: 2.4, fta: 3.4, stats: [0.5, 9.4, 6.3, 3.3, 0.9, 0, 1.5] },
+    'Isaiah Jackson': { fgm: 3.6, fga: 5.8, ftm: 1, fta: 1.6, stats: [0.4, 8.6, 4.2, 1.8, 0.6, 0.8, 1.2] },
+    'Quenton Jackson': { fgm: 3.7, fga: 7.9, ftm: 1.4, fta: 1.7, stats: [1.3, 10.1, 5.1, 3.4, 1.6, 0.3, 2] },
+  },
+}
+const weekFiveSlots: Record<string, string> = {
+  'Jalen Suggs': 'PG', 'Jordan Goodwin': 'SG', 'Jalen Brunson': 'G', 'Deni Avdija': 'SF', 'Julius Randle': 'PF', 'Tari Eason': 'F', 'Nikola Jokić': 'C', 'Jarrett Allen': 'C', 'RJ Barrett': 'Util', 'Meleek Thomas': 'Util', 'Devin Vassell': 'Util', 'Ziaire Williams': 'BN', 'Brook Lopez': 'BN', 'Zaccharie Risacher': 'BN',
+  'Tyrese Maxey': 'PG', 'Brandin Podziemski': 'SG', 'VJ Edgecombe': 'G', 'Christian Braun': 'SF', 'Jaime Jaquez Jr.': 'PF', 'Sidy Cissoko': 'F', 'Anthony Davis': 'C', 'Draymond Green': 'C', 'Andre Drummond': 'Util', 'Dyson Daniels': 'Util', 'Anfernee Simons': 'Util', 'Keldon Johnson': 'BN', 'Isaiah Jackson': 'BN', 'Quenton Jackson': 'BN',
+}
 const latestProjectionRange = (): ProjectionRange => {
   const weeks: [ProjectionRange, number][] = [
     ['week7', Date.parse('2026-11-30T00:00:00+08:00')],
@@ -238,9 +307,17 @@ const chooseChampion = (team: string) => {
   window.setTimeout(() => { forecastGate.value = 'revealed' }, 1250)
 }
 const projectionRangeLabels: Record<ProjectionRange, string> = { week4: 'WEEK 4', week5: 'WEEK 5', week6: 'WEEK 6', week7: 'WEEK 7' }
-const projectionGameCount = (nba: string) => {
+// Exact NBA Week 5 (2026-11-16 to 2026-11-22) game counts, checked against the weekly schedule.
+// Keep this explicit so a missing club can never silently become 0 games in this matchup.
+const weekFiveGameCounts: Record<string, number> = {
+  ATL: 3, BKN: 3, BOS: 4, CHA: 2, CHI: 4, CLE: 3, DAL: 3, DEN: 4, DET: 4, GSW: 4,
+  HOU: 3, IND: 3, LAC: 3, LAL: 3, MEM: 4, MIA: 3, MIL: 3, MIN: 4, NOP: 4, NYK: 4,
+  OKC: 3, ORL: 4, PHI: 3, PHX: 3, POR: 4, SAC: 3, SAS: 3, TOR: 3, UTA: 4, WAS: 4,
+}
+const projectionGameCount = (nba: string, range = projectionRange.value) => {
+  if (range === 'week5') return weekFiveGameCounts[nba] || 0
   const games = futureSchedule[nba] || [0, 0, 0, 0]
-  return games[{ week4: 0, week5: 1, week6: 2, week7: 3 }[projectionRange.value]]
+  return games[{ week4: 0, week5: 1, week6: 2, week7: 3 }[range]]
 }
 type LiveProjection = { gp: number; fgm: number; fga: number; ftm: number; fta: number; stats: number[] }
 // Unstarted games on Yahoo dates Nov. 15; bench included, IL excluded.
@@ -305,7 +382,8 @@ const projectedPlayersFor = (team: string, range = projectionRange.value) => {
   const live = range === 'week4' ? weekFourLive[team] : undefined
   return projectionTeams.find(entry => entry.team === team)!.players.filter(player => player.slot !== 'IL').map(player => ({
     ...player,
-    gp: live ? (weekFourRemainingGames[team]?.[player.name] || 0) : projectionGameCount(player.nba),
+    slot: weekFiveSlots[player.name] || player.slot,
+    gp: live ? (weekFourRemainingGames[team]?.[player.name] || 0) : projectionGameCount(player.nba, range),
   }))
 }
 const calculateProjection = (team: string) => {
@@ -338,7 +416,7 @@ const projectionSummary = computed(() => ({ left: projectionRows.value.filter(ro
 
 type WeekFiveSource = 'season' | 'last14'
 const weekFiveSource = ref<WeekFiveSource>('season')
-const weekFivePlayerAverage = (player: ProjectionPlayer) => weekFiveSource.value === 'last14' && player.last14 ? player.last14 : player
+const weekFivePlayerAverage = (player: ProjectionPlayer) => verifiedWeekFiveAverages[weekFiveSource.value][player.name] || (weekFiveSource.value === 'last14' && player.last14 ? player.last14 : player)
 const weekFiveRosterForecast = computed(() => {
   const makeTeam = (team: string) => {
     const players = projectedPlayersFor(team, 'week5')
