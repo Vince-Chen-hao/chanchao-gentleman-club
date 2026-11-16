@@ -194,22 +194,24 @@ const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
     {"name":"Ziaire Williams","nba":"LAL","slot":"BN","fgm":4,"fga":7.1,"ftm":1,"fta":1.2,"stats":[2,11,2.6,2,1.5,0.2,0.4]},
     {"name":"Jalen Suggs","nba":"ORL","slot":"IL","fgm":2.8,"fga":9,"ftm":0.8,"fta":1,"stats":[0.5,6.8,4.3,5,1.5,0.3,2.5]},
   ] },
-  { team: '80年次男性屬羊', players: [
-    {"name":"James Harden","nba":"CLE","slot":"PG","fgm":4.8,"fga":12.2,"ftm":4.8,"fta":5.5,"stats":[2.6,16.9,4.7,5.8,1,0.5,2.8]},
-    {"name":"Andrew Nembhard","nba":"IND","slot":"SG","fgm":5.6,"fga":12.6,"ftm":3.1,"fta":3.5,"stats":[2.3,16.6,2.3,7.6,0.5,0.2,2.5]},
-    {"name":"Cedric Coward","nba":"MEM","slot":"G","fgm":4.7,"fga":10.6,"ftm":1.4,"fta":1.6,"stats":[2.1,12.9,8.5,3,1.5,0.2,1.4]},
-    {"name":"Franz Wagner","nba":"ORL","slot":"SF","fgm":8.9,"fga":18.9,"ftm":5.2,"fta":6.2,"stats":[1.4,24.4,6.8,8.3,1.3,0.1,4.3]},
-    {"name":"Joan Beringer","nba":"MIN","slot":"PF","fgm":2.4,"fga":4,"ftm":1.4,"fta":2,"stats":[0,6.3,6.4,0.6,0.3,1,0.7]},
-    {"name":"Gradey Dick","nba":"LAC","slot":"F","fgm":2.9,"fga":5.5,"ftm":1.1,"fta":1.5,"stats":[0.9,7.8,3,0.6,0.6,0.2,0.7]},
-    {"name":"Bam Adebayo","nba":"MIA","slot":"C","fgm":7,"fga":13.3,"ftm":4.8,"fta":6.2,"stats":[0.7,19.4,8.8,3.3,2,0.7,1.5]},
-    {"name":"Jalen Smith","nba":"CHI","slot":"C","fgm":5,"fga":9.7,"ftm":1.3,"fta":1.6,"stats":[1.7,13,7.8,2,0.5,1,0.9]},
-    {"name":"Aaron Nesmith","nba":"IND","slot":"Util","fgm":4.1,"fga":10.3,"ftm":2.3,"fta":2.8,"stats":[1.8,12.3,2.6,1.6,0.7,0.3,1.5]},
-    {"name":"Kenrich Williams","nba":"OKC","slot":"Util","fgm":2.5,"fga":5.8,"ftm":0.7,"fta":0.9,"stats":[1.3,6.9,3.8,1.4,0.3,0.2,0.3]},
-    {"name":"Neemias Queta","nba":"BOS","slot":"BN","fgm":3.3,"fga":6,"ftm":2.3,"fta":3.5,"stats":[0.3,9.2,6.7,1.8,0.3,1.3,1.3]},
-    {"name":"Trae Young","nba":"WAS","slot":"BN","fgm":5.4,"fga":13.7,"ftm":6.8,"fta":7.9,"stats":[2.2,19.7,3.1,8.8,1.1,0.2,3.2]},
-    {"name":"Coby White","nba":"CHA","slot":"BN","fgm":3.4,"fga":10.8,"ftm":2.2,"fta":2.4,"stats":[0.8,9.8,2.2,3.6,0,0.2,3]},
-    {"name":"Jayson Tatum","nba":"BOS","slot":"BN","fgm":8,"fga":19.4,"ftm":7.9,"fta":8.9,"stats":[2.4,26.3,6.1,7.5,0.6,0.8,2.8]},
-    {"name":"Dejounte Murray","nba":"NOP","slot":"IL","fgm":4.9,"fga":11.3,"ftm":2.8,"fta":3,"stats":[0.9,13.4,4.6,4.4,1.6,0.6,2.3]},
+  { team: 'Wei Too Strong', players: [
+    {"name":"Tyrese Maxey","nba":"PHI","slot":"PG","fgm":8.5,"fga":16.1,"ftm":6.1,"fta":7.1,"stats":[2.5,25.6,2.9,6.1,1,0.5,1.8]},
+    {"name":"Quenton Jackson","nba":"WAS","slot":"SG","fgm":4.6,"fga":8.6,"ftm":1.9,"fta":2.1,"stats":[1.7,12.7,4.6,2.1,1.6,0.3,1.7]},
+    {"name":"VJ Edgecombe","nba":"PHI","slot":"G","fgm":5.9,"fga":11.5,"ftm":0.4,"fta":0.6,"stats":[1.6,13.8,5.8,3.9,1.8,0.5,0.9]},
+    {"name":"Keldon Johnson","nba":"SAS","slot":"SF","fgm":2.4,"fga":6.4,"ftm":1.9,"fta":2.7,"stats":[0.1,6.9,6,2.9,0.6,0,1.3]},
+    {"name":"Jaime Jaquez Jr.","nba":"MIA","slot":"PF","fgm":5.1,"fga":11.9,"ftm":2.7,"fta":3.1,"stats":[1.9,14.9,4.6,2.9,0.9,0.1,1.7]},
+    {"name":"Sidy Cissoko","nba":"POR","slot":"F","fgm":2.6,"fga":5.6,"ftm":2.1,"fta":2.7,"stats":[1.7,9,2.9,1.7,0.4,0.4,0.7]},
+    {"name":"Anthony Davis","nba":"BKN","slot":"C","fgm":11.3,"fga":19.2,"ftm":5.7,"fta":6.3,"stats":[0.5,28.8,12.2,1.7,1.3,1,2]},
+    {"name":"Isaiah Jackson","nba":"IND","slot":"C","fgm":2.8,"fga":4.9,"ftm":1.1,"fta":1.8,"stats":[0.2,6.7,5.2,1.1,0.5,1.3,0.8]},
+    {"name":"Andre Drummond","nba":"PHI","slot":"Util","fgm":0.8,"fga":2.8,"ftm":0.8,"fta":1,"stats":[0,2.5,8.3,1.2,0.3,0.5,1]},
+    {"name":"Dyson Daniels","nba":"ATL","slot":"Util","fgm":4,"fga":8.5,"ftm":0.8,"fta":1.3,"stats":[0.2,9,9,7,3,0.3,1.8]},
+    {"name":"Anfernee Simons","nba":"PHI","slot":"BN","fgm":5.5,"fga":12.6,"ftm":2.6,"fta":3,"stats":[2.6,16.2,2.8,3.9,0.8,0.2,1.8]},
+    {"name":"Brandin Podziemski","nba":"GSW","slot":"BN","fgm":6.6,"fga":13.3,"ftm":1.9,"fta":2.7,"stats":[3.4,18.4,5.3,4,1.3,0.6,1]},
+    {"name":"Draymond Green","nba":"GSW","slot":"BN","fgm":1.3,"fga":3.2,"ftm":0.3,"fta":0.7,"stats":[0.2,3.2,4.5,8,1.3,0.8,2]},
+    {"name":"Christian Braun","nba":"DEN","slot":"BN","fgm":4.7,"fga":9.3,"ftm":1.8,"fta":2.3,"stats":[1.8,13,3.8,2.5,1.8,0.2,0.7]},
+    {"name":"Trey Murphy III","nba":"NOP","slot":"BN","fgm":5.3,"fga":11.3,"ftm":4.5,"fta":4.5,"stats":[2.3,17.3,5.3,4.5,1,0.5,1.8]},
+    {"name":"Chet Holmgren","nba":"OKC","slot":"IL","fgm":7.2,"fga":12.8,"ftm":3.2,"fta":3.8,"stats":[1.6,19.2,8.5,2.5,0.8,2.5,1.8]},
+    {"name":"Jusuf Nurkić","nba":"UTA","slot":"IL","fgm":2.5,"fga":5.2,"ftm":1.4,"fta":2.1,"stats":[0.2,6.6,7.1,3.5,0.7,0.8,1.5]},
   ] },
 ]
 const latestProjectionRange = (): ProjectionRange => {
@@ -467,7 +469,7 @@ const weiWeekFiveSummary = computed(() => ({ left: weiWeekFiveRows.value.filter(
           <div class="projection-details"><div class="projection-detail-tabs"><button type="button" :class="{ active: activeProjectionDetail === 'left' }" @click="activeProjectionDetail = activeProjectionDetail === 'left' ? null : 'left'">查看 {{ leftProjectionTeam }} 的球員乘算明細</button><button type="button" :class="{ active: activeProjectionDetail === 'right' }" @click="activeProjectionDetail = activeProjectionDetail === 'right' ? null : 'right'">查看 {{ rightProjectionTeam }} 的球員乘算明細</button></div><section v-if="activeProjectionDetail" class="projection-roster"><h3>{{ activeProjectionTeam }} · 球員乘算明細</h3><div class="projection-table-wrap"><table><thead><tr><th>球員</th><th>NBA</th><th>位置</th><th>預計 GP</th><th>3PTM</th><th>PTS</th><th>REB</th><th>AST</th><th>ST</th><th>BLK</th><th>TO</th></tr></thead><tbody><tr v-for="player in activeProjection.players" :key="player.name"><th>{{ player.name }}</th><td>{{ player.nba }}</td><td>{{ player.slot }}</td><td>{{ player.gp }}</td><td>{{ (player.stats[0] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[1] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[2] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[3] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[4] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[5] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[6] * player.gp).toFixed(1) }}</td></tr></tbody></table></div></section></div></div>
         <Transition name="forecast-unlock"><div v-if="forecastGate !== 'revealed'" :class="['forecast-gate', { wrong: forecastGate === 'wrong', correct: forecastGate === 'correct' }]" role="dialog" aria-label="未來戰力預測表解鎖"><template v-if="forecastGate !== 'correct'"><p class="forecast-label">未來戰力預測表</p><p class="forecast-kicker">FORECAST LOCKED · SEASON ORACLE</p><div v-if="forecastGate === 'wrong'" :key="`wrong-mark-${wrongAttempt}`" class="forecast-error-mark">×</div><h3>你認為這季 NBA 總冠軍球隊是哪一支？</h3><p class="forecast-copy">猜對，才有資格查看未來戰力預測。</p><div class="championship-options"><button v-for="team in championOptions" :key="team" type="button" :class="{ selected: championGuess === team }" @click="chooseChampion(team)">{{ team }}</button></div><p v-if="forecastGate === 'wrong'" :key="`wrong-copy-${wrongAttempt}`" class="forecast-error">預言錯誤。再猜一次。</p></template><template v-else><div class="forecast-success-mark">✓</div><p class="forecast-kicker">ORACLE VERIFIED</p><h3>正確答案。</h3><p class="forecast-copy">阿肥加班幹大事，解鎖未來戰力預測。</p></template></div></Transition>
       </section>
-      <section v-if="forecastOnly" class="sprint-lab" aria-labelledby="sprint-title">
+      <section v-if="false" class="sprint-lab" aria-labelledby="sprint-title">
         <div class="sprint-heading"><div><p class="eyebrow">WEEK 4 · LIVE MATCHUP</p><h2 id="sprint-title">阿肥 vs 80年次男性｜本週對戰推演</h2></div><p>採計 Yahoo 11/14 完賽數據，以及 11/15（台灣時間 11/16）賽程。以 Yahoo 本季場均估算，包含板凳、不計 IL；Andrew Nembhard、Aaron Nesmith 出賽存疑，各暫計 1 場。</p></div>
         <div class="sprint-status"><span><b>{{ finalSprint.left.team }}</b> · 已打 {{ finalSprint.left.played }} 場／預計再打 {{ finalSprint.left.remaining }} 場</span><strong>目前 6 : 3</strong><span><b>{{ finalSprint.right.team }}</b> · 已打 {{ finalSprint.right.played }} 場／預計再打 {{ finalSprint.right.remaining }} 場</span></div>
         <div class="sprint-table-wrap"><table class="sprint-table"><thead><tr><th>項目</th><th>{{ finalSprint.left.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>{{ finalSprint.right.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>預估差距</th></tr></thead><tbody><tr v-for="row in finalSprintRows" :key="row.category"><th>{{ row.category }}</th><td>{{ row.leftCurrent }}</td><td class="sprint-add">+{{ row.leftAdd }}</td><td :class="{ winner: row.winner === 'left' }">{{ row.leftFinal }}</td><td>{{ row.rightCurrent }}</td><td class="sprint-add">+{{ row.rightAdd }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.rightFinal }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
