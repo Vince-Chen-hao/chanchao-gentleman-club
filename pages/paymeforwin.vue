@@ -171,7 +171,7 @@ const matchupSummary = computed(() => {
   return { leftWins, rightWins, ties, winner }
 })
 
-type ProjectionPlayer = { name: string; nba: string; slot: string; fgm: number; fga: number; ftm: number; fta: number; stats: number[] }
+type ProjectionPlayer = { name: string; nba: string; slot: string; fgm: number; fga: number; ftm: number; fta: number; stats: number[]; last14?: { fgm: number; fga: number; ftm: number; fta: number; stats: number[] } }
 type ProjectionRange = 'week4' | 'week5' | 'week6' | 'week7'
 const futureSchedule: Record<string, [number, number, number, number]> = {
   MIN: [4, 4, 4, 2], SAC: [3, 3, 3, 2], SAS: [4, 3, 4, 2], GSW: [3, 4, 3, 1], LAL: [3, 3, 3, 2], DAL: [3, 3, 4, 2], HOU: [4, 3, 3, 2], DEN: [3, 4, 3, 2], LAC: [3, 3, 4, 2], CLE: [4, 3, 3, 2], NYK: [4, 4, 3, 2], TOR: [4, 3, 3, 2], BKN: [2, 3, 4, 2], POR: [3, 4, 4, 2], IND: [4, 3, 3, 2], ORL: [3, 4, 3, 1], CHA: [3, 2, 3, 2], MEM: [4, 4, 4, 2], MIA: [3, 3, 3, 2], BOS: [3, 4, 3, 2], NOP: [4, 4, 3, 2], OKC: [4, 3, 3, 2], WAS: [4, 4, 2, 2], CHI: [3, 4, 3, 2], PHX: [4, 3, 3, 2], PHI: [3, 4, 3, 2],
@@ -179,36 +179,36 @@ const futureSchedule: Record<string, [number, number, number, number]> = {
 const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
   { team: '阿肥加班幹大事', players: [
     {"name":"De'Aaron Fox","nba":"SAS","slot":"IL","fgm":4.5,"fga":9,"ftm":3.7,"fta":4.5,"stats":[1,13.6,4.4,5.8,1.3,0.5,2.3]},
-    {"name":"Deni Avdija","nba":"POR","slot":"SG","fgm":7.8,"fga":15.5,"ftm":6.4,"fta":8.9,"stats":[2,23.9,6.1,6.3,1.1,0.3,3.2]},
-    {"name":"Jalen Brunson","nba":"NYK","slot":"G","fgm":9.1,"fga":20.8,"ftm":5.7,"fta":7.2,"stats":[2.8,26.6,2.9,5.7,0.8,0.3,1.8]},
-    {"name":"Zaccharie Risacher","nba":"DAL","slot":"SF","fgm":3.3,"fga":7.8,"ftm":0.6,"fta":1,"stats":[1.1,8.3,5,1.5,1.3,1.1,1.1]},
-    {"name":"Julius Randle","nba":"BKN","slot":"PF","fgm":6.4,"fga":14.5,"ftm":5.6,"fta":7.1,"stats":[1.4,19.7,6.5,5,0.7,0.2,3.8]},
-    {"name":"Tari Eason","nba":"HOU","slot":"F","fgm":3.8,"fga":9.2,"ftm":1.2,"fta":1.3,"stats":[0.9,9.7,6.2,1.3,1,1.1,1.2]},
-    {"name":"Jarrett Allen","nba":"CLE","slot":"C","fgm":4.8,"fga":7.5,"ftm":2.6,"fta":3.7,"stats":[0.3,12.5,8.3,1.4,0.6,1.4,0.8]},
-    {"name":"Nikola Jokić","nba":"DEN","slot":"C","fgm":9.2,"fga":18.4,"ftm":4.1,"fta":4.7,"stats":[1,23.5,10.8,9,1.8,1.2,3]},
-    {"name":"RJ Barrett","nba":"TOR","slot":"Util","fgm":8.2,"fga":17.6,"ftm":3.4,"fta":5.5,"stats":[1.6,21.3,6.7,4.1,0.5,0.5,1.8]},
-    {"name":"Meleek Thomas","nba":"CLE","slot":"Util","fgm":5,"fga":10.2,"ftm":0.4,"fta":0.4,"stats":[2.6,13,2.5,1.4,1.2,0.3,0.9]},
-    {"name":"Devin Vassell","nba":"SAS","slot":"Util","fgm":3.8,"fga":9.3,"ftm":2.4,"fta":2.5,"stats":[1.5,11.5,3.6,3,1.5,0.3,0.9]},
+    {"name":"Deni Avdija","nba":"POR","slot":"SG","fgm":7.8,"fga":15.5,"ftm":6.4,"fta":8.9,"stats":[2,23.9,6.1,6.3,1.1,0.3,3.2],"last14":{"fgm":8,"fga":15.857,"ftm":6.429,"fta":8.429,"stats":[2.143,24.571,5.429,6.714,1.143,0.429,3.857]}},
+    {"name":"Jalen Brunson","nba":"NYK","slot":"G","fgm":9.1,"fga":20.8,"ftm":5.7,"fta":7.2,"stats":[2.8,26.6,2.9,5.7,0.8,0.3,1.8],"last14":{"fgm":9.571,"fga":20.429,"ftm":5.286,"fta":6.286,"stats":[3.286,27.714,2.714,6.571,0.571,0.143,1.571]}},
+    {"name":"Zaccharie Risacher","nba":"DAL","slot":"SF","fgm":3.3,"fga":7.8,"ftm":0.6,"fta":1,"stats":[1.1,8.3,5,1.5,1.3,1.1,1.1],"last14":{"fgm":3.625,"fga":6.75,"ftm":0.125,"fta":0.5,"stats":[0.875,8.25,3.875,1,0.625,0.375,0.875]}},
+    {"name":"Julius Randle","nba":"BKN","slot":"PF","fgm":6.4,"fga":14.5,"ftm":5.6,"fta":7.1,"stats":[1.4,19.7,6.5,5,0.7,0.2,3.8],"last14":{"fgm":6.5,"fga":14.167,"ftm":5,"fta":7,"stats":[1,19,5.333,4.667,1,0.167,3.5]}},
+    {"name":"Tari Eason","nba":"HOU","slot":"F","fgm":3.8,"fga":9.2,"ftm":1.2,"fta":1.3,"stats":[0.9,9.7,6.2,1.3,1,1.1,1.2],"last14":{"fgm":4.714,"fga":10.714,"ftm":0.571,"fta":0.714,"stats":[1.571,11.571,6.143,1.571,0.714,0.714,1.286]}},
+    {"name":"Jarrett Allen","nba":"CLE","slot":"C","fgm":4.8,"fga":7.5,"ftm":2.6,"fta":3.7,"stats":[0.3,12.5,8.3,1.4,0.6,1.4,0.8],"last14":{"fgm":3.4,"fga":5.4,"ftm":2.2,"fta":3,"stats":[0.2,9.2,7.2,1.2,0.6,0.8,0.4]}},
+    {"name":"Nikola Jokić","nba":"DEN","slot":"C","fgm":9.2,"fga":18.4,"ftm":4.1,"fta":4.7,"stats":[1,23.5,10.8,9,1.8,1.2,3],"last14":{"fgm":10,"fga":18.667,"ftm":4.833,"fta":5.333,"stats":[1,25.833,11.167,9,2.167,0.833,2.167]}},
+    {"name":"RJ Barrett","nba":"TOR","slot":"Util","fgm":8.2,"fga":17.6,"ftm":3.4,"fta":5.5,"stats":[1.6,21.3,6.7,4.1,0.5,0.5,1.8],"last14":{"fgm":8.143,"fga":17.857,"ftm":3.857,"fta":6,"stats":[1.429,21.571,6.857,4.286,0.286,0.571,2.429]}},
+    {"name":"Meleek Thomas","nba":"CLE","slot":"Util","fgm":5,"fga":10.2,"ftm":0.4,"fta":0.4,"stats":[2.6,13,2.5,1.4,1.2,0.3,0.9],"last14":{"fgm":5.375,"fga":11.25,"ftm":0.375,"fta":0.5,"stats":[2.75,13.875,2.75,1.625,1.125,0.25,1.25]}},
+    {"name":"Devin Vassell","nba":"SAS","slot":"Util","fgm":3.8,"fga":9.3,"ftm":2.4,"fta":2.5,"stats":[1.5,11.5,3.6,3,1.5,0.3,0.9],"last14":{"fgm":3.333,"fga":8.667,"ftm":2.167,"fta":2.333,"stats":[1.167,10,3.5,2.167,1.5,0.333,0.333]}},
     {"name":"Jordan Goodwin","nba":"PHX","slot":"SG","fgm":3.2,"fga":7.3,"ftm":0.6,"fta":0.8,"stats":[1,9,3.6,2.3,1.2,0.3,1.1]},
-    {"name":"Brook Lopez","nba":"LAC","slot":"BN","fgm":5.8,"fga":10.4,"ftm":1.6,"fta":2.5,"stats":[1.5,14.7,5.4,1.3,0.5,0.9,1]},
-    {"name":"Ziaire Williams","nba":"LAL","slot":"BN","fgm":4,"fga":7.1,"ftm":1,"fta":1.2,"stats":[2,11,2.6,2,1.5,0.2,0.4]},
-    {"name":"Jalen Suggs","nba":"ORL","slot":"BN","fgm":2.8,"fga":9,"ftm":0.8,"fta":1,"stats":[0.5,6.8,4.3,5,1.5,0.3,2.5]},
+    {"name":"Brook Lopez","nba":"LAC","slot":"BN","fgm":5.8,"fga":10.4,"ftm":1.6,"fta":2.5,"stats":[1.5,14.7,5.4,1.3,0.5,0.9,1],"last14":{"fgm":6.333,"fga":11.667,"ftm":1.333,"fta":3,"stats":[1.5,15.5,6.167,2.667,0.5,0.833,0.5]}},
+    {"name":"Ziaire Williams","nba":"LAL","slot":"BN","fgm":4,"fga":7.1,"ftm":1,"fta":1.2,"stats":[2,11,2.6,2,1.5,0.2,0.4],"last14":{"fgm":3.714,"fga":6.571,"ftm":0.857,"fta":1,"stats":[1.857,10.143,2.286,2,1.571,0.143,0.286]}},
+    {"name":"Jalen Suggs","nba":"ORL","slot":"BN","fgm":2.8,"fga":9,"ftm":0.8,"fta":1,"stats":[0.5,6.8,4.3,5,1.5,0.3,2.5],"last14":{"fgm":1,"fga":8,"ftm":0,"fta":0,"stats":[1,3,2,3,0,0,1]}},
   ] },
   { team: 'Wei Too Strong', players: [
-    {"name":"Tyrese Maxey","nba":"PHI","slot":"PG","fgm":8.5,"fga":16.1,"ftm":6.1,"fta":7.1,"stats":[2.5,25.6,2.9,6.1,1,0.5,1.8]},
-    {"name":"Quenton Jackson","nba":"IND","slot":"SG","fgm":4.6,"fga":8.6,"ftm":1.9,"fta":2.1,"stats":[1.7,12.7,4.6,2.1,1.6,0.3,1.7]},
-    {"name":"VJ Edgecombe","nba":"PHI","slot":"G","fgm":5.9,"fga":11.5,"ftm":0.4,"fta":0.6,"stats":[1.6,13.8,5.8,3.9,1.8,0.5,0.9]},
-    {"name":"Keldon Johnson","nba":"SAS","slot":"SF","fgm":2.4,"fga":6.4,"ftm":1.9,"fta":2.7,"stats":[0.1,6.9,6,2.9,0.6,0,1.3]},
-    {"name":"Jaime Jaquez Jr.","nba":"MIL","slot":"PF","fgm":5.1,"fga":11.9,"ftm":2.7,"fta":3.1,"stats":[1.9,14.9,4.6,2.9,0.9,0.1,1.7]},
-    {"name":"Sidy Cissoko","nba":"POR","slot":"F","fgm":2.6,"fga":5.6,"ftm":2.1,"fta":2.7,"stats":[1.7,9,2.9,1.7,0.4,0.4,0.7]},
-    {"name":"Anthony Davis","nba":"WAS","slot":"C","fgm":11.3,"fga":19.2,"ftm":5.7,"fta":6.3,"stats":[0.5,28.8,12.2,1.7,1.3,1,2]},
-    {"name":"Isaiah Jackson","nba":"LAC","slot":"C","fgm":2.8,"fga":4.9,"ftm":1.1,"fta":1.8,"stats":[0.2,6.7,5.2,1.1,0.5,1.3,0.8]},
-    {"name":"Andre Drummond","nba":"NYK","slot":"Util","fgm":0.8,"fga":2.8,"ftm":0.8,"fta":1,"stats":[0,2.5,8.3,1.2,0.3,0.5,1]},
-    {"name":"Dyson Daniels","nba":"ATL","slot":"Util","fgm":4,"fga":8.5,"ftm":0.8,"fta":1.3,"stats":[0.2,9,9,7,3,0.3,1.8]},
-    {"name":"Anfernee Simons","nba":"PHI","slot":"BN","fgm":5.5,"fga":12.6,"ftm":2.6,"fta":3,"stats":[2.6,16.2,2.8,3.9,0.8,0.2,1.8]},
-    {"name":"Brandin Podziemski","nba":"GSW","slot":"BN","fgm":6.6,"fga":13.3,"ftm":1.9,"fta":2.7,"stats":[3.4,18.4,5.3,4,1.3,0.6,1]},
-    {"name":"Draymond Green","nba":"GSW","slot":"BN","fgm":1.3,"fga":3.2,"ftm":0.3,"fta":0.7,"stats":[0.2,3.2,4.5,8,1.3,0.8,2]},
-    {"name":"Christian Braun","nba":"DEN","slot":"BN","fgm":4.7,"fga":9.3,"ftm":1.8,"fta":2.3,"stats":[1.8,13,3.8,2.5,1.8,0.2,0.7]},
+    {"name":"Tyrese Maxey","nba":"PHI","slot":"PG","fgm":8.5,"fga":16.1,"ftm":6.1,"fta":7.1,"stats":[2.5,25.6,2.9,6.1,1,0.5,1.8],"last14":{"fgm":9,"fga":17.667,"ftm":6.833,"fta":7.667,"stats":[3,27.833,3.167,7.833,1,0.5,1.833]}},
+    {"name":"Quenton Jackson","nba":"IND","slot":"SG","fgm":4.6,"fga":8.6,"ftm":1.9,"fta":2.1,"stats":[1.7,12.7,4.6,2.1,1.6,0.3,1.7],"last14":{"fgm":4.333,"fga":9.167,"ftm":1.667,"fta":2,"stats":[1.5,11.833,6,4,1.833,0.333,2.333]}},
+    {"name":"VJ Edgecombe","nba":"PHI","slot":"G","fgm":5.9,"fga":11.5,"ftm":0.4,"fta":0.6,"stats":[1.6,13.8,5.8,3.9,1.8,0.5,0.9],"last14":{"fgm":7,"fga":13.333,"ftm":0.667,"fta":1.167,"stats":[1.667,16.333,5.667,5.333,2.333,0.5,1]}},
+    {"name":"Keldon Johnson","nba":"SAS","slot":"SF","fgm":2.4,"fga":6.4,"ftm":1.9,"fta":2.7,"stats":[0.1,6.9,6,2.9,0.6,0,1.3],"last14":{"fgm":3.714,"fga":8.286,"ftm":2.714,"fta":3.857,"stats":[0.571,10.714,7.143,3.714,1,0,1.714]}},
+    {"name":"Jaime Jaquez Jr.","nba":"MIL","slot":"PF","fgm":5.1,"fga":11.9,"ftm":2.7,"fta":3.1,"stats":[1.9,14.9,4.6,2.9,0.9,0.1,1.7],"last14":{"fgm":6.143,"fga":13.857,"ftm":2.714,"fta":3.286,"stats":[2.714,17.714,5.143,3.286,1.143,0.143,2.429]}},
+    {"name":"Sidy Cissoko","nba":"POR","slot":"F","fgm":2.6,"fga":5.6,"ftm":2.1,"fta":2.7,"stats":[1.7,9,2.9,1.7,0.4,0.4,0.7],"last14":{"fgm":2.714,"fga":6.286,"ftm":2,"fta":2.429,"stats":[1.857,9.286,3,1.714,0.286,0.429,0.571]}},
+    {"name":"Anthony Davis","nba":"WAS","slot":"C","fgm":11.3,"fga":19.2,"ftm":5.7,"fta":6.3,"stats":[0.5,28.8,12.2,1.7,1.3,1,2],"last14":{"fgm":12.8,"fga":21.8,"ftm":6.2,"fta":6.8,"stats":[0.6,32.4,13.6,2.8,1.6,1.4,2.6]}},
+    {"name":"Isaiah Jackson","nba":"LAC","slot":"C","fgm":2.8,"fga":4.9,"ftm":1.1,"fta":1.8,"stats":[0.2,6.7,5.2,1.1,0.5,1.3,0.8],"last14":{"fgm":4.5,"fga":7.25,"ftm":1.25,"fta":2,"stats":[0.5,10.75,5.25,2.25,0.75,1,1.5]}},
+    {"name":"Andre Drummond","nba":"NYK","slot":"Util","fgm":0.8,"fga":2.8,"ftm":0.8,"fta":1,"stats":[0,2.5,8.3,1.2,0.3,0.5,1],"last14":{"fgm":0.833,"fga":2.5,"ftm":0.667,"fta":0.667,"stats":[0,2.333,8.833,1,0.5,0.833,1.167]}},
+    {"name":"Dyson Daniels","nba":"ATL","slot":"Util","fgm":4,"fga":8.5,"ftm":0.8,"fta":1.3,"stats":[0.2,9,9,7,3,0.3,1.8],"last14":{"fgm":4.667,"fga":9.833,"ftm":0.667,"fta":1.167,"stats":[0.167,10.167,11.5,8,3.167,0.333,2]}},
+    {"name":"Anfernee Simons","nba":"PHI","slot":"BN","fgm":5.5,"fga":12.6,"ftm":2.6,"fta":3,"stats":[2.6,16.2,2.8,3.9,0.8,0.2,1.8],"last14":{"fgm":3.667,"fga":8.5,"ftm":0.833,"fta":0.833,"stats":[2,10.167,2.5,1.167,0,0,0.5]}},
+    {"name":"Brandin Podziemski","nba":"GSW","slot":"BN","fgm":6.6,"fga":13.3,"ftm":1.9,"fta":2.7,"stats":[3.4,18.4,5.3,4,1.3,0.6,1],"last14":{"fgm":5.667,"fga":12.333,"ftm":1.833,"fta":2.5,"stats":[3.333,16.5,4.5,2.333,1.167,0.667,0.833]}},
+    {"name":"Draymond Green","nba":"GSW","slot":"BN","fgm":1.3,"fga":3.2,"ftm":0.3,"fta":0.7,"stats":[0.2,3.2,4.5,8,1.3,0.8,2],"last14":{"fgm":1.5,"fga":3.5,"ftm":0.333,"fta":0.667,"stats":[0.167,3.5,4.333,7,1,0.667,2.167]}},
+    {"name":"Christian Braun","nba":"DEN","slot":"BN","fgm":4.7,"fga":9.3,"ftm":1.8,"fta":2.3,"stats":[1.8,13,3.8,2.5,1.8,0.2,0.7],"last14":{"fgm":3.833,"fga":9,"ftm":2.167,"fta":2.833,"stats":[0.833,10.667,4.5,2.5,2,0.333,0.5]}},
     {"name":"Trey Murphy III","nba":"NOP","slot":"IL","fgm":5.3,"fga":11.3,"ftm":4.5,"fta":4.5,"stats":[2.3,17.3,5.3,4.5,1,0.5,1.8]},
     {"name":"Chet Holmgren","nba":"OKC","slot":"IL","fgm":7.2,"fga":12.8,"ftm":3.2,"fta":3.8,"stats":[1.6,19.2,8.5,2.5,0.8,2.5,1.8]},
     {"name":"Jusuf Nurkić","nba":"UTA","slot":"IL","fgm":2.5,"fga":5.2,"ftm":1.4,"fta":2.1,"stats":[0.2,6.6,7.1,3.5,0.7,0.8,1.5]},
@@ -338,19 +338,16 @@ const projectionSummary = computed(() => ({ left: projectionRows.value.filter(ro
 
 type WeekFiveSource = 'season' | 'last14'
 const weekFiveSource = ref<WeekFiveSource>('season')
-const recentFormMultiplier: Record<string, { fgm: number; ftm: number; stats: number[] }> = {
-  '阿肥加班幹大事': { fgm: 1.037, ftm: 1.004, stats: [1.23, 1.109, 1.085, 1.057, 1.1, 0.8, 0.914] },
-  'Wei Too Strong': { fgm: 1.049, ftm: 1.035, stats: [1.038, 1.016, 1.101, 1.272, 1.021, 1.053, 0.95] },
-}
+const weekFivePlayerAverage = (player: ProjectionPlayer) => weekFiveSource.value === 'last14' && player.last14 ? player.last14 : player
 const weekFiveRosterForecast = computed(() => {
   const makeTeam = (team: string) => {
     const players = projectedPlayersFor(team, 'week5')
-    const form = weekFiveSource.value === 'last14' ? recentFormMultiplier[team] : undefined
     const totals = players.reduce((sum, player) => {
+      const average = weekFivePlayerAverage(player)
       sum.gp += player.gp
-      sum.fgm += player.fgm * (form?.fgm || 1) * player.gp; sum.fga += player.fga * player.gp
-      sum.ftm += player.ftm * (form?.ftm || 1) * player.gp; sum.fta += player.fta * player.gp
-      player.stats.forEach((value, index) => { sum.stats[index] += value * (form?.stats[index] || 1) * player.gp })
+      sum.fgm += average.fgm * player.gp; sum.fga += average.fga * player.gp
+      sum.ftm += average.ftm * player.gp; sum.fta += average.fta * player.gp
+      average.stats.forEach((value, index) => { sum.stats[index] += value * player.gp })
       return sum
     }, { gp: 0, fgm: 0, fga: 0, ftm: 0, fta: 0, stats: Array(7).fill(0) as number[] })
     return { team, players, gp: totals.gp, values: [totals.fgm / totals.fga, totals.ftm / totals.fta, ...totals.stats] }
@@ -366,7 +363,7 @@ const weekFiveRosterRows = computed(() => categories.map((category, index) => {
 const weekFiveRosterSummary = computed(() => ({ left: weekFiveRosterRows.value.filter(row => row.winner === 'left').length, right: weekFiveRosterRows.value.filter(row => row.winner === 'right').length }))
 const activeWeekFiveDetail = ref<'left' | 'right' | null>(null)
 const activeWeekFiveTeam = computed(() => activeWeekFiveDetail.value === 'left' ? weekFiveRosterForecast.value.left : weekFiveRosterForecast.value.right)
-const weekFivePlayerStat = (team: string, player: ProjectionPlayer, index: number) => player.stats[index] * (weekFiveSource.value === 'last14' ? recentFormMultiplier[team].stats[index] : 1) * player.gp
+const weekFivePlayerStat = (_team: string, player: ProjectionPlayer, index: number) => weekFivePlayerAverage(player).stats[index] * player.gp
 
 type SprintTotals = { fgm: number; fga: number; ftm: number; fta: number; three: number; pts: number; reb: number; ast: number; st: number; blk: number; to: number }
 type SprintTeam = { team: string; played: number; remaining: number; current: SprintTotals; projection: SprintTotals }
