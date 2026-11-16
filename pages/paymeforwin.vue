@@ -52,14 +52,30 @@ const weekThree: TeamWeek[] = [
   { team: 'Wei Too Strong', gp: 48, fgm: '195/411', ftm: '86/103', stats: ['.474', '.835', '52', '528', '230', '146', '49', '18', '67'] },
   { team: 'Wintersoldier', gp: 48, fgm: '256/597', ftm: '149/185', stats: ['.429', '.805', '96', '757', '234', '157', '36', '26', '92'] },
 ]
+const weekFour: TeamWeek[] = [
+  { team: '字母主委', gp: 50, fgm: '248/473', ftm: '113/158', stats: ['.524', '.715', '58', '667', '267', '159', '30', '42', '78'] },
+  { team: '浪子踢球', gp: 50, fgm: '200/444', ftm: '110/125', stats: ['.450', '.880', '91', '601', '232', '138', '40', '35', '73'] },
+  { team: '阿肥加班幹大事', gp: 50, fgm: '291/584', ftm: '104/134', stats: ['.498', '.776', '77', '763', '241', '176', '48', '21', '70'] },
+  { team: '傻逼維特向前衝', gp: 50, fgm: '257/550', ftm: '108/139', stats: ['.467', '.777', '75', '697', '239', '160', '44', '27', '94'] },
+  { team: 'Gyuumao', gp: 50, fgm: '265/575', ftm: '119/143', stats: ['.461', '.832', '91', '740', '263', '170', '43', '20', '91'] },
+  { team: '卡店老闆的斑馬PSA10', gp: 50, fgm: '265/578', ftm: '137/168', stats: ['.458', '.815', '88', '755', '256', '166', '49', '38', '78'] },
+  { team: '哈利吸K', gp: 50, fgm: '204/471', ftm: '142/170', stats: ['.433', '.835', '83', '633', '178', '170', '47', '22', '82'] },
+  { team: 'ALOMAR', gp: 50, fgm: '254/540', ftm: '106/138', stats: ['.470', '.768', '105', '719', '231', '166', '42', '39', '87'] },
+  { team: 'Wei Too Strong', gp: 50, fgm: '213/440', ftm: '98/123', stats: ['.484', '.797', '55', '579', '261', '163', '52', '23', '56'] },
+  { team: '螞蟻雄兵閃身步絕地大反擊', gp: 50, fgm: '167/361', ftm: '88/107', stats: ['.463', '.822', '40', '462', '140', '107', '32', '18', '48'] },
+  { team: 'Wintersoldier', gp: 52, fgm: '233/515', ftm: '124/149', stats: ['.452', '.832', '67', '657', '206', '131', '40', '29', '90'] },
+  { team: '台北胯下大暖流艦隊', gp: 52, fgm: '195/383', ftm: '86/114', stats: ['.509', '.754', '67', '543', '248', '104', '27', '31', '59'] },
+  { team: '80年次男性屬羊', gp: 50, fgm: '243/528', ftm: '167/195', stats: ['.460', '.856', '82', '735', '227', '197', '41', '19', '84'] },
+  { team: '尬電鮪魚', gp: 50, fgm: '230/482', ftm: '93/119', stats: ['.477', '.782', '75', '628', '226', '124', '43', '33', '90'] },
+]
 
 const split = (value: string) => value.split('/').map(Number) as [number, number]
 const canonicalTeam = (team: string) => ({
   '蟻人快歸來': '螞蟻雄兵閃身步絕地大反擊',
   '80年次男性': '80年次男性屬羊',
 }[team] || team)
-const combined = weekThree.map(current => {
-  const entries = [weekOne, weekTwo, weekThree].map(week => week.find(entry => canonicalTeam(entry.team) === canonicalTeam(current.team))!)
+const combined = weekFour.map(current => {
+  const entries = [weekOne, weekTwo, weekThree, weekFour].map(week => week.find(entry => canonicalTeam(entry.team) === canonicalTeam(current.team))!)
   const shooting = entries.map(entry => ({ fg: split(entry.fgm), ft: split(entry.ftm) }))
   const sums = current.stats.slice(2).map((_, index) => entries.reduce((total, entry) => total + Number(entry.stats[index + 2]), 0))
   return {
@@ -72,15 +88,16 @@ const combined = weekThree.map(current => {
     ],
   }
 })
-type MatchupPeriod = 'combined' | 'weekOne' | 'weekTwo' | 'weekThree'
+type MatchupPeriod = 'combined' | 'weekOne' | 'weekTwo' | 'weekThree' | 'weekFour'
 type MatchupTeam = { team: string; gp: number; stats: number[] }
 const normalizeWeek = (entries: TeamWeek[]): MatchupTeam[] => entries.map(entry => ({ team: canonicalTeam(entry.team), gp: entry.gp, stats: entry.stats.map(Number) }))
-const weeklyMatchupData = { weekOne: normalizeWeek(weekOne), weekTwo: normalizeWeek(weekTwo), weekThree: normalizeWeek(weekThree) }
+const weeklyMatchupData = { weekOne: normalizeWeek(weekOne), weekTwo: normalizeWeek(weekTwo), weekThree: normalizeWeek(weekThree), weekFour: normalizeWeek(weekFour) }
 const matchupPeriods: { id: MatchupPeriod; label: string; caption: string }[] = [
-  { id: 'combined', label: '三週合計', caption: 'WEEK 1–3 · COMBINED' },
+  { id: 'combined', label: '四週合計', caption: 'WEEK 1–4 · COMBINED' },
   { id: 'weekOne', label: 'WEEK 1', caption: 'WEEK 1 · FINAL' },
   { id: 'weekTwo', label: 'WEEK 2', caption: 'WEEK 2 · FINAL' },
   { id: 'weekThree', label: 'WEEK 3', caption: 'WEEK 3 · FINAL' },
+  { id: 'weekFour', label: 'WEEK 4', caption: 'WEEK 4 · FINAL' },
 ]
 const ranks = combined.map(entry => categories.map((_, index) => {
   const sorted = [...combined].sort((a, b) => index === 8 ? a.stats[index] - b.stats[index] : b.stats[index] - a.stats[index])
