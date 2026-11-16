@@ -432,8 +432,8 @@ const weiWeekFiveSummary = computed(() => ({ left: weiWeekFiveRows.value.filter(
     </section>
     <section class="analysis-board wrap">
       <template v-if="!forecastOnly">
-      <div class="analysis-heading"><div><p class="eyebrow ink">WEEK 1–3 · COMBINED DATA</p><h2>全員九項戰力圖</h2></div><p>三週原始數據合併後再排名。FG% 與 FT% 以總命中／總出手加權計算；TO 越低越強。</p></div>
-      <div class="analysis-method"><span>14 TEAMS</span><span>3 WEEKS</span><span>9 CATEGORIES</span><span>14 RANK LEVELS</span><span>點雷達開啟完整名次</span></div>
+      <div class="analysis-heading"><div><p class="eyebrow ink">WEEK 1–4 · COMBINED DATA</p><h2>全員九項戰力圖</h2></div><p>四週原始數據合併後再排名。FG% 與 FT% 以總命中／總出手加權計算；TO 越低越強。</p></div>
+      <div class="analysis-method"><span>14 TEAMS</span><span>4 WEEKS</span><span>9 CATEGORIES</span><span>14 RANK LEVELS</span><span>點雷達開啟完整名次</span></div>
       <div class="analysis-grid">
         <article v-for="(player, playerIndex) in playerCards" :key="player.team" class="analysis-card" :class="{ active: isRankModalOpen && selectedTeam === player.team }" tabindex="0" role="button" :aria-pressed="isRankModalOpen && selectedTeam === player.team" @click="selectPlayer(player.team)" @keydown.enter="selectPlayer(player.team)" @keydown.space.prevent="selectPlayer(player.team)">
           <div class="analysis-card-head"><div><small>TEAM {{ String(playerIndex + 1).padStart(2, '0') }}</small><h3>{{ player.team }}</h3></div><b>{{ player.gp }}<em> GP</em></b></div>
