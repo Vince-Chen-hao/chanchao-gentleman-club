@@ -189,7 +189,7 @@ const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
     {"name":"RJ Barrett","nba":"TOR","slot":"Util","fgm":8.2,"fga":17.6,"ftm":3.4,"fta":5.5,"stats":[1.6,21.3,6.7,4.1,0.5,0.5,1.8]},
     {"name":"Meleek Thomas","nba":"CLE","slot":"Util","fgm":5,"fga":10.2,"ftm":0.4,"fta":0.4,"stats":[2.6,13,2.5,1.4,1.2,0.3,0.9]},
     {"name":"Devin Vassell","nba":"SAS","slot":"Util","fgm":3.8,"fga":9.3,"ftm":2.4,"fta":2.5,"stats":[1.5,11.5,3.6,3,1.5,0.3,0.9]},
-    {"name":"Obi Toppin","nba":"IND","slot":"BN","fgm":4.7,"fga":9,"ftm":1.3,"fta":1.8,"stats":[1.7,12.4,4.6,1.5,0.2,0.2,0.8]},
+    {"name":"Jordan Goodwin","nba":"PHX","slot":"SG","fgm":3.2,"fga":7.3,"ftm":0.6,"fta":0.8,"stats":[1,9,3.6,2.3,1.2,0.3,1.1]},
     {"name":"Brook Lopez","nba":"LAC","slot":"BN","fgm":5.8,"fga":10.4,"ftm":1.6,"fta":2.5,"stats":[1.5,14.7,5.4,1.3,0.5,0.9,1]},
     {"name":"Ziaire Williams","nba":"LAL","slot":"BN","fgm":4,"fga":7.1,"ftm":1,"fta":1.2,"stats":[2,11,2.6,2,1.5,0.2,0.4]},
     {"name":"Jalen Suggs","nba":"ORL","slot":"BN","fgm":2.8,"fga":9,"ftm":0.8,"fta":1,"stats":[0.5,6.8,4.3,5,1.5,0.3,2.5]},
