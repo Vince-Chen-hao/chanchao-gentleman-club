@@ -184,7 +184,7 @@ const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
     {"name":"Zaccharie Risacher","nba":"DAL","slot":"SF","fgm":3.3,"fga":7.8,"ftm":0.6,"fta":1,"stats":[1.1,8.3,5,1.5,1.3,1.1,1.1]},
     {"name":"Julius Randle","nba":"BKN","slot":"PF","fgm":6.4,"fga":14.5,"ftm":5.6,"fta":7.1,"stats":[1.4,19.7,6.5,5,0.7,0.2,3.8]},
     {"name":"Tari Eason","nba":"HOU","slot":"F","fgm":3.8,"fga":9.2,"ftm":1.2,"fta":1.3,"stats":[0.9,9.7,6.2,1.3,1,1.1,1.2]},
-    {"name":"Jarrett Allen","nba":"CLE","slot":"C","fgm":4.8,"fga":7.5,"ftm":2.6,"fta":3.7,"stats":[0.3,12.5,8.3,1.4,0.6,1.4,0.8]},
+    {"name":"Jarrett Allen","nba":"CLE","slot":"IL","fgm":4.8,"fga":7.5,"ftm":2.6,"fta":3.7,"stats":[0.3,12.5,8.3,1.4,0.6,1.4,0.8]},
     {"name":"Nikola Jokić","nba":"DEN","slot":"C","fgm":9.2,"fga":18.4,"ftm":4.1,"fta":4.7,"stats":[1,23.5,10.8,9,1.8,1.2,3]},
     {"name":"RJ Barrett","nba":"TOR","slot":"Util","fgm":8.2,"fga":17.6,"ftm":3.4,"fta":5.5,"stats":[1.6,21.3,6.7,4.1,0.5,0.5,1.8]},
     {"name":"Meleek Thomas","nba":"CLE","slot":"Util","fgm":5,"fga":10.2,"ftm":0.4,"fta":0.4,"stats":[2.6,13,2.5,1.4,1.2,0.3,0.9]},
@@ -511,7 +511,7 @@ const weiWeekFiveSummary = computed(() => ({ left: weiWeekFiveRows.value.filter(
         </div>
         <p class="sprint-footnote">命中率以已完成的命中／出手，加上剩餘賽程的預估命中／出手加權計算；其餘項目則為已結算數據與剩餘推估的加總。每日傷病、輪休與實際排陣仍可能改變結果。</p>
       </section>
-      <section v-if="forecastOnly" class="next-matchup-lab" aria-labelledby="wei-week-five-title">
+      <section v-if="false" class="next-matchup-lab" aria-labelledby="wei-week-five-title">
         <div class="sprint-heading"><div><p class="eyebrow">NEXT WEEK · ROSTER OUTLOOK</p><h2 id="wei-week-five-title">阿肥 vs Wei Too Strong｜下週預測</h2></div><p>每名球員的平均數據乘上 Week 5 賽程；FG%、FT% 以預估命中與出手加權。可切換穩定的整季基準與近期 14 天狀態。</p></div>
         <div class="forecast-source"><span>預測數據來源</span><div><button type="button" :class="{ active: weiForecastSource === 'season' }" @click="weiForecastSource = 'season'">整季平均</button><button type="button" :class="{ active: weiForecastSource === 'last14' }" @click="weiForecastSource = 'last14'">最近 14 天平均</button></div><p>{{ weiWeekFive.caption }}</p></div>
         <div class="sprint-status next-matchup-status"><span><b>{{ weiWeekFive.left.team }}</b> · 預計 {{ weiWeekFive.left.gp }} GP</span><strong>WEEK 5</strong><span><b>{{ weiWeekFive.right.team }}</b> · 預計 {{ weiWeekFive.right.gp }} GP</span></div>
