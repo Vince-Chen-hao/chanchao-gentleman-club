@@ -35,6 +35,7 @@ interface FundResponse {
 }
 
 const section = ref<HTMLElement | null>(null)
+const showPerformance = ref(false)
 const { data, error, status, refresh } = await useLazyFetch<FundResponse>('/api/fund-0050', { server: false })
 // A failed refresh must not replace a previously successful quote or position.
 const lastGood = shallowRef<FundResponse | null>(null)
@@ -89,6 +90,32 @@ const holdingNote = computed(() => {
     ? `${numberAmount(position.shares)} 股 + 現金 ${amount(position.cashBalance, 2)}`
     : '收盤後試算股數與餘額'
 })
+const performanceHistory = computed(() => {
+  const currentValue = fund.value?.metrics.totalValue ?? 23012.1
+  return [
+    { date: '2026-10-06', label: '首次買進', value: 24001.65, detail: '207 股 · NT$ 115.95' },
+    { date: '2026-10-14', label: '第二次加碼', value: 28087.65, detail: '243 股 · 平均 NT$ 115.59' },
+    { date: quote.value?.quoteDate || '現在', label: '目前市值', value: currentValue, detail: `${profit.value} · ${profitPercent.value || '等待最新報價'}` },
+  ]
+})
+const performanceChart = computed(() => {
+  const values = performanceHistory.value.map(point => point.value)
+  const min = Math.min(...values)
+  const max = Math.max(...values)
+  const range = Math.max(max - min, max * .08, 1)
+  const points = performanceHistory.value.map((point, index) => {
+    const x = 48 + index * 162
+    const y = 164 - ((point.value - min) / range) * 112
+    return { ...point, x, y }
+  })
+  return { points, line: points.map(point => `${point.x},${point.y}`).join(' '), top: max, bottom: min }
+})
+const performanceLoss = computed(() => {
+  const value = fund.value?.metrics.unrealizedPnl
+  const pct = fund.value?.metrics.returnPct
+  if (value == null || pct == null) return '等待最新報價建立損益'
+  return `目前 ${value < 0 ? '賠' : '賺'} ${amount(Math.abs(value), 2)} · ${pct > 0 ? '+' : ''}${pct.toFixed(2)}%`
+})
 
 let observer: IntersectionObserver | undefined
 let timer: ReturnType<typeof setInterval> | undefined
@@ -117,6 +144,9 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
       <button class="fund-refresh" type="button" :disabled="pending" @click="refreshQuote">
         <span aria-hidden="true" :class="{ 'is-refreshing': pending }">↻</span>
         {{ pending ? '更新中' : '更新報價' }}
+      </button>
+      <button class="fund-history-trigger" type="button" @click="showPerformance = true">
+        <span aria-hidden="true">↗</span> 資金走勢
       </button>
     </div>
 
@@ -153,6 +183,40 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
         <a :href="quote?.sourceUrl || 'https://www.twse.com.tw/zh/trading/exchange/MI_INDEX.html'" target="_blank" rel="noopener noreferrer">證交所來源 ↗</a>
       </p>
     </div>
+
+    <Teleport to="body">
+      <div v-if="showPerformance" class="fund-modal-backdrop" role="presentation" @click.self="showPerformance = false">
+        <section class="fund-modal" role="dialog" aria-modal="true" aria-labelledby="fund-performance-title">
+          <button class="fund-modal-close" type="button" aria-label="關閉資金走勢" @click="showPerformance = false">×</button>
+          <header class="fund-modal-heading">
+            <p class="fund-kicker">0050 · CAPITAL TIMELINE</p>
+            <h3 id="fund-performance-title">積分池資金走勢</h3>
+            <p>從兩次投入到現在，錢的去向清清楚楚。</p>
+          </header>
+          <div class="fund-performance-summary">
+            <span>累計投入 <b>NT$ 28,087.65</b></span>
+            <strong :class="profitTone">{{ performanceLoss }}</strong>
+          </div>
+          <div class="fund-chart-shell">
+            <svg class="fund-chart" viewBox="0 0 420 220" role="img" aria-label="0050 積分池投入與目前市值走勢">
+              <defs><linearGradient id="fund-chart-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efbd55" stop-opacity=".42"/><stop offset="1" stop-color="#efbd55" stop-opacity="0"/></linearGradient></defs>
+              <line v-for="guide in [52, 108, 164]" :key="guide" x1="32" x2="388" :y1="guide" :y2="guide" class="fund-chart-guide" />
+              <polygon :points="`48,180 ${performanceChart.line} 372,180`" class="fund-chart-area" />
+              <polyline :points="performanceChart.line" class="fund-chart-line" />
+              <g v-for="point in performanceChart.points" :key="point.date + point.label">
+                <circle :cx="point.x" :cy="point.y" r="10" class="fund-chart-halo" />
+                <circle :cx="point.x" :cy="point.y" r="4.5" class="fund-chart-dot" />
+                <text :x="point.x" :y="point.y - 17" text-anchor="middle" class="fund-chart-value">{{ numberAmount(point.value, 0) }}</text>
+                <text :x="point.x" y="204" text-anchor="middle" class="fund-chart-date">{{ point.date }}</text>
+              </g>
+            </svg>
+          </div>
+          <ol class="fund-history-list">
+            <li v-for="point in performanceHistory" :key="point.date + point.label"><time>{{ point.date }}</time><div><strong>{{ point.label }}</strong><span>{{ point.detail }}</span></div><b>NT$ {{ numberAmount(point.value, 2) }}</b></li>
+          </ol>
+        </section>
+      </div>
+    </Teleport>
   </aside>
 </template>
 
@@ -160,7 +224,8 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
 .fund-tracker{position:relative;isolation:isolate;overflow:hidden;margin-top:22px;padding:22px 26px;background:linear-gradient(145deg,rgba(13,20,31,.96),rgba(17,27,42,.92) 52%,rgba(8,17,31,.98));color:#f6f3e9;border:0;border-radius:14px;box-shadow:0 22px 70px rgba(0,0,0,.28),0 6px 22px rgba(16,29,49,.2),inset 0 1px 0 rgba(255,255,255,.13),inset 0 0 0 1px rgba(255,255,255,.06)}
 .fund-tracker::before{content:'';position:absolute;inset:auto -8% -42% -8%;z-index:-2;height:58%;background:radial-gradient(circle at 10% 62%,rgba(239,184,73,.78),transparent 32%),radial-gradient(circle at 36% 82%,rgba(255,91,126,.5),transparent 34%),radial-gradient(circle at 62% 70%,rgba(163,124,255,.52),transparent 36%),radial-gradient(circle at 86% 64%,rgba(49,216,165,.62),transparent 33%);filter:blur(24px);opacity:.78;animation:fund-aurora 9s ease-in-out infinite alternate}
 .fund-tracker::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(255,255,255,.06),transparent 42%),radial-gradient(circle at 82% 12%,rgba(150,190,255,.14),transparent 26%);pointer-events:none}
-.fund-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;z-index:1}
+.fund-heading{display:flex;align-items:center;justify-content:flex-start;gap:10px;position:relative;z-index:1}
+.fund-heading>div{margin-right:auto}
 .fund-kicker{margin:0 0 7px;color:#7ed7b8;font-size:12px;line-height:1.3;font-weight:700;letter-spacing:.13em}
 .fund-kicker span{display:inline-block;margin-right:6px;font-size:17px;line-height:12px}
 .fund-heading h3{margin:0;color:#fff6df;font-size:22px;font-weight:750;line-height:1.35;letter-spacing:.01em}
@@ -169,6 +234,8 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
 .fund-refresh:focus-visible{outline:2px solid #f3bd45;outline-offset:3px}
 .fund-refresh:disabled{opacity:.6;cursor:wait}
 .fund-refresh span{font-size:18px;line-height:1}
+.fund-history-trigger{display:flex;align-items:center;gap:6px;min-height:35px;padding:7px 11px;border:1px solid rgba(239,193,91,.46);border-radius:999px;background:rgba(239,193,91,.09);color:#f4cf76;font:inherit;font-size:12px;cursor:pointer;backdrop-filter:blur(8px)}
+.fund-history-trigger:hover{background:rgba(239,193,91,.17);border-color:#f3c15b;color:#fff2cd}.fund-history-trigger:focus-visible{outline:2px solid #f3c15b;outline-offset:3px}
 .is-refreshing{animation:fund-spin 1.2s linear infinite}
 .fund-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:20px 0 17px;position:relative;z-index:1}
 .fund-metrics>div{min-width:0;padding:0 22px;border-left:1px solid rgba(230,235,227,.15)}
@@ -184,10 +251,17 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
 .fund-source{text-align:right;flex-shrink:0}
 .fund-source a{color:#c9d4d7;text-decoration:underline;text-underline-offset:3px}
 .fund-source a:hover{color:#f3c15b}
+.fund-modal-backdrop{position:fixed;z-index:80;inset:0;display:grid;place-items:center;padding:22px;background:rgba(6,12,22,.74);backdrop-filter:blur(12px);animation:fund-modal-in .22s ease-out}
+.fund-modal{position:relative;width:min(720px,100%);max-height:min(760px,calc(100vh - 44px));overflow:auto;padding:30px;border:1px solid rgba(239,193,91,.38);border-radius:22px;background:radial-gradient(circle at 88% 0,rgba(40,157,131,.22),transparent 30%),linear-gradient(145deg,#0e192a,#101c30 58%,#0b1628);box-shadow:0 32px 100px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,255,255,.1);color:#f7f3e9;animation:fund-modal-rise .3s cubic-bezier(.2,.8,.2,1)}
+.fund-modal-close{position:absolute;top:18px;right:18px;width:35px;height:35px;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(255,255,255,.05);color:#fff;font-size:27px;line-height:28px;cursor:pointer}.fund-modal-close:hover{border-color:#f3c15b;color:#f3c15b}.fund-modal-heading h3{margin:4px 0 8px;font-size:29px;letter-spacing:.01em}.fund-modal-heading>p:last-child{margin:0;color:#aebbc6;font-size:14px}
+.fund-performance-summary{display:flex;justify-content:space-between;gap:18px;align-items:center;margin:25px 0 14px;padding:14px 16px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.035);color:#acb8c3;font-size:13px}.fund-performance-summary b{display:block;margin-top:4px;color:#f8e1a0;font-size:19px}.fund-performance-summary>strong{font-size:18px}.fund-performance-summary>.is-negative{color:#ffaca9}.fund-performance-summary>.is-positive{color:#8ce5bd}
+.fund-chart-shell{padding:16px 6px 2px;border:1px solid rgba(255,255,255,.08);border-radius:15px;background:rgba(0,0,0,.13)}.fund-chart{display:block;width:100%;height:auto}.fund-chart-guide{stroke:rgba(222,231,241,.13);stroke-dasharray:3 5}.fund-chart-area{fill:url(#fund-chart-fill)}.fund-chart-line{fill:none;stroke:#efbd55;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 4px 6px rgba(239,189,85,.25))}.fund-chart-halo{fill:rgba(239,189,85,.2)}.fund-chart-dot{fill:#fff6df;stroke:#efbd55;stroke-width:3}.fund-chart-value{fill:#f8dfa0;font-size:13px;font-weight:750}.fund-chart-date{fill:#aab8c5;font-size:10px;letter-spacing:.04em}
+.fund-history-list{display:grid;gap:0;margin:18px 0 0;padding:0;list-style:none;border:1px solid rgba(255,255,255,.09);border-radius:13px;overflow:hidden}.fund-history-list li{display:grid;grid-template-columns:90px 1fr auto;gap:14px;align-items:center;padding:13px 15px;border-top:1px solid rgba(255,255,255,.08)}.fund-history-list li:first-child{border-top:0}.fund-history-list time{color:#83d8bb;font:700 11px/1.2 ui-monospace,monospace;letter-spacing:.04em}.fund-history-list strong,.fund-history-list span{display:block}.fund-history-list strong{font-size:14px}.fund-history-list span{margin-top:3px;color:#9eafbe;font-size:12px}.fund-history-list b{color:#f7dea1;font-size:14px;font-variant-numeric:tabular-nums}
+@keyframes fund-modal-in{from{opacity:0}to{opacity:1}}@keyframes fund-modal-rise{from{transform:translateY(16px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
 @keyframes fund-spin{to{transform:rotate(360deg)}}
 @keyframes fund-aurora{0%{transform:translate3d(-2%,6%,0) scale(1.02);opacity:.62}50%{transform:translate3d(2%,-2%,0) scale(1.08);opacity:.9}100%{transform:translate3d(4%,4%,0) scale(1.03);opacity:.72}}
 @media(max-width:1000px){.fund-metrics dd{font-size:22px}.fund-metrics>div{padding:0 15px}.fund-bottom{flex-wrap:wrap}.fund-source{text-align:left}}
-@media(max-width:650px){.fund-tracker{padding:20px;margin-top:18px}.fund-heading{gap:12px;align-items:flex-start}.fund-heading h3{font-size:19px;max-width:240px}.fund-refresh{font-size:11px;padding:7px 8px}.fund-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:19px 0;margin-top:21px}.fund-metrics>div{padding:0 0 0 15px}.fund-metrics>div:nth-child(odd){padding-left:0;border-left:0}.fund-metrics dd{font-size:24px}.fund-note,.fund-source{font-size:11px}.fund-bottom{gap:6px}.fund-source{flex-shrink:1}}
+@media(max-width:650px){.fund-tracker{padding:20px;margin-top:18px}.fund-heading{gap:8px;align-items:flex-start;flex-wrap:wrap}.fund-heading>div{flex-basis:100%}.fund-heading h3{font-size:19px;max-width:240px}.fund-refresh,.fund-history-trigger{font-size:11px;padding:7px 8px}.fund-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:19px 0;margin-top:21px}.fund-metrics>div{padding:0 0 0 15px}.fund-metrics>div:nth-child(odd){padding-left:0;border-left:0}.fund-metrics dd{font-size:24px}.fund-note,.fund-source{font-size:11px}.fund-bottom{gap:6px}.fund-source{flex-shrink:1}.fund-modal{padding:25px 18px 18px;border-radius:17px}.fund-modal-heading h3{font-size:25px}.fund-performance-summary{align-items:flex-start;flex-direction:column}.fund-history-list li{grid-template-columns:1fr auto;gap:7px 12px}.fund-history-list time{grid-column:1/-1}.fund-history-list b{align-self:center}}
 @media(max-width:650px){.fund-heading h3 span{display:block}.fund-metrics dd{white-space:normal;overflow-wrap:anywhere}}
 @media(max-width:400px){.fund-metrics dd{font-size:21px}.fund-metrics>div{padding-left:12px}}
 @media(prefers-reduced-motion:reduce){.is-refreshing,.fund-tracker::before{animation:none}}
