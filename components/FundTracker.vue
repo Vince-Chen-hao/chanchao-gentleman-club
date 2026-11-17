@@ -31,11 +31,14 @@ interface FundResponse {
     unrealizedPnl: number | null
     returnPct: number | null
   }
+  history: Array<{ date: string; price: number; shares: number; cost: number; marketValue: number; unrealizedPnl: number }>
   status: 'pending' | 'ready'
 }
+type FundPerformancePoint = FundResponse['history'][number]
 
 const section = ref<HTMLElement | null>(null)
 const showPerformance = ref(false)
+const performanceRange = ref<'daily' | 'weekly'>('daily')
 const { data, error, status, refresh } = await useLazyFetch<FundResponse>('/api/fund-0050', { server: false })
 // A failed refresh must not replace a previously successful quote or position.
 const lastGood = shallowRef<FundResponse | null>(null)
@@ -52,6 +55,7 @@ const numberAmount = (value: number | null | undefined, digits = 0) =>
   value == null ? '—' : new Intl.NumberFormat('zh-TW', { minimumFractionDigits: digits, maximumFractionDigits: digits }).format(value)
 const amount = (value: number | null | undefined, digits = 0) =>
   value == null ? '—' : `NT$ ${numberAmount(value, digits)}`
+const signedAmount = (value: number, digits = 0) => `${value > 0 ? '+' : value < 0 ? '−' : ''}${numberAmount(Math.abs(value), digits)}`
 const profit = computed(() => {
   const value = fund.value?.metrics.unrealizedPnl
   return value == null ? '—' : `${value > 0 ? '+' : value < 0 ? '−' : ''}${numberAmount(Math.abs(value), 2)}`
@@ -90,25 +94,29 @@ const holdingNote = computed(() => {
     ? `${numberAmount(position.shares)} 股 + 現金 ${amount(position.cashBalance, 2)}`
     : '收盤後試算股數與餘額'
 })
+const dailyPerformance = computed(() => fund.value?.history || [])
 const performanceHistory = computed(() => {
-  const currentValue = fund.value?.metrics.totalValue ?? 23012.1
-  return [
-    { date: '2026-10-06', label: '首次買進', value: 24001.65, detail: '207 股 · NT$ 115.95' },
-    { date: '2026-10-14', label: '第二次加碼', value: 28087.65, detail: '243 股 · 平均 NT$ 115.59' },
-    { date: quote.value?.quoteDate || '現在', label: '目前市值', value: currentValue, detail: `${profit.value} · ${profitPercent.value || '等待最新報價'}` },
-  ]
+  if (performanceRange.value === 'daily') return dailyPerformance.value
+  const weeks = new Map<string, FundPerformancePoint>()
+  dailyPerformance.value.forEach(point => {
+    const date = new Date(`${point.date}T00:00:00Z`)
+    date.setUTCDate(date.getUTCDate() - ((date.getUTCDay() + 6) % 7))
+    weeks.set(date.toISOString().slice(0, 10), point)
+  })
+  return [...weeks.values()]
 })
 const performanceChart = computed(() => {
-  const values = performanceHistory.value.map(point => point.value)
-  const min = Math.min(...values)
-  const max = Math.max(...values)
-  const range = Math.max(max - min, max * .08, 1)
+  const values = performanceHistory.value.map(point => point.unrealizedPnl)
+  if (!values.length) return { points: [] as Array<FundPerformancePoint & { x: number; y: number }>, line: '' }
+  const min = Math.min(0, ...values)
+  const max = Math.max(0, ...values)
+  const range = Math.max(max - min, 500, 1)
   const points = performanceHistory.value.map((point, index) => {
-    const x = 48 + index * 162
-    const y = 164 - ((point.value - min) / range) * 112
+    const x = performanceHistory.value.length < 2 ? 210 : 44 + index * (332 / (performanceHistory.value.length - 1))
+    const y = 164 - ((point.unrealizedPnl - min) / range) * 112
     return { ...point, x, y }
   })
-  return { points, line: points.map(point => `${point.x},${point.y}`).join(' '), top: max, bottom: min }
+  return { points, line: points.map(point => `${point.x},${point.y}`).join(' ') }
 })
 const performanceLoss = computed(() => {
   const value = fund.value?.metrics.unrealizedPnl
@@ -116,6 +124,7 @@ const performanceLoss = computed(() => {
   if (value == null || pct == null) return '等待最新報價建立損益'
   return `目前 ${value < 0 ? '賠' : '賺'} ${amount(Math.abs(value), 2)} · ${pct > 0 ? '+' : ''}${pct.toFixed(2)}%`
 })
+const performanceEntries = computed(() => performanceHistory.value.slice(-5).reverse())
 
 let observer: IntersectionObserver | undefined
 let timer: ReturnType<typeof setInterval> | undefined
@@ -191,28 +200,33 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
           <header class="fund-modal-heading">
             <p class="fund-kicker">0050 · CAPITAL TIMELINE</p>
             <h3 id="fund-performance-title">積分池資金走勢</h3>
-            <p>從兩次投入到現在，錢的去向清清楚楚。</p>
+            <p>每天看帳面損益；日線看波動，週線看趨勢。</p>
           </header>
           <div class="fund-performance-summary">
             <span>累計投入 <b>NT$ 28,087.65</b></span>
             <strong :class="profitTone">{{ performanceLoss }}</strong>
           </div>
+          <div class="fund-range-tabs" role="tablist" aria-label="資金走勢區間">
+            <button :class="{ active: performanceRange === 'daily' }" type="button" role="tab" :aria-selected="performanceRange === 'daily'" @click="performanceRange = 'daily'">每日損益</button>
+            <button :class="{ active: performanceRange === 'weekly' }" type="button" role="tab" :aria-selected="performanceRange === 'weekly'" @click="performanceRange = 'weekly'">每週收盤</button>
+          </div>
+          <div class="fund-investments"><span><b>10/06</b> 首次投入 24,001.65</span><span><b>10/14</b> 加碼至 28,087.65</span></div>
           <div class="fund-chart-shell">
-            <svg class="fund-chart" viewBox="0 0 420 220" role="img" aria-label="0050 積分池投入與目前市值走勢">
+            <svg class="fund-chart" viewBox="0 0 420 220" role="img" aria-label="0050 積分池每日帳面損益走勢">
               <defs><linearGradient id="fund-chart-fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#efbd55" stop-opacity=".42"/><stop offset="1" stop-color="#efbd55" stop-opacity="0"/></linearGradient></defs>
               <line v-for="guide in [52, 108, 164]" :key="guide" x1="32" x2="388" :y1="guide" :y2="guide" class="fund-chart-guide" />
               <polygon :points="`48,180 ${performanceChart.line} 372,180`" class="fund-chart-area" />
               <polyline :points="performanceChart.line" class="fund-chart-line" />
-              <g v-for="point in performanceChart.points" :key="point.date + point.label">
-                <circle :cx="point.x" :cy="point.y" r="10" class="fund-chart-halo" />
-                <circle :cx="point.x" :cy="point.y" r="4.5" class="fund-chart-dot" />
-                <text :x="point.x" :y="point.y - 17" text-anchor="middle" class="fund-chart-value">{{ numberAmount(point.value, 0) }}</text>
-                <text :x="point.x" y="204" text-anchor="middle" class="fund-chart-date">{{ point.date }}</text>
+              <g v-for="point in performanceChart.points" :key="point.date">
+                <circle :cx="point.x" :cy="point.y" r="7" class="fund-chart-halo" />
+                <circle :cx="point.x" :cy="point.y" r="3.5" class="fund-chart-dot" />
+                <text v-if="point === performanceChart.points[0] || point === performanceChart.points[performanceChart.points.length - 1]" :x="point.x" :y="point.y - 14" text-anchor="middle" class="fund-chart-value">{{ signedAmount(point.unrealizedPnl) }}</text>
+                <text v-if="point === performanceChart.points[0] || point === performanceChart.points[performanceChart.points.length - 1]" :x="point.x" y="204" text-anchor="middle" class="fund-chart-date">{{ point.date }}</text>
               </g>
             </svg>
           </div>
           <ol class="fund-history-list">
-            <li v-for="point in performanceHistory" :key="point.date + point.label"><time>{{ point.date }}</time><div><strong>{{ point.label }}</strong><span>{{ point.detail }}</span></div><b>NT$ {{ numberAmount(point.value, 2) }}</b></li>
+            <li v-for="point in performanceEntries" :key="point.date"><time>{{ point.date }}</time><div><strong>收盤 NT$ {{ numberAmount(point.price, 2) }}</strong><span>{{ numberAmount(point.shares) }} 股 · 累計成本 NT$ {{ numberAmount(point.cost, 2) }}</span></div><b :class="point.unrealizedPnl < 0 ? 'is-loss' : 'is-gain'">{{ signedAmount(point.unrealizedPnl, 2) }}</b></li>
           </ol>
         </section>
       </div>
@@ -255,8 +269,9 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
 .fund-modal{position:relative;width:min(720px,100%);max-height:min(760px,calc(100vh - 44px));overflow:auto;padding:30px;border:1px solid rgba(239,193,91,.38);border-radius:22px;background:radial-gradient(circle at 88% 0,rgba(40,157,131,.22),transparent 30%),linear-gradient(145deg,#0e192a,#101c30 58%,#0b1628);box-shadow:0 32px 100px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,255,255,.1);color:#f7f3e9;animation:fund-modal-rise .3s cubic-bezier(.2,.8,.2,1)}
 .fund-modal-close{position:absolute;top:18px;right:18px;width:35px;height:35px;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(255,255,255,.05);color:#fff;font-size:27px;line-height:28px;cursor:pointer}.fund-modal-close:hover{border-color:#f3c15b;color:#f3c15b}.fund-modal-heading h3{margin:4px 0 8px;font-size:29px;letter-spacing:.01em}.fund-modal-heading>p:last-child{margin:0;color:#aebbc6;font-size:14px}
 .fund-performance-summary{display:flex;justify-content:space-between;gap:18px;align-items:center;margin:25px 0 14px;padding:14px 16px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.035);color:#acb8c3;font-size:13px}.fund-performance-summary b{display:block;margin-top:4px;color:#f8e1a0;font-size:19px}.fund-performance-summary>strong{font-size:18px}.fund-performance-summary>.is-negative{color:#ffaca9}.fund-performance-summary>.is-positive{color:#8ce5bd}
+.fund-range-tabs{display:flex;gap:6px;margin:0 0 11px}.fund-range-tabs button{border:1px solid rgba(255,255,255,.16);border-radius:8px;background:transparent;color:#9eafbe;padding:7px 11px;font:700 11px/1 inherit;letter-spacing:.04em;cursor:pointer}.fund-range-tabs button.active{border-color:#efbd55;background:rgba(239,189,85,.13);color:#f8dfa0}.fund-investments{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:13px}.fund-investments span{padding:5px 8px;border-radius:6px;background:rgba(129,214,188,.09);color:#a9b9c4;font-size:11px}.fund-investments b{margin-right:5px;color:#83d8bb;font-family:ui-monospace,monospace}
 .fund-chart-shell{padding:16px 6px 2px;border:1px solid rgba(255,255,255,.08);border-radius:15px;background:rgba(0,0,0,.13)}.fund-chart{display:block;width:100%;height:auto}.fund-chart-guide{stroke:rgba(222,231,241,.13);stroke-dasharray:3 5}.fund-chart-area{fill:url(#fund-chart-fill)}.fund-chart-line{fill:none;stroke:#efbd55;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 4px 6px rgba(239,189,85,.25))}.fund-chart-halo{fill:rgba(239,189,85,.2)}.fund-chart-dot{fill:#fff6df;stroke:#efbd55;stroke-width:3}.fund-chart-value{fill:#f8dfa0;font-size:13px;font-weight:750}.fund-chart-date{fill:#aab8c5;font-size:10px;letter-spacing:.04em}
-.fund-history-list{display:grid;gap:0;margin:18px 0 0;padding:0;list-style:none;border:1px solid rgba(255,255,255,.09);border-radius:13px;overflow:hidden}.fund-history-list li{display:grid;grid-template-columns:90px 1fr auto;gap:14px;align-items:center;padding:13px 15px;border-top:1px solid rgba(255,255,255,.08)}.fund-history-list li:first-child{border-top:0}.fund-history-list time{color:#83d8bb;font:700 11px/1.2 ui-monospace,monospace;letter-spacing:.04em}.fund-history-list strong,.fund-history-list span{display:block}.fund-history-list strong{font-size:14px}.fund-history-list span{margin-top:3px;color:#9eafbe;font-size:12px}.fund-history-list b{color:#f7dea1;font-size:14px;font-variant-numeric:tabular-nums}
+.fund-history-list{display:grid;gap:0;margin:18px 0 0;padding:0;list-style:none;border:1px solid rgba(255,255,255,.09);border-radius:13px;overflow:hidden}.fund-history-list li{display:grid;grid-template-columns:90px 1fr auto;gap:14px;align-items:center;padding:13px 15px;border-top:1px solid rgba(255,255,255,.08)}.fund-history-list li:first-child{border-top:0}.fund-history-list time{color:#83d8bb;font:700 11px/1.2 ui-monospace,monospace;letter-spacing:.04em}.fund-history-list strong,.fund-history-list span{display:block}.fund-history-list strong{font-size:14px}.fund-history-list span{margin-top:3px;color:#9eafbe;font-size:12px}.fund-history-list b{font-size:14px;font-variant-numeric:tabular-nums}.fund-history-list .is-loss{color:#ffaaa6}.fund-history-list .is-gain{color:#8ce5bd}
 @keyframes fund-modal-in{from{opacity:0}to{opacity:1}}@keyframes fund-modal-rise{from{transform:translateY(16px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
 @keyframes fund-spin{to{transform:rotate(360deg)}}
 @keyframes fund-aurora{0%{transform:translate3d(-2%,6%,0) scale(1.02);opacity:.62}50%{transform:translate3d(2%,-2%,0) scale(1.08);opacity:.9}100%{transform:translate3d(4%,4%,0) scale(1.03);opacity:.72}}

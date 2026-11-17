@@ -1,4 +1,4 @@
-import { calculateFund, canReplaceQuote, fundPlan, parseDailyQuote, parseMisQuote, type FundQuote } from '../utils/fund-0050'
+import { calculateFund, canReplaceQuote, fundPlan, parseDailyHistory, parseDailyQuote, parseMisQuote, type FundQuote } from '../utils/fund-0050'
 
 const misUrl = 'https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_0050.tw&json=1&delay=0'
 const ttl = 300_000
@@ -6,6 +6,9 @@ let lastQuote: FundQuote | null = null
 let cachedAt = 0
 let lastAttempt = 0
 let loading: Promise<FundQuote> | null = null
+let lastHistory: Array<{ quoteDate: string; price: number }> = []
+let historyCachedAt = 0
+let historyLoading: Promise<Array<{ quoteDate: string; price: number }>> | null = null
 
 async function getJson(url: string): Promise<unknown> {
   const response = await fetch(url, { signal: AbortSignal.timeout(6000), headers: { Accept: 'application/json' } })
@@ -41,10 +44,29 @@ async function loadQuote(): Promise<FundQuote> {
     kind: 'trade', sourceUrl: misUrl, fetchedAt, stale: true }
 }
 
+async function loadHistory() {
+  const date = taipeiDate()
+  const current = new Date(Date.UTC(Number(date.slice(0, 4)), Number(date.slice(4, 6)) - 1, 1))
+  const previous = new Date(Date.UTC(current.getUTCFullYear(), current.getUTCMonth() - 1, 1))
+  const reportDates = [current, previous].map(month => `${month.getUTCFullYear()}${String(month.getUTCMonth() + 1).padStart(2, '0')}01`)
+  const responses = await Promise.all(reportDates.map(async reportDate => {
+    const url = `https://www.twse.com.tw/rwd/zh/afterTrading/STOCK_DAY?date=${reportDate}&response=json&stockNo=0050`
+    try { return parseDailyHistory(await getJson(url)) } catch { return [] }
+  }))
+  const history = new Map<string, number>()
+  responses.flat().forEach(point => history.set(point.quoteDate, point.price))
+  return [...history].map(([quoteDate, price]) => ({ quoteDate, price })).sort((a, b) => a.quoteDate.localeCompare(b.quoteDate))
+}
+
 export default defineEventHandler(async (event) => {
   setHeader(event, 'Cache-Control', 'no-store')
   const now = Date.now()
-  if (lastQuote && now - cachedAt < ttl) return calculateFund(lastQuote)
+  if (!historyLoading && now - historyCachedAt >= ttl) {
+    historyLoading = loadHistory().then(history => {
+      if (history.length) { lastHistory = history; historyCachedAt = Date.now() }
+      return lastHistory
+    }).finally(() => { historyLoading = null })
+  }
   // Coalesce requests; failed providers get a one-minute cooldown across clients.
   if (!loading && now - lastAttempt >= 60_000) {
     lastAttempt = now
@@ -54,6 +76,9 @@ export default defineEventHandler(async (event) => {
       return quote
     }).finally(() => { loading = null })
   }
-  const quote = loading ? await loading : lastQuote!
-  return calculateFund(quote)
+  const quote = lastQuote && now - cachedAt < ttl ? lastQuote : loading ? await loading : lastQuote!
+  const history = historyLoading ? await historyLoading : lastHistory
+  const priceMap = new Map(history.map(point => [point.quoteDate, point.price]))
+  if (quote.price != null && quote.quoteDate != null) priceMap.set(quote.quoteDate, quote.price)
+  return calculateFund(quote, [...priceMap].map(([quoteDate, price]) => ({ quoteDate, price })))
 })

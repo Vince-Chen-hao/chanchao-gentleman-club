@@ -10,6 +10,15 @@ export type FundQuote = {
   stale: boolean
 }
 
+export type FundHistoryPoint = {
+  date: string
+  price: number
+  shares: number
+  cost: number
+  marketValue: number
+  unrealizedPnl: number
+}
+
 // Actual 0050 position.
 // User-provided order confirmations:
 // - 2026-10-06: 207 shares at NT$115.95, estimated amount NT$24,001.65.
@@ -69,17 +78,21 @@ export function parseMisQuote(payload: unknown, fetchedAt: string, sourceUrl: st
     kind: quoteTime >= '13:30:00' ? 'close' : 'trade', sourceUrl, fetchedAt, stale: false }
 }
 
-export function parseDailyQuote(payload: unknown, fetchedAt: string, sourceUrl: string): FundQuote | null {
+export function parseDailyHistory(payload: unknown) {
   const data = payload as { stat?: string; title?: string; fields?: string[]; data?: unknown[][] }
-  if (data?.stat !== 'OK' || !data.title?.includes('0050') || !Array.isArray(data.data)) return null
+  if (data?.stat !== 'OK' || !data.title?.includes('0050') || !Array.isArray(data.data)) return []
   const dateColumn = data.fields?.indexOf('日期') ?? -1
   const closeColumn = data.fields?.indexOf('收盤價') ?? -1
-  if (dateColumn < 0 || closeColumn < 0) return null
-  const rows = data.data.flatMap(row => {
+  if (dateColumn < 0 || closeColumn < 0) return []
+  return data.data.flatMap(row => {
     if (!Array.isArray(row)) return []
     const quoteDate = dateString(row[dateColumn]), price = numeric(row[closeColumn])
     return quoteDate && price ? [{ quoteDate, price }] : []
-  }).sort((a, b) => b.quoteDate.localeCompare(a.quoteDate))
+  })
+}
+
+export function parseDailyQuote(payload: unknown, fetchedAt: string, sourceUrl: string): FundQuote | null {
+  const rows = parseDailyHistory(payload).sort((a, b) => b.quoteDate.localeCompare(a.quoteDate))
   const latest = rows[0]
   if (!latest) return null
   return { symbol: '0050', name: '元大台灣50', ...latest, quoteTime: '13:30:00',
@@ -94,7 +107,7 @@ export function canReplaceQuote(quote: FundQuote, previous: FundQuote | null): b
   return stamp >= previousStamp
 }
 
-export function calculateFund(quote: FundQuote) {
+export function calculateFund(quote: FundQuote, priceHistory: Array<{ quoteDate: string; price: number }> = []) {
   const investmentBudget = money(fundPlan.plannedPrincipal - fundPlan.adminReserve)
   const shares = fundPlan.shares
   const cost = money(fundPlan.cost)
@@ -107,10 +120,21 @@ export function calculateFund(quote: FundQuote) {
   const totalValue = marketValue === null ? null : marketValue
   const unrealizedPnl = marketValue === null ? null : money(marketValue - cost)
   const returnPct = unrealizedPnl === null ? null : money(unrealizedPnl / cost * 100)
+  const history = priceHistory
+    .filter(point => point.quoteDate >= fundPlan.baselineDate)
+    .sort((a, b) => a.quoteDate.localeCompare(b.quoteDate))
+    .map(point => {
+      const purchases = fundPlan.purchases.filter(purchase => purchase.date <= point.quoteDate)
+      const heldShares = purchases.reduce((sum, purchase) => sum + purchase.shares, 0)
+      const investedCost = money(purchases.reduce((sum, purchase) => sum + purchase.cost, 0))
+      const value = money(heldShares * point.price)
+      return { date: point.quoteDate, price: point.price, shares: heldShares, cost: investedCost, marketValue: value, unrealizedPnl: money(value - investedCost) }
+    })
   return {
     quote,
     position: { ...fundPlan, investmentBudget, shares, cost, cashBalance, averagePrice, purchaseSummary, mode: 'actual' as const },
     metrics: { marketValue, totalValue, unrealizedPnl, returnPct },
+    history: history as FundHistoryPoint[],
     status: validPrice ? 'ready' as const : 'pending' as const,
   }
 }
