@@ -76,7 +76,7 @@ const baselineNote = computed(() => {
   const averagePrice = fund.value?.position.averagePrice
   const purchaseSummary = fund.value?.position.purchaseSummary
   if (fund.value?.position.mode === 'actual' && price != null && shares != null && cost != null) {
-    return `${purchaseSummary || `${date} 已用聯盟積分池買進 0050`}；目前總持股 ${numberAmount(shares)} 股，總成本 ${amount(cost, 2)}，平均成本 ${amount(averagePrice ?? cost / shares, 2)}；未含交易費用及配息，季末揭曉加菜成果`
+    return `${purchaseSummary || `${date} 已用聯盟積分池買進 0050`}；目前總持股 ${numberAmount(shares)} 股，總成本 ${amount(cost, 2)}，平均成本 ${amount(averagePrice ?? cost / shares, 2)}；未含交易費用及配息。菜還沒加，先學會吃土。`
   }
   return price != null
     ? `${date} 收盤 ${amount(price, 2)} 為試算起點；僅供私人聯盟內部紀錄，季末以實際結算為準`
@@ -111,8 +111,8 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
   <aside ref="section" class="fund-tracker" aria-labelledby="fund-title" :aria-busy="pending">
     <div class="fund-heading">
       <div>
-        <p class="fund-kicker"><span aria-hidden="true">↗</span> 0050 積分加菜計畫</p>
-        <h3 id="fund-title"><span>聯盟積分池，</span><span>0050 拚加菜</span></h3>
+        <p class="fund-kicker"><span aria-hidden="true">↗</span> 0050 積分加菜計畫 · 鍋底先賠進去了</p>
+        <h3 id="fund-title"><span>聯盟長期投資計畫，</span><span>長期是多久不知道</span></h3>
       </div>
       <button class="fund-refresh" type="button" :disabled="pending" @click="refreshQuote">
         <span aria-hidden="true" :class="{ 'is-refreshing': pending }">↻</span>
@@ -139,7 +139,7 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
       <div :class="profitTone">
         <dt>帳面損益 <span class="fund-unit">NT$</span></dt>
         <dd>{{ profit }}</dd>
-        <small>{{ profitPercent || (fund?.position.baselinePrice != null ? '等待最新報價' : '等待買進資料建立起點') }}</small>
+        <small>{{ profitPercent || (fund?.position.baselinePrice != null ? '等待最新報價' : '等待買進資料建立起點') }} · 心情在辦告別式</small>
       </div>
     </dl>
 
