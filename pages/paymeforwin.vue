@@ -196,7 +196,7 @@ const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
   ] },
   { team: 'Wei Too Strong', players: [
     {"name":"Tyrese Maxey","nba":"PHI","slot":"PG","fgm":8.5,"fga":16.1,"ftm":6.1,"fta":7.1,"stats":[2.5,25.6,2.9,6.1,1,0.5,1.8],"last14":{"fgm":9,"fga":17.667,"ftm":6.833,"fta":7.667,"stats":[3,27.833,3.167,7.833,1,0.5,1.833]}},
-    {"name":"Quenton Jackson","nba":"IND","slot":"SG","fgm":4.6,"fga":8.6,"ftm":1.9,"fta":2.1,"stats":[1.7,12.7,4.6,2.1,1.6,0.3,1.7],"last14":{"fgm":4.333,"fga":9.167,"ftm":1.667,"fta":2,"stats":[1.5,11.833,6,4,1.833,0.333,2.333]}},
+    {"name":"Reed Sheppard","nba":"HOU","slot":"Util","fgm":3.4,"fga":9.1,"ftm":0.4,"fta":0.4,"stats":[2.2,9.3,1.5,2.9,1.4,0.2,1],"last14":{"fgm":3.1,"fga":8.6,"ftm":0.1,"fta":0.1,"stats":[2.1,8.6,0.7,1.9,1.1,0.3,0.6]}},
     {"name":"VJ Edgecombe","nba":"PHI","slot":"G","fgm":5.9,"fga":11.5,"ftm":0.4,"fta":0.6,"stats":[1.6,13.8,5.8,3.9,1.8,0.5,0.9],"last14":{"fgm":7,"fga":13.333,"ftm":0.667,"fta":1.167,"stats":[1.667,16.333,5.667,5.333,2.333,0.5,1]}},
     {"name":"Keldon Johnson","nba":"SAS","slot":"SF","fgm":2.4,"fga":6.4,"ftm":1.9,"fta":2.7,"stats":[0.1,6.9,6,2.9,0.6,0,1.3],"last14":{"fgm":3.714,"fga":8.286,"ftm":2.714,"fta":3.857,"stats":[0.571,10.714,7.143,3.714,1,0,1.714]}},
     {"name":"Jaime Jaquez Jr.","nba":"MIL","slot":"PF","fgm":5.1,"fga":11.9,"ftm":2.7,"fta":3.1,"stats":[1.9,14.9,4.6,2.9,0.9,0.1,1.7],"last14":{"fgm":6.143,"fga":13.857,"ftm":2.714,"fta":3.286,"stats":[2.714,17.714,5.143,3.286,1.143,0.143,2.429]}},
@@ -246,7 +246,7 @@ const verifiedWeekFiveAverages: Record<WeekFiveSource, Record<string, Projection
     'Anfernee Simons': { fgm: 3.6, fga: 8.3, ftm: 0.9, fta: 1, stats: [2.4, 10.4, 2.1, 1.1, 0.4, 0.1, 0.5] },
     'Keldon Johnson': { fgm: 3.4, fga: 7.1, ftm: 1.9, fta: 2.6, stats: [0.4, 8.9, 5.9, 2.4, 0.8, 0, 1.1] },
     'Isaiah Jackson': { fgm: 3.5, fga: 6, ftm: 1.2, fta: 1.8, stats: [0.2, 8.3, 5.3, 2.1, 1.2, 0.9, 1.6] },
-    'Quenton Jackson': { fgm: 3.4, fga: 7.1, ftm: 1.6, fta: 1.9, stats: [1.1, 9.4, 3.8, 3.1, 1.3, 0.2, 1.3] },
+    'Reed Sheppard': { fgm: 3.4, fga: 9.1, ftm: 0.4, fta: 0.4, stats: [2.2, 9.3, 1.5, 2.9, 1.4, 0.2, 1] },
   },
   last14: {
     'Jalen Suggs': { fgm: 1, fga: 8, ftm: 0, fta: 0, stats: [1, 3, 2, 3, 0, 0, 1] },
@@ -276,12 +276,12 @@ const verifiedWeekFiveAverages: Record<WeekFiveSource, Record<string, Projection
     'Anfernee Simons': { fgm: 3.1, fga: 7.3, ftm: 0.7, fta: 0.7, stats: [1.7, 8.7, 2.1, 1, 0, 0, 0.4] },
     'Keldon Johnson': { fgm: 3.3, fga: 7.3, ftm: 2.4, fta: 3.4, stats: [0.5, 9.4, 6.3, 3.3, 0.9, 0, 1.5] },
     'Isaiah Jackson': { fgm: 3.6, fga: 5.8, ftm: 1, fta: 1.6, stats: [0.4, 8.6, 4.2, 1.8, 0.6, 0.8, 1.2] },
-    'Quenton Jackson': { fgm: 3.7, fga: 7.9, ftm: 1.4, fta: 1.7, stats: [1.3, 10.1, 5.1, 3.4, 1.6, 0.3, 2] },
+    'Reed Sheppard': { fgm: 3.1, fga: 8.6, ftm: 0.1, fta: 0.1, stats: [2.1, 8.6, 0.7, 1.9, 1.1, 0.3, 0.6] },
   },
 }
 const weekFiveSlots: Record<string, string> = {
   'Jalen Suggs': 'PG', 'Jordan Goodwin': 'SG', 'Jalen Brunson': 'G', 'Deni Avdija': 'SF', 'Julius Randle': 'PF', 'Tari Eason': 'F', 'Nikola Jokić': 'C', 'Jarrett Allen': 'C', 'RJ Barrett': 'Util', 'Meleek Thomas': 'Util', 'Devin Vassell': 'Util', 'Ziaire Williams': 'BN', 'Brook Lopez': 'BN', 'Zaccharie Risacher': 'BN',
-  'Tyrese Maxey': 'PG', 'Brandin Podziemski': 'SG', 'VJ Edgecombe': 'G', 'Christian Braun': 'SF', 'Jaime Jaquez Jr.': 'PF', 'Sidy Cissoko': 'F', 'Anthony Davis': 'C', 'Draymond Green': 'C', 'Andre Drummond': 'Util', 'Dyson Daniels': 'Util', 'Anfernee Simons': 'Util', 'Keldon Johnson': 'BN', 'Isaiah Jackson': 'BN', 'Quenton Jackson': 'BN',
+  'Tyrese Maxey': 'PG', 'Brandin Podziemski': 'SG', 'VJ Edgecombe': 'G', 'Christian Braun': 'SF', 'Jaime Jaquez Jr.': 'PF', 'Sidy Cissoko': 'F', 'Anthony Davis': 'C', 'Draymond Green': 'C', 'Andre Drummond': 'Util', 'Dyson Daniels': 'Util', 'Anfernee Simons': 'Util', 'Reed Sheppard': 'Util', 'Keldon Johnson': 'BN', 'Isaiah Jackson': 'BN',
 }
 const latestProjectionRange = (): ProjectionRange => {
   const weeks: [ProjectionRange, number][] = [
