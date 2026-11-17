@@ -35,10 +35,12 @@ interface FundResponse {
   status: 'pending' | 'ready'
 }
 type FundPerformancePoint = FundResponse['history'][number]
+type FundChartPoint = FundPerformancePoint & { x: number; y: number }
 
 const section = ref<HTMLElement | null>(null)
 const showPerformance = ref(false)
 const performanceRange = ref<'daily' | 'weekly'>('daily')
+const hoveredPerformancePoint = ref<FundChartPoint | null>(null)
 const { data, error, status, refresh } = await useLazyFetch<FundResponse>('/api/fund-0050', { server: false })
 // A failed refresh must not replace a previously successful quote or position.
 const lastGood = shallowRef<FundResponse | null>(null)
@@ -107,7 +109,7 @@ const performanceHistory = computed(() => {
 })
 const performanceChart = computed(() => {
   const values = performanceHistory.value.map(point => point.unrealizedPnl)
-  if (!values.length) return { points: [] as Array<FundPerformancePoint & { x: number; y: number }>, line: '' }
+  if (!values.length) return { points: [] as FundChartPoint[], line: '' }
   const min = Math.min(0, ...values)
   const max = Math.max(0, ...values)
   const range = Math.max(max - min, 500, 1)
@@ -125,6 +127,7 @@ const performanceLoss = computed(() => {
   return `目前 ${value < 0 ? '賠' : '賺'} ${amount(Math.abs(value), 2)} · ${pct > 0 ? '+' : ''}${pct.toFixed(2)}%`
 })
 const performanceEntries = computed(() => performanceHistory.value.slice(-5).reverse())
+const tooltipX = (x: number) => Math.min(Math.max(x - 56, 8), 300)
 
 let observer: IntersectionObserver | undefined
 let timer: ReturnType<typeof setInterval> | undefined
@@ -178,7 +181,7 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
       <div :class="profitTone">
         <dt>帳面損益 <span class="fund-unit">NT$</span></dt>
         <dd>{{ profit }}</dd>
-        <small>{{ profitPercent || (fund?.position.baselinePrice != null ? '等待最新報價' : '等待買進資料建立起點') }} · 心情在辦告別式</small>
+        <small>{{ profitPercent || (fund?.position.baselinePrice != null ? '等待最新報價' : '等待買進資料建立起點') }} · 加菜還沒上桌，帳先結了</small>
       </div>
     </dl>
 
@@ -217,11 +220,16 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
               <line v-for="guide in [52, 108, 164]" :key="guide" x1="32" x2="388" :y1="guide" :y2="guide" class="fund-chart-guide" />
               <polygon :points="`48,180 ${performanceChart.line} 372,180`" class="fund-chart-area" />
               <polyline :points="performanceChart.line" class="fund-chart-line" />
-              <g v-for="point in performanceChart.points" :key="point.date">
+              <g v-for="point in performanceChart.points" :key="point.date" class="fund-chart-point" tabindex="0" @mouseenter="hoveredPerformancePoint = point" @mouseleave="hoveredPerformancePoint = null" @focus="hoveredPerformancePoint = point" @blur="hoveredPerformancePoint = null">
                 <circle :cx="point.x" :cy="point.y" r="7" class="fund-chart-halo" />
                 <circle :cx="point.x" :cy="point.y" r="3.5" class="fund-chart-dot" />
                 <text v-if="point === performanceChart.points[0] || point === performanceChart.points[performanceChart.points.length - 1]" :x="point.x" :y="point.y - 14" text-anchor="middle" class="fund-chart-value">{{ signedAmount(point.unrealizedPnl) }}</text>
                 <text v-if="point === performanceChart.points[0] || point === performanceChart.points[performanceChart.points.length - 1]" :x="point.x" y="204" text-anchor="middle" class="fund-chart-date">{{ point.date }}</text>
+              </g>
+              <g v-if="hoveredPerformancePoint" class="fund-chart-tooltip" pointer-events="none">
+                <rect :x="tooltipX(hoveredPerformancePoint.x)" :y="Math.max(hoveredPerformancePoint.y - 63, 10)" width="112" height="47" rx="7" />
+                <text :x="tooltipX(hoveredPerformancePoint.x) + 8" :y="Math.max(hoveredPerformancePoint.y - 45, 28)">{{ hoveredPerformancePoint.date }}</text>
+                <text :x="tooltipX(hoveredPerformancePoint.x) + 8" :y="Math.max(hoveredPerformancePoint.y - 27, 46)" :class="hoveredPerformancePoint.unrealizedPnl < 0 ? 'is-loss' : 'is-gain'">帳面 {{ signedAmount(hoveredPerformancePoint.unrealizedPnl, 0) }}</text>
               </g>
             </svg>
           </div>
@@ -266,11 +274,11 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
 .fund-source a{color:#c9d4d7;text-decoration:underline;text-underline-offset:3px}
 .fund-source a:hover{color:#f3c15b}
 .fund-modal-backdrop{position:fixed;z-index:80;inset:0;display:grid;place-items:center;padding:22px;background:rgba(6,12,22,.74);backdrop-filter:blur(12px);animation:fund-modal-in .22s ease-out}
-.fund-modal{position:relative;width:min(720px,100%);max-height:min(760px,calc(100vh - 44px));overflow:auto;padding:30px;border:1px solid rgba(239,193,91,.38);border-radius:22px;background:radial-gradient(circle at 88% 0,rgba(40,157,131,.22),transparent 30%),linear-gradient(145deg,#0e192a,#101c30 58%,#0b1628);box-shadow:0 32px 100px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,255,255,.1);color:#f7f3e9;animation:fund-modal-rise .3s cubic-bezier(.2,.8,.2,1)}
+.fund-modal{position:relative;width:min(980px,100%);max-height:min(760px,calc(100vh - 44px));overflow:auto;padding:34px 38px;border:1px solid rgba(239,193,91,.38);border-radius:22px;background:radial-gradient(circle at 88% 0,rgba(40,157,131,.22),transparent 30%),linear-gradient(145deg,#0e192a,#101c30 58%,#0b1628);box-shadow:0 32px 100px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,255,255,.1);color:#f7f3e9;animation:fund-modal-rise .3s cubic-bezier(.2,.8,.2,1)}
 .fund-modal-close{position:absolute;top:18px;right:18px;width:35px;height:35px;border:1px solid rgba(255,255,255,.2);border-radius:50%;background:rgba(255,255,255,.05);color:#fff;font-size:27px;line-height:28px;cursor:pointer}.fund-modal-close:hover{border-color:#f3c15b;color:#f3c15b}.fund-modal-heading h3{margin:4px 0 8px;font-size:29px;letter-spacing:.01em}.fund-modal-heading>p:last-child{margin:0;color:#aebbc6;font-size:14px}
 .fund-performance-summary{display:flex;justify-content:space-between;gap:18px;align-items:center;margin:25px 0 14px;padding:14px 16px;border:1px solid rgba(255,255,255,.1);border-radius:12px;background:rgba(255,255,255,.035);color:#acb8c3;font-size:13px}.fund-performance-summary b{display:block;margin-top:4px;color:#f8e1a0;font-size:19px}.fund-performance-summary>strong{font-size:18px}.fund-performance-summary>.is-negative{color:#ffaca9}.fund-performance-summary>.is-positive{color:#8ce5bd}
 .fund-range-tabs{display:flex;gap:6px;margin:0 0 11px}.fund-range-tabs button{border:1px solid rgba(255,255,255,.16);border-radius:8px;background:transparent;color:#9eafbe;padding:7px 11px;font:700 11px/1 inherit;letter-spacing:.04em;cursor:pointer}.fund-range-tabs button.active{border-color:#efbd55;background:rgba(239,189,85,.13);color:#f8dfa0}.fund-investments{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:13px}.fund-investments span{padding:5px 8px;border-radius:6px;background:rgba(129,214,188,.09);color:#a9b9c4;font-size:11px}.fund-investments b{margin-right:5px;color:#83d8bb;font-family:ui-monospace,monospace}
-.fund-chart-shell{padding:16px 6px 2px;border:1px solid rgba(255,255,255,.08);border-radius:15px;background:rgba(0,0,0,.13)}.fund-chart{display:block;width:100%;height:auto}.fund-chart-guide{stroke:rgba(222,231,241,.13);stroke-dasharray:3 5}.fund-chart-area{fill:url(#fund-chart-fill)}.fund-chart-line{fill:none;stroke:#efbd55;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 4px 6px rgba(239,189,85,.25))}.fund-chart-halo{fill:rgba(239,189,85,.2)}.fund-chart-dot{fill:#fff6df;stroke:#efbd55;stroke-width:3}.fund-chart-value{fill:#f8dfa0;font-size:13px;font-weight:750}.fund-chart-date{fill:#aab8c5;font-size:10px;letter-spacing:.04em}
+.fund-chart-shell{padding:16px 6px 2px;border:1px solid rgba(255,255,255,.08);border-radius:15px;background:rgba(0,0,0,.13)}.fund-chart{display:block;width:100%;height:auto}.fund-chart-guide{stroke:rgba(222,231,241,.13);stroke-dasharray:3 5}.fund-chart-area{fill:url(#fund-chart-fill)}.fund-chart-line{fill:none;stroke:#efbd55;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 4px 6px rgba(239,189,85,.25))}.fund-chart-halo{fill:rgba(239,189,85,.2)}.fund-chart-dot{fill:#fff6df;stroke:#efbd55;stroke-width:3}.fund-chart-point{cursor:crosshair;outline:none}.fund-chart-point:focus .fund-chart-halo,.fund-chart-point:hover .fund-chart-halo{fill:rgba(239,189,85,.44)}.fund-chart-value{fill:#f8dfa0;font-size:13px;font-weight:750}.fund-chart-date{fill:#aab8c5;font-size:10px;letter-spacing:.04em}.fund-chart-tooltip rect{fill:#f8f1df;stroke:#efbd55;stroke-width:1;filter:drop-shadow(0 5px 8px rgba(0,0,0,.32))}.fund-chart-tooltip text{fill:#50555b;font-size:9px;font-weight:700}.fund-chart-tooltip .is-loss{fill:#b8474b}.fund-chart-tooltip .is-gain{fill:#288766}
 .fund-history-list{display:grid;gap:0;margin:18px 0 0;padding:0;list-style:none;border:1px solid rgba(255,255,255,.09);border-radius:13px;overflow:hidden}.fund-history-list li{display:grid;grid-template-columns:90px 1fr auto;gap:14px;align-items:center;padding:13px 15px;border-top:1px solid rgba(255,255,255,.08)}.fund-history-list li:first-child{border-top:0}.fund-history-list time{color:#83d8bb;font:700 11px/1.2 ui-monospace,monospace;letter-spacing:.04em}.fund-history-list strong,.fund-history-list span{display:block}.fund-history-list strong{font-size:14px}.fund-history-list span{margin-top:3px;color:#9eafbe;font-size:12px}.fund-history-list b{font-size:14px;font-variant-numeric:tabular-nums}.fund-history-list .is-loss{color:#ffaaa6}.fund-history-list .is-gain{color:#8ce5bd}
 @keyframes fund-modal-in{from{opacity:0}to{opacity:1}}@keyframes fund-modal-rise{from{transform:translateY(16px) scale(.98);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
 @keyframes fund-spin{to{transform:rotate(360deg)}}
