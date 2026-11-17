@@ -196,14 +196,14 @@ const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
   ] },
   { team: 'Wei Too Strong', players: [
     {"name":"Tyrese Maxey","nba":"PHI","slot":"PG","fgm":8.5,"fga":16.1,"ftm":6.1,"fta":7.1,"stats":[2.5,25.6,2.9,6.1,1,0.5,1.8],"last14":{"fgm":9,"fga":17.667,"ftm":6.833,"fta":7.667,"stats":[3,27.833,3.167,7.833,1,0.5,1.833]}},
-    {"name":"Reed Sheppard","nba":"HOU","slot":"Util","fgm":3.4,"fga":9.1,"ftm":0.4,"fta":0.4,"stats":[2.2,9.3,1.5,2.9,1.4,0.2,1],"last14":{"fgm":3.1,"fga":8.6,"ftm":0.1,"fta":0.1,"stats":[2.1,8.6,0.7,1.9,1.1,0.3,0.6]}},
+    {"name":"Quenton Jackson","nba":"IND","slot":"BN","fgm":3.4,"fga":7.1,"ftm":1.6,"fta":1.9,"stats":[1.1,9.4,3.8,3.1,1.3,0.2,1.3],"last14":{"fgm":3.7,"fga":7.9,"ftm":1.4,"fta":1.7,"stats":[1.3,10.1,5.1,3.4,1.6,0.3,2]}},
     {"name":"VJ Edgecombe","nba":"PHI","slot":"G","fgm":5.9,"fga":11.5,"ftm":0.4,"fta":0.6,"stats":[1.6,13.8,5.8,3.9,1.8,0.5,0.9],"last14":{"fgm":7,"fga":13.333,"ftm":0.667,"fta":1.167,"stats":[1.667,16.333,5.667,5.333,2.333,0.5,1]}},
     {"name":"Keldon Johnson","nba":"SAS","slot":"SF","fgm":2.4,"fga":6.4,"ftm":1.9,"fta":2.7,"stats":[0.1,6.9,6,2.9,0.6,0,1.3],"last14":{"fgm":3.714,"fga":8.286,"ftm":2.714,"fta":3.857,"stats":[0.571,10.714,7.143,3.714,1,0,1.714]}},
     {"name":"Jaime Jaquez Jr.","nba":"MIL","slot":"PF","fgm":5.1,"fga":11.9,"ftm":2.7,"fta":3.1,"stats":[1.9,14.9,4.6,2.9,0.9,0.1,1.7],"last14":{"fgm":6.143,"fga":13.857,"ftm":2.714,"fta":3.286,"stats":[2.714,17.714,5.143,3.286,1.143,0.143,2.429]}},
     {"name":"Sidy Cissoko","nba":"POR","slot":"F","fgm":2.6,"fga":5.6,"ftm":2.1,"fta":2.7,"stats":[1.7,9,2.9,1.7,0.4,0.4,0.7],"last14":{"fgm":2.714,"fga":6.286,"ftm":2,"fta":2.429,"stats":[1.857,9.286,3,1.714,0.286,0.429,0.571]}},
     {"name":"Anthony Davis","nba":"WAS","slot":"C","fgm":11.3,"fga":19.2,"ftm":5.7,"fta":6.3,"stats":[0.5,28.8,12.2,1.7,1.3,1,2],"last14":{"fgm":12.8,"fga":21.8,"ftm":6.2,"fta":6.8,"stats":[0.6,32.4,13.6,2.8,1.6,1.4,2.6]}},
     {"name":"Isaiah Jackson","nba":"LAC","slot":"C","fgm":2.8,"fga":4.9,"ftm":1.1,"fta":1.8,"stats":[0.2,6.7,5.2,1.1,0.5,1.3,0.8],"last14":{"fgm":4.5,"fga":7.25,"ftm":1.25,"fta":2,"stats":[0.5,10.75,5.25,2.25,0.75,1,1.5]}},
-    {"name":"Andre Drummond","nba":"NYK","slot":"Util","fgm":0.8,"fga":2.8,"ftm":0.8,"fta":1,"stats":[0,2.5,8.3,1.2,0.3,0.5,1],"last14":{"fgm":0.833,"fga":2.5,"ftm":0.667,"fta":0.667,"stats":[0,2.333,8.833,1,0.5,0.833,1.167]}},
+    {"name":"Reed Sheppard","nba":"HOU","slot":"Util","fgm":3.4,"fga":9.1,"ftm":0.4,"fta":0.4,"stats":[2.2,9.3,1.5,2.9,1.4,0.2,1],"last14":{"fgm":3.1,"fga":8.6,"ftm":0.1,"fta":0.1,"stats":[2.1,8.6,0.7,1.9,1.1,0.3,0.6]}},
     {"name":"Dyson Daniels","nba":"ATL","slot":"Util","fgm":4,"fga":8.5,"ftm":0.8,"fta":1.3,"stats":[0.2,9,9,7,3,0.3,1.8],"last14":{"fgm":4.667,"fga":9.833,"ftm":0.667,"fta":1.167,"stats":[0.167,10.167,11.5,8,3.167,0.333,2]}},
     {"name":"Anfernee Simons","nba":"PHI","slot":"BN","fgm":5.5,"fga":12.6,"ftm":2.6,"fta":3,"stats":[2.6,16.2,2.8,3.9,0.8,0.2,1.8],"last14":{"fgm":3.667,"fga":8.5,"ftm":0.833,"fta":0.833,"stats":[2,10.167,2.5,1.167,0,0,0.5]}},
     {"name":"Brandin Podziemski","nba":"GSW","slot":"BN","fgm":6.6,"fga":13.3,"ftm":1.9,"fta":2.7,"stats":[3.4,18.4,5.3,4,1.3,0.6,1],"last14":{"fgm":5.667,"fga":12.333,"ftm":1.833,"fta":2.5,"stats":[3.333,16.5,4.5,2.333,1.167,0.667,0.833]}},
@@ -241,7 +241,7 @@ const verifiedWeekFiveAverages: Record<WeekFiveSource, Record<string, Projection
     'Sidy Cissoko': { fgm: 2.4, fga: 5.3, ftm: 1.7, fta: 2.3, stats: [1.3, 7.8, 3.6, 1.9, 0.4, 0.3, 0.6] },
     'Anthony Davis': { fgm: 9.4, fga: 18.3, ftm: 5.1, fta: 5.9, stats: [0.8, 24.7, 10.3, 2.3, 1.3, 1.1, 2] },
     'Draymond Green': { fgm: 1.4, fga: 3.4, ftm: 0.3, fta: 0.5, stats: [0.3, 3.3, 4.7, 7.1, 0.9, 0.8, 2.8] },
-    'Andre Drummond': { fgm: 1.6, fga: 3.8, ftm: 0.5, fta: 0.9, stats: [0, 3.8, 7.5, 1.2, 0.3, 0.6, 0.7] },
+    'Quenton Jackson': { fgm: 3.4, fga: 7.1, ftm: 1.6, fta: 1.9, stats: [1.1, 9.4, 3.8, 3.1, 1.3, 0.2, 1.3] },
     'Dyson Daniels': { fgm: 4.2, fga: 8.7, ftm: 0.9, fta: 1.6, stats: [0.1, 9.5, 7.4, 5.6, 2.9, 0.3, 1.3] },
     'Anfernee Simons': { fgm: 3.6, fga: 8.3, ftm: 0.9, fta: 1, stats: [2.4, 10.4, 2.1, 1.1, 0.4, 0.1, 0.5] },
     'Keldon Johnson': { fgm: 3.4, fga: 7.1, ftm: 1.9, fta: 2.6, stats: [0.4, 8.9, 5.9, 2.4, 0.8, 0, 1.1] },
@@ -271,7 +271,7 @@ const verifiedWeekFiveAverages: Record<WeekFiveSource, Record<string, Projection
     'Sidy Cissoko': { fgm: 2.7, fga: 6.3, ftm: 2, fta: 2.4, stats: [1.9, 9.3, 3, 1.7, 0.3, 0.4, 0.6] },
     'Anthony Davis': { fgm: 10.7, fga: 18.2, ftm: 5.2, fta: 5.7, stats: [0.5, 27, 11.3, 2.3, 1.3, 1.2, 2.2] },
     'Draymond Green': { fgm: 1.5, fga: 3.5, ftm: 0.3, fta: 0.7, stats: [0.2, 3.5, 4.3, 7, 1, 0.7, 2.2] },
-    'Andre Drummond': { fgm: 0.7, fga: 2.1, ftm: 0.6, fta: 0.6, stats: [0, 2, 7.6, 0.9, 0.4, 0.7, 1] },
+    'Quenton Jackson': { fgm: 3.7, fga: 7.9, ftm: 1.4, fta: 1.7, stats: [1.3, 10.1, 5.1, 3.4, 1.6, 0.3, 2] },
     'Dyson Daniels': { fgm: 4, fga: 8.4, ftm: 0.6, fta: 1, stats: [0.1, 8.7, 9.9, 6.9, 2.7, 0.3, 1.7] },
     'Anfernee Simons': { fgm: 3.1, fga: 7.3, ftm: 0.7, fta: 0.7, stats: [1.7, 8.7, 2.1, 1, 0, 0, 0.4] },
     'Keldon Johnson': { fgm: 3.3, fga: 7.3, ftm: 2.4, fta: 3.4, stats: [0.5, 9.4, 6.3, 3.3, 0.9, 0, 1.5] },
@@ -281,7 +281,7 @@ const verifiedWeekFiveAverages: Record<WeekFiveSource, Record<string, Projection
 }
 const weekFiveSlots: Record<string, string> = {
   'Jalen Suggs': 'PG', 'Jordan Goodwin': 'SG', 'Jalen Brunson': 'G', 'Deni Avdija': 'SF', 'Julius Randle': 'PF', 'Tari Eason': 'F', 'Nikola Jokić': 'C', 'Jarrett Allen': 'C', 'RJ Barrett': 'Util', 'Meleek Thomas': 'Util', 'Devin Vassell': 'Util', 'Ziaire Williams': 'BN', 'Brook Lopez': 'BN', 'Zaccharie Risacher': 'BN',
-  'Tyrese Maxey': 'PG', 'Brandin Podziemski': 'SG', 'VJ Edgecombe': 'G', 'Christian Braun': 'SF', 'Jaime Jaquez Jr.': 'PF', 'Sidy Cissoko': 'F', 'Anthony Davis': 'C', 'Draymond Green': 'C', 'Andre Drummond': 'Util', 'Dyson Daniels': 'Util', 'Anfernee Simons': 'Util', 'Reed Sheppard': 'Util', 'Keldon Johnson': 'BN', 'Isaiah Jackson': 'BN',
+  'Tyrese Maxey': 'PG', 'Brandin Podziemski': 'SG', 'VJ Edgecombe': 'G', 'Christian Braun': 'SF', 'Jaime Jaquez Jr.': 'PF', 'Sidy Cissoko': 'F', 'Anthony Davis': 'C', 'Draymond Green': 'C', 'Dyson Daniels': 'Util', 'Anfernee Simons': 'Util', 'Reed Sheppard': 'Util', 'Keldon Johnson': 'BN', 'Isaiah Jackson': 'BN', 'Quenton Jackson': 'BN',
 }
 const latestProjectionRange = (): ProjectionRange => {
   const weeks: [ProjectionRange, number][] = [
