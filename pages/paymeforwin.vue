@@ -178,8 +178,8 @@ const futureSchedule: Record<string, [number, number, number, number]> = {
 }
 const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
   { team: '阿肥加班幹大事', players: [
-    {"name":"De'Aaron Fox","nba":"SAS","slot":"IL","fgm":4.5,"fga":9,"ftm":3.7,"fta":4.5,"stats":[1,13.6,4.4,5.8,1.3,0.5,2.3]},
-    {"name":"Deni Avdija","nba":"POR","slot":"SG","fgm":7.8,"fga":15.5,"ftm":6.4,"fta":8.9,"stats":[2,23.9,6.1,6.3,1.1,0.3,3.2],"last14":{"fgm":8,"fga":15.857,"ftm":6.429,"fta":8.429,"stats":[2.143,24.571,5.429,6.714,1.143,0.429,3.857]}},
+    {"name":"De'Aaron Fox","nba":"SAS","slot":"PG","fgm":4.5,"fga":9,"ftm":3.7,"fta":4.5,"stats":[1,13.6,4.4,5.8,1.3,0.5,2.3]},
+    {"name":"Deni Avdija","nba":"POR","slot":"IL","fgm":7.8,"fga":15.5,"ftm":6.4,"fta":8.9,"stats":[2,23.9,6.1,6.3,1.1,0.3,3.2],"last14":{"fgm":8,"fga":15.857,"ftm":6.429,"fta":8.429,"stats":[2.143,24.571,5.429,6.714,1.143,0.429,3.857]}},
     {"name":"Jalen Brunson","nba":"NYK","slot":"G","fgm":9.1,"fga":20.8,"ftm":5.7,"fta":7.2,"stats":[2.8,26.6,2.9,5.7,0.8,0.3,1.8],"last14":{"fgm":9.571,"fga":20.429,"ftm":5.286,"fta":6.286,"stats":[3.286,27.714,2.714,6.571,0.571,0.143,1.571]}},
     {"name":"Julius Randle","nba":"BKN","slot":"PF","fgm":6.4,"fga":14.5,"ftm":5.6,"fta":7.1,"stats":[1.4,19.7,6.5,5,0.7,0.2,3.8],"last14":{"fgm":6.5,"fga":14.167,"ftm":5,"fta":7,"stats":[1,19,5.333,4.667,1,0.167,3.5]}},
     {"name":"Tari Eason","nba":"HOU","slot":"F","fgm":3.8,"fga":9.2,"ftm":1.2,"fta":1.3,"stats":[0.9,9.7,6.2,1.3,1,1.1,1.2],"last14":{"fgm":4.714,"fga":10.714,"ftm":0.571,"fta":0.714,"stats":[1.571,11.571,6.143,1.571,0.714,0.714,1.286]}},
@@ -205,7 +205,7 @@ const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
     {"name":"Isaiah Jackson","nba":"LAC","slot":"C","fgm":2.8,"fga":4.9,"ftm":1.1,"fta":1.8,"stats":[0.2,6.7,5.2,1.1,0.5,1.3,0.8],"last14":{"fgm":4.5,"fga":7.25,"ftm":1.25,"fta":2,"stats":[0.5,10.75,5.25,2.25,0.75,1,1.5]}},
     {"name":"Reed Sheppard","nba":"HOU","slot":"Util","fgm":3.4,"fga":9.1,"ftm":0.4,"fta":0.4,"stats":[2.2,9.3,1.5,2.9,1.4,0.2,1],"last14":{"fgm":3.1,"fga":8.6,"ftm":0.1,"fta":0.1,"stats":[2.1,8.6,0.7,1.9,1.1,0.3,0.6]}},
     {"name":"Dyson Daniels","nba":"ATL","slot":"Util","fgm":4,"fga":8.5,"ftm":0.8,"fta":1.3,"stats":[0.2,9,9,7,3,0.3,1.8],"last14":{"fgm":4.667,"fga":9.833,"ftm":0.667,"fta":1.167,"stats":[0.167,10.167,11.5,8,3.167,0.333,2]}},
-    {"name":"Anfernee Simons","nba":"PHI","slot":"BN","fgm":5.5,"fga":12.6,"ftm":2.6,"fta":3,"stats":[2.6,16.2,2.8,3.9,0.8,0.2,1.8],"last14":{"fgm":3.667,"fga":8.5,"ftm":0.833,"fta":0.833,"stats":[2,10.167,2.5,1.167,0,0,0.5]}},
+    {"name":"Leaky Black","nba":"SAC","slot":"Util","fgm":2.6,"fga":5.8,"ftm":0.7,"fta":1,"stats":[0.8,6.7,3.6,1.7,0.9,0.5,0.8],"last14":{"fgm":2.8,"fga":6.1,"ftm":0.6,"fta":0.9,"stats":[0.9,7.1,3.9,1.8,1,0.6,0.9]}},
     {"name":"Brandin Podziemski","nba":"GSW","slot":"BN","fgm":6.6,"fga":13.3,"ftm":1.9,"fta":2.7,"stats":[3.4,18.4,5.3,4,1.3,0.6,1],"last14":{"fgm":5.667,"fga":12.333,"ftm":1.833,"fta":2.5,"stats":[3.333,16.5,4.5,2.333,1.167,0.667,0.833]}},
     {"name":"Draymond Green","nba":"GSW","slot":"BN","fgm":1.3,"fga":3.2,"ftm":0.3,"fta":0.7,"stats":[0.2,3.2,4.5,8,1.3,0.8,2],"last14":{"fgm":1.5,"fga":3.5,"ftm":0.333,"fta":0.667,"stats":[0.167,3.5,4.333,7,1,0.667,2.167]}},
     {"name":"Christian Braun","nba":"DEN","slot":"BN","fgm":4.7,"fga":9.3,"ftm":1.8,"fta":2.3,"stats":[1.8,13,3.8,2.5,1.8,0.2,0.7],"last14":{"fgm":3.833,"fga":9,"ftm":2.167,"fta":2.833,"stats":[0.833,10.667,4.5,2.5,2,0.333,0.5]}},
@@ -278,8 +278,8 @@ const verifiedWeekFiveAverages: Record<WeekFiveSource, Record<string, Projection
   },
 }
 const weekFiveSlots: Record<string, string> = {
-  "De'Aaron Fox": 'Util', 'Jalen Suggs': 'PG', 'Jordan Goodwin': 'SG', 'Jalen Brunson': 'G', 'Deni Avdija': 'SF', 'Julius Randle': 'PF', 'Tari Eason': 'F', 'Nikola Jokić': 'C', 'Jarrett Allen': 'C', 'RJ Barrett': 'Util', 'Meleek Thomas': 'Util', 'Devin Vassell': 'Util', 'Ziaire Williams': 'BN', 'Brook Lopez': 'BN',
-  'Tyrese Maxey': 'PG', 'Brandin Podziemski': 'SG', 'VJ Edgecombe': 'G', 'Christian Braun': 'SF', 'Jaime Jaquez Jr.': 'PF', 'Sidy Cissoko': 'F', 'Anthony Davis': 'C', 'Draymond Green': 'C', 'Dyson Daniels': 'Util', 'Anfernee Simons': 'Util', 'Reed Sheppard': 'Util', 'Keldon Johnson': 'BN', 'Isaiah Jackson': 'BN', 'Quenton Jackson': 'BN',
+  "De'Aaron Fox": 'PG', 'Jalen Suggs': 'SG', 'Jordan Goodwin': 'BN', 'Jalen Brunson': 'PG', 'Deni Avdija': 'IL', 'Julius Randle': 'PF', 'Tari Eason': 'F', 'Nikola Jokić': 'C', 'Jarrett Allen': 'BN', 'RJ Barrett': 'Util', 'Meleek Thomas': 'Util', 'Devin Vassell': 'Util', 'Ziaire Williams': 'SG', 'Brook Lopez': 'C',
+  'Tyrese Maxey': 'PG', 'Brandin Podziemski': 'SG', 'VJ Edgecombe': 'G', 'Christian Braun': 'SF', 'Jaime Jaquez Jr.': 'BN', 'Sidy Cissoko': 'F', 'Anthony Davis': 'C', 'Draymond Green': 'BN', 'Dyson Daniels': 'Util', 'Leaky Black': 'Util', 'Reed Sheppard': 'Util', 'Keldon Johnson': 'PF', 'Isaiah Jackson': 'C', 'Quenton Jackson': 'BN',
 }
 const latestProjectionRange = (): ProjectionRange => {
   const weeks: [ProjectionRange, number][] = [
@@ -312,25 +312,25 @@ const weekFiveGameCounts: Record<string, number> = {
   HOU: 3, IND: 3, LAC: 3, LAL: 3, MEM: 4, MIA: 3, MIL: 3, MIN: 4, NOP: 4, NYK: 4,
   OKC: 3, ORL: 4, PHI: 3, PHX: 3, POR: 4, SAC: 3, SAS: 3, TOR: 3, UTA: 4, WAS: 4,
 }
-// Week 5 live audit: Monday's completed games have been removed from each
-// player's weekly total. This includes every non-IL player, including BN.
+// Week 5 live audit: Tuesday's completed games plus the Yahoo roster snapshot.
+// Every non-IL player is counted for the remaining schedule, including BN.
 const weekFiveRemainingGames: Record<string, Record<string, number>> = {
   '阿肥加班幹大事': {
-    'Jalen Suggs': 3, 'Ziaire Williams': 3, 'Jordan Goodwin': 2, 'Jalen Brunson': 4,
-    'Deni Avdija': 3, 'Julius Randle': 2, 'Tari Eason': 2, 'Jarrett Allen': 2,
-    'Nikola Jokić': 3, 'RJ Barrett': 3, 'Meleek Thomas': 2, 'Devin Vassell': 3,
+    "De'Aaron Fox": 2, 'Jalen Suggs': 3, 'Ziaire Williams': 2, 'Jordan Goodwin': 2, 'Jalen Brunson': 3,
+    'Julius Randle': 2, 'Tari Eason': 2, 'Jarrett Allen': 2,
+    'Nikola Jokić': 3, 'RJ Barrett': 2, 'Meleek Thomas': 2, 'Devin Vassell': 3,
     'Brook Lopez': 3, 'Zaccharie Risacher': 3,
   },
   'Wei Too Strong': {
     'Tyrese Maxey': 2, 'Brandin Podziemski': 3, 'VJ Edgecombe': 2, 'Christian Braun': 3,
-    'Keldon Johnson': 3, 'Sidy Cissoko': 3, 'Anthony Davis': 3, 'Isaiah Jackson': 3,
-    'Dyson Daniels': 3, 'Anfernee Simons': 2, 'Reed Sheppard': 2, 'Draymond Green': 3,
+    'Keldon Johnson': 2, 'Sidy Cissoko': 2, 'Anthony Davis': 4, 'Isaiah Jackson': 2,
+    'Dyson Daniels': 3, 'Leaky Black': 3, 'Reed Sheppard': 3, 'Draymond Green': 3,
     'Jaime Jaquez Jr.': 3, 'Quenton Jackson': 3,
   },
 }
 const weekFiveLive: Record<string, LiveProjection> = {
-  '阿肥加班幹大事': { gp: 8, fgm: 58, fga: 105, ftm: 14, fta: 18, stats: [11, 141, 68, 27, 8, 6, 22] },
-  'Wei Too Strong': { gp: 9, fgm: 35, fga: 76, ftm: 24, fta: 28, stats: [13, 107, 38, 31, 9, 5, 18] },
+  '阿肥加班幹大事': { gp: 14, fgm: 92, fga: 181, ftm: 28, fta: 37, stats: [23, 235, 92, 46, 13, 9, 28] },
+  'Wei Too Strong': { gp: 12, fgm: 43, fga: 91, ftm: 24, fta: 28, stats: [15, 125, 50, 33, 10, 8, 22] },
 }
 const projectionGameCount = (nba: string, range = projectionRange.value) => {
   if (range === 'week5') return weekFiveGameCounts[nba] || 0
@@ -607,9 +607,9 @@ const weiWeekFiveSummary = computed(() => ({ left: weiWeekFiveRows.value.filter(
         <Transition name="forecast-unlock"><div v-if="forecastGate !== 'revealed'" :class="['forecast-gate', { wrong: forecastGate === 'wrong', correct: forecastGate === 'correct' }]" role="dialog" aria-label="未來戰力預測表解鎖"><template v-if="forecastGate !== 'correct'"><p class="forecast-label">未來戰力預測表</p><p class="forecast-kicker">FORECAST LOCKED · SEASON ORACLE</p><div v-if="forecastGate === 'wrong'" :key="`wrong-mark-${wrongAttempt}`" class="forecast-error-mark">×</div><h3>你認為這季 NBA 總冠軍球隊是哪一支？</h3><p class="forecast-copy">猜對，才有資格查看未來戰力預測。</p><div class="championship-options"><button v-for="team in championOptions" :key="team" type="button" :class="{ selected: championGuess === team }" @click="chooseChampion(team)">{{ team }}</button></div><p v-if="forecastGate === 'wrong'" :key="`wrong-copy-${wrongAttempt}`" class="forecast-error">預言錯誤。再猜一次。</p></template><template v-else><div class="forecast-success-mark">✓</div><p class="forecast-kicker">ORACLE VERIFIED</p><h3>正確答案。</h3><p class="forecast-copy">阿肥加班幹大事，解鎖未來戰力預測。</p></template></div></Transition>
       </section>
       <section v-if="forecastOnly" class="sprint-lab" aria-labelledby="week-five-roster-title">
-        <div class="sprint-heading"><div><p class="eyebrow">WEEK 5 · LIVE ROSTER MODEL</p><h2 id="week-five-roster-title">阿肥 vs Wei Too Strong｜本週戰力推演</h2></div><p>首日實績加上未來六天賽程；所有非 IL 球員都納入，包含板凳 BN。</p></div>
+        <div class="sprint-heading"><div><p class="eyebrow">WEEK 5 · LIVE ROSTER MODEL</p><h2 id="week-five-roster-title">阿肥 vs Wei Too Strong｜本週戰力推演</h2></div><p>已完成兩日實績，加上週三至週日賽程；所有非 IL 球員都納入，包含板凳 BN。</p></div>
         <div class="forecast-source week-five-source"><span>球員數據基準</span><div><button type="button" :class="{ active: weekFiveSource === 'season' }" @click="weekFiveSource = 'season'">整季平均</button><button type="button" :class="{ active: weekFiveSource === 'last14' }" @click="weekFiveSource = 'last14'">最近 14 天平均</button></div><p>{{ weekFiveSource === 'season' ? '以整季場均 × 本週預計出賽場次計算。' : '以 Yahoo 最近 14 天的球員近況趨勢 × 相同出賽場次計算。' }}</p></div>
-        <div class="sprint-status"><span><b>{{ weekFiveRosterForecast.left.team }}</b> · 已打 8 場／剩 {{ weekFiveRosterForecast.left.remainingGp }} 場</span><strong>WEEK 5</strong><span><b>{{ weekFiveRosterForecast.right.team }}</b> · 已打 9 場／剩 {{ weekFiveRosterForecast.right.remainingGp }} 場</span></div>
+        <div class="sprint-status"><span><b>{{ weekFiveRosterForecast.left.team }}</b> · 已打 14 場／剩 {{ weekFiveRosterForecast.left.remainingGp }} 場</span><strong>WEEK 5</strong><span><b>{{ weekFiveRosterForecast.right.team }}</b> · 已打 12 場／剩 {{ weekFiveRosterForecast.right.remainingGp }} 場</span></div>
         <div class="sprint-table-wrap"><table class="sprint-table"><thead><tr><th>項目</th><th>{{ weekFiveRosterForecast.left.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>{{ weekFiveRosterForecast.right.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>預測差距</th></tr></thead><tbody><tr v-for="row in weekFiveRosterRows" :key="`week-five-${row.category}`"><th>{{ row.category }}</th><td>{{ row.leftCurrent }}</td><td class="sprint-add">+{{ row.leftAdd }}</td><td :class="{ winner: row.winner === 'left' }">{{ row.left }}</td><td>{{ row.rightCurrent }}</td><td class="sprint-add">+{{ row.rightAdd }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
         <div class="sprint-result"><span>預測對位</span><strong>{{ weekFiveRosterSummary.left }} : {{ weekFiveRosterSummary.right }}</strong><b>{{ weekFiveRosterSummary.left === weekFiveRosterSummary.right ? '平手' : (weekFiveRosterSummary.left > weekFiveRosterSummary.right ? weekFiveRosterForecast.left.team : weekFiveRosterForecast.right.team) + ' 優勢' }}</b></div>
         <div class="sprint-details"><div class="projection-detail-tabs"><button type="button" :class="{ active: activeWeekFiveDetail === 'left' }" @click="activeWeekFiveDetail = activeWeekFiveDetail === 'left' ? null : 'left'">查看 {{ weekFiveRosterForecast.left.team }} 的剩餘球員明細</button><button type="button" :class="{ active: activeWeekFiveDetail === 'right' }" @click="activeWeekFiveDetail = activeWeekFiveDetail === 'right' ? null : 'right'">查看 {{ weekFiveRosterForecast.right.team }} 的剩餘球員明細</button></div><section v-if="activeWeekFiveDetail" class="projection-roster"><h3>{{ activeWeekFiveTeam.team }} · 剩餘賽程球員乘算明細</h3><div class="projection-table-wrap"><table><thead><tr><th>球員</th><th>NBA</th><th>位置</th><th>剩餘 GP</th><th>3PTM</th><th>PTS</th><th>REB</th><th>AST</th><th>ST</th><th>BLK</th><th>TO</th></tr></thead><tbody><tr v-for="player in activeWeekFiveTeam.players" :key="`week-five-${player.name}`"><th>{{ player.name }}</th><td>{{ player.nba }}</td><td>{{ player.slot }}</td><td>{{ player.gp }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 0).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 1).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 2).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 3).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 4).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 5).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 6).toFixed(1) }}</td></tr></tbody></table></div></section></div>
