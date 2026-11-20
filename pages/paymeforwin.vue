@@ -317,14 +317,14 @@ const weekFiveRemainingGames: Record<string, Record<string, number>> = {
   '阿肥加班幹大事': {
     "De'Aaron Fox": 1, 'Jalen Suggs': 2, 'Ziaire Williams': 1, 'Jalen Brunson': 2,
     'Julius Randle': 1, 'Tari Eason': 1, 'Jarrett Allen': 1,
-    'Nikola Jokić': 1, 'Meleek Thomas': 1, 'Dylan Cardwell': 2, 'Devin Vassell': 1,
+    'Nikola Jokić': 2, 'Meleek Thomas': 1, 'Dylan Cardwell': 2, 'Devin Vassell': 1,
     'Brook Lopez': 1,
   },
   'Wei Too Strong': {
-    'Tyrese Maxey': 1, 'Brandin Podziemski': 2, 'VJ Edgecombe': 1, 'Christian Braun': 2,
-    'Keldon Johnson': 2, 'Sidy Cissoko': 2, 'Anthony Davis': 2, 'Isaiah Jackson': 2,
-    'Dyson Daniels': 2, 'Leaky Black': 2, 'Reed Sheppard': 2, 'Draymond Green': 1,
-    'Jaime Jaquez Jr.': 2, 'Quenton Jackson': 2,
+    'Tyrese Maxey': 1, 'Brandin Podziemski': 1, 'VJ Edgecombe': 1, 'Christian Braun': 2,
+    'Keldon Johnson': 1, 'Sidy Cissoko': 1, 'Anthony Davis': 2, 'Isaiah Jackson': 1,
+    'Dyson Daniels': 2, 'Leaky Black': 2, 'Reed Sheppard': 1, 'Draymond Green': 1,
+    'Jaime Jaquez Jr.': 1, 'Quenton Jackson': 2,
   },
 }
 const weekFiveLive: Record<string, LiveProjection> = {
