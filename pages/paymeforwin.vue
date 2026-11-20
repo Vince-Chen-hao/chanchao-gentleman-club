@@ -323,7 +323,7 @@ const weekFiveRemainingGames: Record<string, Record<string, number>> = {
   'Wei Too Strong': {
     'Tyrese Maxey': 1, 'Brandin Podziemski': 2, 'VJ Edgecombe': 1, 'Christian Braun': 2,
     'Keldon Johnson': 2, 'Sidy Cissoko': 2, 'Anthony Davis': 2, 'Isaiah Jackson': 2,
-    'Dyson Daniels': 2, 'Leaky Black': 2, 'Reed Sheppard': 2, 'Draymond Green': 2,
+    'Dyson Daniels': 2, 'Leaky Black': 2, 'Reed Sheppard': 2, 'Draymond Green': 1,
     'Jaime Jaquez Jr.': 2, 'Quenton Jackson': 2,
   },
 }
