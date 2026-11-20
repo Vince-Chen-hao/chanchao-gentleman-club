@@ -190,6 +190,8 @@ const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
     {"name":"Dylan Cardwell","nba":"SAC","slot":"Util","fgm":2.5,"fga":4.3,"ftm":0.7,"fta":1.1,"stats":[0.1,5.7,6.2,2,0.5,1.1,1],"last14":{"fgm":2.5,"fga":4.3,"ftm":0.7,"fta":1.1,"stats":[0.1,5.7,6.2,2,0.5,1.1,1]}},
     {"name":"Devin Vassell","nba":"SAS","slot":"Util","fgm":3.8,"fga":9.3,"ftm":2.4,"fta":2.5,"stats":[1.5,11.5,3.6,3,1.5,0.3,0.9],"last14":{"fgm":3.333,"fga":8.667,"ftm":2.167,"fta":2.333,"stats":[1.167,10,3.5,2.167,1.5,0.333,0.333]}},
     {"name":"Brook Lopez","nba":"LAC","slot":"BN","fgm":5.8,"fga":10.4,"ftm":1.6,"fta":2.5,"stats":[1.5,14.7,5.4,1.3,0.5,0.9,1],"last14":{"fgm":6.333,"fga":11.667,"ftm":1.333,"fta":3,"stats":[1.5,15.5,6.167,2.667,0.5,0.833,0.5]}},
+    {"name":"Luke Kornet","nba":"SAS","slot":"C","fgm":1.3,"fga":2.6,"ftm":0.9,"fta":1.1,"stats":[0,3.4,4.1,1,0.1,0.7,0.3],"last14":{"fgm":1.4,"fga":3.1,"ftm":1,"fta":1.1,"stats":[0,3.9,4.1,1.1,0,0.9,0.1]}},
+    {"name":"Ryan Kalkbrenner","nba":"CHA","slot":"BN","fgm":1.7,"fga":2.6,"ftm":1.3,"fta":1.4,"stats":[0,4.7,5.2,1.4,0.4,1.2,1.1],"last14":{"fgm":1.6,"fga":3,"ftm":1.8,"fta":2,"stats":[0,5,6.8,1.2,0.6,1.2,1.2]}},
     {"name":"Ziaire Williams","nba":"LAL","slot":"BN","fgm":4,"fga":7.1,"ftm":1,"fta":1.2,"stats":[2,11,2.6,2,1.5,0.2,0.4],"last14":{"fgm":3.714,"fga":6.571,"ftm":0.857,"fta":1,"stats":[1.857,10.143,2.286,2,1.571,0.143,0.286]}},
     {"name":"Jalen Suggs","nba":"ORL","slot":"BN","fgm":2.8,"fga":9,"ftm":0.8,"fta":1,"stats":[0.5,6.8,4.3,5,1.5,0.3,2.5],"last14":{"fgm":1,"fga":8,"ftm":0,"fta":0,"stats":[1,3,2,3,0,0,1]}},
   ] },
@@ -277,7 +279,7 @@ const verifiedWeekFiveAverages: Record<WeekFiveSource, Record<string, Projection
   },
 }
 const weekFiveSlots: Record<string, string> = {
-  "De'Aaron Fox": 'G', 'Jalen Suggs': 'BN', 'Jalen Brunson': 'PG', 'Deni Avdija': 'IL', 'Julius Randle': 'PF', 'Tari Eason': 'F', 'Nikola Jokić': 'BN', 'Jarrett Allen': 'BN', 'RJ Barrett': 'IL', 'Meleek Thomas': 'Util', 'Dylan Cardwell': 'Util', 'Devin Vassell': 'SF', 'Ziaire Williams': 'SG', 'Brook Lopez': 'C',
+  "De'Aaron Fox": 'G', 'Jalen Suggs': 'BN', 'Jalen Brunson': 'PG', 'Deni Avdija': 'IL', 'Julius Randle': 'PF', 'Tari Eason': 'F', 'Nikola Jokić': 'BN', 'Jarrett Allen': 'BN', 'RJ Barrett': 'IL', 'Meleek Thomas': 'Util', 'Dylan Cardwell': 'Util', 'Devin Vassell': 'SF', 'Ziaire Williams': 'SG', 'Brook Lopez': 'C', 'Luke Kornet': 'C', 'Ryan Kalkbrenner': 'BN',
   'Tyrese Maxey': 'PG', 'Brandin Podziemski': 'SG', 'VJ Edgecombe': 'G', 'Christian Braun': 'SF', 'Jaime Jaquez Jr.': 'BN', 'Sidy Cissoko': 'F', 'Anthony Davis': 'C', 'Draymond Green': 'BN', 'Dyson Daniels': 'Util', 'Leaky Black': 'Util', 'Reed Sheppard': 'Util', 'Keldon Johnson': 'PF', 'Isaiah Jackson': 'C', 'Quenton Jackson': 'BN',
 }
 const latestProjectionRange = (): ProjectionRange => {
@@ -318,7 +320,7 @@ const weekFiveRemainingGames: Record<string, Record<string, number>> = {
     "De'Aaron Fox": 1, 'Jalen Suggs': 2, 'Ziaire Williams': 1, 'Jalen Brunson': 2,
     'Julius Randle': 1, 'Tari Eason': 1, 'Jarrett Allen': 1,
     'Nikola Jokić': 2, 'Meleek Thomas': 1, 'Dylan Cardwell': 2, 'Devin Vassell': 1,
-    'Brook Lopez': 1,
+    'Brook Lopez': 1, 'Luke Kornet': 1, 'Ryan Kalkbrenner': 1,
   },
   'Wei Too Strong': {
     'Tyrese Maxey': 1, 'Brandin Podziemski': 1, 'VJ Edgecombe': 1, 'Christian Braun': 2,
