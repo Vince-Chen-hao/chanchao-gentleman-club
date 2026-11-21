@@ -177,111 +177,105 @@ const futureSchedule: Record<string, [number, number, number, number]> = {
   MIN: [4, 4, 4, 2], SAC: [3, 3, 3, 2], SAS: [4, 3, 4, 2], GSW: [3, 4, 3, 1], LAL: [3, 3, 3, 2], DAL: [3, 3, 4, 2], HOU: [4, 3, 3, 2], DEN: [3, 4, 3, 2], LAC: [3, 3, 4, 2], CLE: [4, 3, 3, 2], NYK: [4, 4, 3, 2], TOR: [4, 3, 3, 2], BKN: [2, 3, 4, 2], POR: [3, 4, 4, 2], IND: [4, 3, 3, 2], ORL: [3, 4, 3, 1], CHA: [3, 2, 3, 2], MEM: [4, 4, 4, 2], MIA: [3, 3, 3, 2], BOS: [3, 4, 3, 2], NOP: [4, 4, 3, 2], OKC: [4, 3, 3, 2], WAS: [4, 4, 2, 2], CHI: [3, 4, 3, 2], PHX: [4, 3, 3, 2], PHI: [3, 4, 3, 2],
 }
 const projectionTeams: { team: string; players: ProjectionPlayer[] }[] = [
-  { team: '阿肥加班幹大事', players: [
-    {"name":"De'Aaron Fox","nba":"SAS","slot":"PG","fgm":4.5,"fga":9,"ftm":3.7,"fta":4.5,"stats":[1,13.6,4.4,5.8,1.3,0.5,2.3]},
-    {"name":"Deni Avdija","nba":"POR","slot":"IL","fgm":7.8,"fga":15.5,"ftm":6.4,"fta":8.9,"stats":[2,23.9,6.1,6.3,1.1,0.3,3.2],"last14":{"fgm":8,"fga":15.857,"ftm":6.429,"fta":8.429,"stats":[2.143,24.571,5.429,6.714,1.143,0.429,3.857]}},
-    {"name":"Jalen Brunson","nba":"NYK","slot":"G","fgm":9.1,"fga":20.8,"ftm":5.7,"fta":7.2,"stats":[2.8,26.6,2.9,5.7,0.8,0.3,1.8],"last14":{"fgm":9.571,"fga":20.429,"ftm":5.286,"fta":6.286,"stats":[3.286,27.714,2.714,6.571,0.571,0.143,1.571]}},
-    {"name":"Julius Randle","nba":"BKN","slot":"PF","fgm":6.4,"fga":14.5,"ftm":5.6,"fta":7.1,"stats":[1.4,19.7,6.5,5,0.7,0.2,3.8],"last14":{"fgm":6.5,"fga":14.167,"ftm":5,"fta":7,"stats":[1,19,5.333,4.667,1,0.167,3.5]}},
-    {"name":"Tari Eason","nba":"HOU","slot":"F","fgm":3.8,"fga":9.2,"ftm":1.2,"fta":1.3,"stats":[0.9,9.7,6.2,1.3,1,1.1,1.2],"last14":{"fgm":4.714,"fga":10.714,"ftm":0.571,"fta":0.714,"stats":[1.571,11.571,6.143,1.571,0.714,0.714,1.286]}},
-    {"name":"Jarrett Allen","nba":"CLE","slot":"C","fgm":4.8,"fga":7.5,"ftm":2.6,"fta":3.7,"stats":[0.3,12.5,8.3,1.4,0.6,1.4,0.8],"last14":{"fgm":3.4,"fga":5.4,"ftm":2.2,"fta":3,"stats":[0.2,9.2,7.2,1.2,0.6,0.8,0.4]}},
-    {"name":"Nikola Jokić","nba":"DEN","slot":"C","fgm":9.2,"fga":18.4,"ftm":4.1,"fta":4.7,"stats":[1,23.5,10.8,9,1.8,1.2,3],"last14":{"fgm":10,"fga":18.667,"ftm":4.833,"fta":5.333,"stats":[1,25.833,11.167,9,2.167,0.833,2.167]}},
-    {"name":"RJ Barrett","nba":"TOR","slot":"IL","fgm":8.2,"fga":17.6,"ftm":3.4,"fta":5.5,"stats":[1.6,21.3,6.7,4.1,0.5,0.5,1.8],"last14":{"fgm":8.143,"fga":17.857,"ftm":3.857,"fta":6,"stats":[1.429,21.571,6.857,4.286,0.286,0.571,2.429]}},
-    {"name":"Meleek Thomas","nba":"CLE","slot":"Util","fgm":5,"fga":10.2,"ftm":0.4,"fta":0.4,"stats":[2.6,13,2.5,1.4,1.2,0.3,0.9],"last14":{"fgm":5.375,"fga":11.25,"ftm":0.375,"fta":0.5,"stats":[2.75,13.875,2.75,1.625,1.125,0.25,1.25]}},
-    {"name":"Dylan Cardwell","nba":"SAC","slot":"Util","fgm":2.5,"fga":4.3,"ftm":0.7,"fta":1.1,"stats":[0.1,5.7,6.2,2,0.5,1.1,1],"last14":{"fgm":2.5,"fga":4.3,"ftm":0.7,"fta":1.1,"stats":[0.1,5.7,6.2,2,0.5,1.1,1]}},
-    {"name":"Devin Vassell","nba":"SAS","slot":"Util","fgm":3.8,"fga":9.3,"ftm":2.4,"fta":2.5,"stats":[1.5,11.5,3.6,3,1.5,0.3,0.9],"last14":{"fgm":3.333,"fga":8.667,"ftm":2.167,"fta":2.333,"stats":[1.167,10,3.5,2.167,1.5,0.333,0.333]}},
-    {"name":"Brook Lopez","nba":"LAC","slot":"BN","fgm":5.8,"fga":10.4,"ftm":1.6,"fta":2.5,"stats":[1.5,14.7,5.4,1.3,0.5,0.9,1],"last14":{"fgm":6.333,"fga":11.667,"ftm":1.333,"fta":3,"stats":[1.5,15.5,6.167,2.667,0.5,0.833,0.5]}},
-    {"name":"Luke Kornet","nba":"SAS","slot":"C","fgm":1.3,"fga":2.6,"ftm":0.9,"fta":1.1,"stats":[0,3.4,4.1,1,0.1,0.7,0.3],"last14":{"fgm":1.4,"fga":3.1,"ftm":1,"fta":1.1,"stats":[0,3.9,4.1,1.1,0,0.9,0.1]}},
-    {"name":"Ryan Kalkbrenner","nba":"CHA","slot":"BN","fgm":1.7,"fga":2.6,"ftm":1.3,"fta":1.4,"stats":[0,4.7,5.2,1.4,0.4,1.2,1.1],"last14":{"fgm":1.6,"fga":3,"ftm":1.8,"fta":2,"stats":[0,5,6.8,1.2,0.6,1.2,1.2]}},
-    {"name":"Ziaire Williams","nba":"LAL","slot":"BN","fgm":4,"fga":7.1,"ftm":1,"fta":1.2,"stats":[2,11,2.6,2,1.5,0.2,0.4],"last14":{"fgm":3.714,"fga":6.571,"ftm":0.857,"fta":1,"stats":[1.857,10.143,2.286,2,1.571,0.143,0.286]}},
-    {"name":"Jalen Suggs","nba":"ORL","slot":"BN","fgm":2.8,"fga":9,"ftm":0.8,"fta":1,"stats":[0.5,6.8,4.3,5,1.5,0.3,2.5],"last14":{"fgm":1,"fga":8,"ftm":0,"fta":0,"stats":[1,3,2,3,0,0,1]}},
+  { team: "阿肥加班幹大事", players: [
+    {"name":"Jalen Brunson","nba":"NYK","slot":"PG","fgm":9.1,"fga":20.9,"ftm":5.5,"fta":6.8,"stats":[2.9,26.6,2.9,5.9,0.8,0.3,1.8]},
+    {"name":"Ziaire Williams","nba":"LAL","slot":"SG","fgm":3.3,"fga":6.1,"ftm":1,"fta":1.1,"stats":[1.6,9.1,2.2,1.8,1.3,0.1,0.4]},
+    {"name":"De'Aaron Fox","nba":"SAS","slot":"G","fgm":4.2,"fga":8.8,"ftm":3.6,"fta":4.3,"stats":[0.9,12.9,4.1,5.5,1.3,0.4,2.5]},
+    {"name":"Devin Vassell","nba":"SAS","slot":"SF","fgm":3.9,"fga":9.6,"ftm":2.1,"fta":2.4,"stats":[1.4,11.4,3.9,3,1.7,0.3,0.9]},
+    {"name":"Julius Randle","nba":"BKN","slot":"PF","fgm":7,"fga":15,"ftm":5.5,"fta":6.9,"stats":[1.6,21.1,6,4.7,1.1,0.2,3.5]},
+    {"name":"Tari Eason","nba":"HOU","slot":"F","fgm":4,"fga":9.2,"ftm":1.4,"fta":1.5,"stats":[1,10.4,6.1,1.5,0.9,0.9,1.4]},
+    {"name":"Brook Lopez","nba":"LAC","slot":"C","fgm":5.9,"fga":10.7,"ftm":1.6,"fta":2.5,"stats":[1.9,15.4,5.2,2,0.6,0.9,1.1]},
+    {"name":"Luke Kornet","nba":"SAS","slot":"C","fgm":1.3,"fga":2.5,"ftm":0.9,"fta":1.2,"stats":[0,3.4,3.8,1.1,0.1,0.7,0.3]},
+    {"name":"Meleek Thomas","nba":"CLE","slot":"Util","fgm":4.9,"fga":10.6,"ftm":0.4,"fta":0.6,"stats":[2.4,12.7,2.7,1.8,1.4,0.2,1.2]},
+    {"name":"Dylan Cardwell","nba":"SAC","slot":"Util","fgm":2,"fga":3.4,"ftm":1,"fta":2.1,"stats":[0,5,5.6,1.5,0.5,0.9,1.1]},
+    {"name":"Nikola Jokić","nba":"DEN","slot":"Util","fgm":9.4,"fga":17.9,"ftm":4.1,"fta":4.5,"stats":[1.3,24.2,10.4,9.1,1.6,1,3.4]},
+    {"name":"Jalen Suggs","nba":"ORL","slot":"BN","fgm":3.4,"fga":9.1,"ftm":0.9,"fta":1.4,"stats":[1.6,9.3,5.3,4.3,1.3,0.6,2.9]},
+    {"name":"Jarrett Allen","nba":"CLE","slot":"BN","fgm":4.9,"fga":8.1,"ftm":2.5,"fta":3.4,"stats":[0.2,12.6,8.7,1.9,0.6,1.3,1.3]},
+    {"name":"Deni Avdija","nba":"POR","slot":"IL","fgm":8,"fga":15.8,"ftm":6.1,"fta":8.5,"stats":[2.1,24.2,6.2,6.1,1.1,0.4,3.3]},
+    {"name":"RJ Barrett","nba":"TOR","slot":"IL","fgm":8.1,"fga":17.1,"ftm":3.2,"fta":5.3,"stats":[1.5,20.9,6.4,4.3,0.4,0.5,1.9]},
   ] },
-  { team: 'Wei Too Strong', players: [
-    {"name":"Tyrese Maxey","nba":"PHI","slot":"PG","fgm":8.5,"fga":16.1,"ftm":6.1,"fta":7.1,"stats":[2.5,25.6,2.9,6.1,1,0.5,1.8],"last14":{"fgm":9,"fga":17.667,"ftm":6.833,"fta":7.667,"stats":[3,27.833,3.167,7.833,1,0.5,1.833]}},
-    {"name":"Quenton Jackson","nba":"IND","slot":"BN","fgm":3.4,"fga":7.1,"ftm":1.6,"fta":1.9,"stats":[1.1,9.4,3.8,3.1,1.3,0.2,1.3],"last14":{"fgm":3.7,"fga":7.9,"ftm":1.4,"fta":1.7,"stats":[1.3,10.1,5.1,3.4,1.6,0.3,2]}},
-    {"name":"VJ Edgecombe","nba":"PHI","slot":"G","fgm":5.9,"fga":11.5,"ftm":0.4,"fta":0.6,"stats":[1.6,13.8,5.8,3.9,1.8,0.5,0.9],"last14":{"fgm":7,"fga":13.333,"ftm":0.667,"fta":1.167,"stats":[1.667,16.333,5.667,5.333,2.333,0.5,1]}},
-    {"name":"Keldon Johnson","nba":"SAS","slot":"SF","fgm":2.4,"fga":6.4,"ftm":1.9,"fta":2.7,"stats":[0.1,6.9,6,2.9,0.6,0,1.3],"last14":{"fgm":3.714,"fga":8.286,"ftm":2.714,"fta":3.857,"stats":[0.571,10.714,7.143,3.714,1,0,1.714]}},
-    {"name":"Jaime Jaquez Jr.","nba":"MIL","slot":"PF","fgm":5.1,"fga":11.9,"ftm":2.7,"fta":3.1,"stats":[1.9,14.9,4.6,2.9,0.9,0.1,1.7],"last14":{"fgm":6.143,"fga":13.857,"ftm":2.714,"fta":3.286,"stats":[2.714,17.714,5.143,3.286,1.143,0.143,2.429]}},
-    {"name":"Sidy Cissoko","nba":"POR","slot":"F","fgm":2.6,"fga":5.6,"ftm":2.1,"fta":2.7,"stats":[1.7,9,2.9,1.7,0.4,0.4,0.7],"last14":{"fgm":2.714,"fga":6.286,"ftm":2,"fta":2.429,"stats":[1.857,9.286,3,1.714,0.286,0.429,0.571]}},
-    {"name":"Anthony Davis","nba":"WAS","slot":"C","fgm":11.3,"fga":19.2,"ftm":5.7,"fta":6.3,"stats":[0.5,28.8,12.2,1.7,1.3,1,2],"last14":{"fgm":12.8,"fga":21.8,"ftm":6.2,"fta":6.8,"stats":[0.6,32.4,13.6,2.8,1.6,1.4,2.6]}},
-    {"name":"Isaiah Jackson","nba":"LAC","slot":"C","fgm":2.8,"fga":4.9,"ftm":1.1,"fta":1.8,"stats":[0.2,6.7,5.2,1.1,0.5,1.3,0.8],"last14":{"fgm":4.5,"fga":7.25,"ftm":1.25,"fta":2,"stats":[0.5,10.75,5.25,2.25,0.75,1,1.5]}},
-    {"name":"Reed Sheppard","nba":"HOU","slot":"Util","fgm":3.4,"fga":9.1,"ftm":0.4,"fta":0.4,"stats":[2.2,9.3,1.5,2.9,1.4,0.2,1],"last14":{"fgm":3.1,"fga":8.6,"ftm":0.1,"fta":0.1,"stats":[2.1,8.6,0.7,1.9,1.1,0.3,0.6]}},
-    {"name":"Dyson Daniels","nba":"ATL","slot":"Util","fgm":4,"fga":8.5,"ftm":0.8,"fta":1.3,"stats":[0.2,9,9,7,3,0.3,1.8],"last14":{"fgm":4.667,"fga":9.833,"ftm":0.667,"fta":1.167,"stats":[0.167,10.167,11.5,8,3.167,0.333,2]}},
-    {"name":"Leaky Black","nba":"SAC","slot":"Util","fgm":2.6,"fga":5.8,"ftm":0.7,"fta":1,"stats":[0.8,6.7,3.6,1.7,0.9,0.5,0.8],"last14":{"fgm":2.8,"fga":6.1,"ftm":0.6,"fta":0.9,"stats":[0.9,7.1,3.9,1.8,1,0.6,0.9]}},
-    {"name":"Brandin Podziemski","nba":"GSW","slot":"BN","fgm":6.6,"fga":13.3,"ftm":1.9,"fta":2.7,"stats":[3.4,18.4,5.3,4,1.3,0.6,1],"last14":{"fgm":5.667,"fga":12.333,"ftm":1.833,"fta":2.5,"stats":[3.333,16.5,4.5,2.333,1.167,0.667,0.833]}},
-    {"name":"Draymond Green","nba":"GSW","slot":"BN","fgm":1.3,"fga":3.2,"ftm":0.3,"fta":0.7,"stats":[0.2,3.2,4.5,8,1.3,0.8,2],"last14":{"fgm":1.5,"fga":3.5,"ftm":0.333,"fta":0.667,"stats":[0.167,3.5,4.333,7,1,0.667,2.167]}},
-    {"name":"Christian Braun","nba":"DEN","slot":"BN","fgm":4.7,"fga":9.3,"ftm":1.8,"fta":2.3,"stats":[1.8,13,3.8,2.5,1.8,0.2,0.7],"last14":{"fgm":3.833,"fga":9,"ftm":2.167,"fta":2.833,"stats":[0.833,10.667,4.5,2.5,2,0.333,0.5]}},
-    {"name":"Trey Murphy III","nba":"NOP","slot":"IL","fgm":5.3,"fga":11.3,"ftm":4.5,"fta":4.5,"stats":[2.3,17.3,5.3,4.5,1,0.5,1.8]},
-    {"name":"Chet Holmgren","nba":"OKC","slot":"IL","fgm":7.2,"fga":12.8,"ftm":3.2,"fta":3.8,"stats":[1.6,19.2,8.5,2.5,0.8,2.5,1.8]},
-    {"name":"Jusuf Nurkić","nba":"UTA","slot":"IL","fgm":2.5,"fga":5.2,"ftm":1.4,"fta":2.1,"stats":[0.2,6.6,7.1,3.5,0.7,0.8,1.5]},
+  { team: "Wei Too Strong", players: [
+    {"name":"Tyrese Maxey","nba":"PHI","slot":"PG","fgm":8.9,"fga":17.7,"ftm":6.1,"fta":7,"stats":[2.7,26.5,3.3,5.8,1.3,0.5,2]},
+    {"name":"Trey Murphy III","nba":"NOP","slot":"SG","fgm":5.2,"fga":11.1,"ftm":3,"fta":3.5,"stats":[2.3,15.7,4.7,3.3,1.1,0.3,1.5]},
+    {"name":"VJ Edgecombe","nba":"PHI","slot":"G","fgm":5.3,"fga":11.5,"ftm":1.3,"fta":1.7,"stats":[1.7,13.6,6.5,3.9,1.7,0.4,1.3]},
+    {"name":"Jaime Jaquez Jr.","nba":"MIL","slot":"SF","fgm":5.3,"fga":11.6,"ftm":2.5,"fta":3.3,"stats":[1.9,15,5.1,3,0.7,0.1,2.1]},
+    {"name":"Sidy Cissoko","nba":"POR","slot":"PF","fgm":2.5,"fga":5.4,"ftm":1.5,"fta":2.1,"stats":[1.3,7.9,3.8,2,0.6,0.3,0.7]},
+    {"name":"Keldon Johnson","nba":"SAS","slot":"F","fgm":3.3,"fga":6.9,"ftm":1.8,"fta":2.4,"stats":[0.3,8.7,5.6,2.3,0.8,0,1.1]},
+    {"name":"Isaiah Jackson","nba":"LAC","slot":"C","fgm":3.5,"fga":5.9,"ftm":1,"fta":1.5,"stats":[0.2,8.1,5.2,1.9,1.2,1.1,1.5]},
+    {"name":"Robert Williams III","nba":"POR","slot":"C","fgm":2.8,"fga":4.3,"ftm":1,"fta":1.2,"stats":[0,6.5,6.6,1.3,0.8,1,0.9]},
+    {"name":"Anthony Davis","nba":"WAS","slot":"Util","fgm":9.7,"fga":18.4,"ftm":5.1,"fta":6.3,"stats":[0.7,25.3,10.1,2.1,1.1,1.1,2.1]},
+    {"name":"Brandin Podziemski","nba":"GSW","slot":"Util","fgm":5.5,"fga":12.3,"ftm":2.4,"fta":3.3,"stats":[2.4,15.8,4.7,3.6,1.1,0.5,1.4]},
+    {"name":"Quenton Jackson","nba":"IND","slot":"Util","fgm":3.4,"fga":7.1,"ftm":1.5,"fta":1.8,"stats":[1.1,9.4,3.6,3,1.4,0.2,1.4]},
+    {"name":"Dyson Daniels","nba":"ATL","slot":"BN","fgm":4.3,"fga":8.8,"ftm":0.8,"fta":1.4,"stats":[0.2,9.6,7.6,5.8,2.9,0.3,1.3]},
+    {"name":"Christian Braun","nba":"DEN","slot":"BN","fgm":5.1,"fga":10.4,"ftm":1.4,"fta":1.8,"stats":[1.6,13.2,4.4,2.4,2.3,0.4,1.1]},
+    {"name":"Draymond Green","nba":"GSW","slot":"BN","fgm":1.3,"fga":3.2,"ftm":0.2,"fta":0.5,"stats":[0.3,3.2,4.7,6.5,0.9,0.9,2.5]},
   ] },
 ]
-type ProjectionAverage = Pick<ProjectionPlayer, 'fgm' | 'fga' | 'ftm' | 'fta' | 'stats'>
-// Yahoo roster page audit — 2026-11-16. These are player-level per-game values,
-// never a team-wide multiplier. IL players are excluded before this data is summed.
-const verifiedWeekFiveAverages: Record<WeekFiveSource, Record<string, ProjectionAverage>> = {
+const verifiedWeekFiveAverages: Record<'season' | 'last14', Record<string, { fgm: number; fga: number; ftm: number; fta: number; stats: number[] }>> = {
   season: {
-    'Jalen Suggs': { fgm: 2.8, fga: 9, ftm: 0.8, fta: 1, stats: [0.5, 6.8, 4.3, 5, 1.5, 0.3, 2.5] },
-    'Jordan Goodwin': { fgm: 3.3, fga: 7.8, ftm: 0.9, fta: 1.1, stats: [2.3, 9.6, 4, 2.8, 1.5, 0.1, 0.9] },
-    'Jalen Brunson': { fgm: 9.1, fga: 20.9, ftm: 5.8, fta: 7.2, stats: [2.8, 26.7, 2.8, 5.9, 0.8, 0.3, 1.8] },
-    'Deni Avdija': { fgm: 7.8, fga: 15.5, ftm: 6.4, fta: 8.9, stats: [2, 23.9, 6.1, 6.3, 1.1, 0.3, 3.2] },
-    'Julius Randle': { fgm: 6.5, fga: 14.6, ftm: 5.4, fta: 7, stats: [1.5, 19.9, 6.3, 5, 0.9, 0.2, 3.8] },
-    'Tari Eason': { fgm: 4.2, fga: 9.5, ftm: 1.3, fta: 1.4, stats: [1.1, 10.8, 6.2, 1.3, 0.9, 1, 1.2] },
-    'Nikola Jokić': { fgm: 9.2, fga: 18, ftm: 4.4, fta: 4.9, stats: [1, 23.7, 10.5, 9.1, 1.9, 1.1, 3.1] },
-    'Jarrett Allen': { fgm: 4.8, fga: 7.5, ftm: 2.6, fta: 3.7, stats: [0.3, 12.5, 8.3, 1.4, 0.6, 1.4, 0.8] },
-    'RJ Barrett': { fgm: 8, fga: 17.1, ftm: 3.3, fta: 5.2, stats: [1.5, 20.8, 6.5, 4.2, 0.5, 0.5, 2.1] },
-    'Meleek Thomas': { fgm: 5.3, fga: 10.8, ftm: 0.5, fta: 0.5, stats: [2.6, 13.6, 2.6, 1.5, 1.1, 0.3, 1.2] },
-    'Devin Vassell': { fgm: 3.8, fga: 9.4, ftm: 2.2, fta: 2.3, stats: [1.3, 11, 3.8, 2.8, 1.7, 0.3, 0.9] },
-    'Ziaire Williams': { fgm: 3.8, fga: 6.7, ftm: 1.1, fta: 1.3, stats: [1.8, 10.5, 2.5, 2.1, 1.5, 0.2, 0.5] },
-    'Brook Lopez': { fgm: 5.6, fga: 10.3, ftm: 1.5, fta: 2.5, stats: [1.4, 14.1, 5.3, 1.8, 0.5, 0.9, 1] },
-    'Tyrese Maxey': { fgm: 9, fga: 18.1, ftm: 6.1, fta: 7.1, stats: [2.6, 26.7, 3.4, 5.6, 1.3, 0.6, 1.9] },
-    'Brandin Podziemski': { fgm: 5.8, fga: 12.6, ftm: 2, fta: 2.8, stats: [2.8, 16.5, 4.9, 3.8, 1.2, 0.5, 1.2] },
-    'VJ Edgecombe': { fgm: 5.2, fga: 11.3, ftm: 0.8, fta: 1.2, stats: [1.5, 12.8, 6.2, 3.7, 1.6, 0.5, 1] },
-    'Christian Braun': { fgm: 4.9, fga: 10.3, ftm: 1.5, fta: 1.9, stats: [1.5, 12.8, 4.4, 2.3, 2.2, 0.3, 1.1] },
-    'Jaime Jaquez Jr.': { fgm: 5.6, fga: 11.9, ftm: 2.5, fta: 3.3, stats: [2, 15.8, 5.6, 2.9, 0.7, 0.1, 2.1] },
-    'Sidy Cissoko': { fgm: 2.4, fga: 5.3, ftm: 1.7, fta: 2.3, stats: [1.3, 7.8, 3.6, 1.9, 0.4, 0.3, 0.6] },
-    'Anthony Davis': { fgm: 9.4, fga: 18.3, ftm: 5.1, fta: 5.9, stats: [0.8, 24.7, 10.3, 2.3, 1.3, 1.1, 2] },
-    'Draymond Green': { fgm: 1.4, fga: 3.4, ftm: 0.3, fta: 0.5, stats: [0.3, 3.3, 4.7, 7.1, 0.9, 0.8, 2.8] },
-    'Quenton Jackson': { fgm: 3.4, fga: 7.1, ftm: 1.6, fta: 1.9, stats: [1.1, 9.4, 3.8, 3.1, 1.3, 0.2, 1.3] },
-    'Dyson Daniels': { fgm: 4.2, fga: 8.7, ftm: 0.9, fta: 1.6, stats: [0.1, 9.5, 7.4, 5.6, 2.9, 0.3, 1.3] },
-    'Anfernee Simons': { fgm: 3.6, fga: 8.3, ftm: 0.9, fta: 1, stats: [2.4, 10.4, 2.1, 1.1, 0.4, 0.1, 0.5] },
-    'Keldon Johnson': { fgm: 3.4, fga: 7.1, ftm: 1.9, fta: 2.6, stats: [0.4, 8.9, 5.9, 2.4, 0.8, 0, 1.1] },
-    'Isaiah Jackson': { fgm: 3.5, fga: 6, ftm: 1.2, fta: 1.8, stats: [0.2, 8.3, 5.3, 2.1, 1.2, 0.9, 1.6] },
-    'Reed Sheppard': { fgm: 3.4, fga: 9.1, ftm: 0.4, fta: 0.4, stats: [2.2, 9.3, 1.5, 2.9, 1.4, 0.2, 1] },
+    "Jalen Brunson": {"fgm":9.1,"fga":20.9,"ftm":5.5,"fta":6.8,"stats":[2.9,26.6,2.9,5.9,0.8,0.3,1.8]},
+    "Ziaire Williams": {"fgm":3.3,"fga":6.1,"ftm":1,"fta":1.1,"stats":[1.6,9.1,2.2,1.8,1.3,0.1,0.4]},
+    "De'Aaron Fox": {"fgm":4.2,"fga":8.8,"ftm":3.6,"fta":4.3,"stats":[0.9,12.9,4.1,5.5,1.3,0.4,2.5]},
+    "Devin Vassell": {"fgm":3.9,"fga":9.6,"ftm":2.1,"fta":2.4,"stats":[1.4,11.4,3.9,3,1.7,0.3,0.9]},
+    "Julius Randle": {"fgm":7,"fga":15,"ftm":5.5,"fta":6.9,"stats":[1.6,21.1,6,4.7,1.1,0.2,3.5]},
+    "Tari Eason": {"fgm":4,"fga":9.2,"ftm":1.4,"fta":1.5,"stats":[1,10.4,6.1,1.5,0.9,0.9,1.4]},
+    "Brook Lopez": {"fgm":5.9,"fga":10.7,"ftm":1.6,"fta":2.5,"stats":[1.9,15.4,5.2,2,0.6,0.9,1.1]},
+    "Luke Kornet": {"fgm":1.3,"fga":2.5,"ftm":0.9,"fta":1.2,"stats":[0,3.4,3.8,1.1,0.1,0.7,0.3]},
+    "Meleek Thomas": {"fgm":4.9,"fga":10.6,"ftm":0.4,"fta":0.6,"stats":[2.4,12.7,2.7,1.8,1.4,0.2,1.2]},
+    "Dylan Cardwell": {"fgm":2,"fga":3.4,"ftm":1,"fta":2.1,"stats":[0,5,5.6,1.5,0.5,0.9,1.1]},
+    "Nikola Jokić": {"fgm":9.4,"fga":17.9,"ftm":4.1,"fta":4.5,"stats":[1.3,24.2,10.4,9.1,1.6,1,3.4]},
+    "Jalen Suggs": {"fgm":3.4,"fga":9.1,"ftm":0.9,"fta":1.4,"stats":[1.6,9.3,5.3,4.3,1.3,0.6,2.9]},
+    "Jarrett Allen": {"fgm":4.9,"fga":8.1,"ftm":2.5,"fta":3.4,"stats":[0.2,12.6,8.7,1.9,0.6,1.3,1.3]},
+    "Deni Avdija": {"fgm":8,"fga":15.8,"ftm":6.1,"fta":8.5,"stats":[2.1,24.2,6.2,6.1,1.1,0.4,3.3]},
+    "RJ Barrett": {"fgm":8.1,"fga":17.1,"ftm":3.2,"fta":5.3,"stats":[1.5,20.9,6.4,4.3,0.4,0.5,1.9]},
+    "Tyrese Maxey": {"fgm":8.9,"fga":17.7,"ftm":6.1,"fta":7,"stats":[2.7,26.5,3.3,5.8,1.3,0.5,2]},
+    "Trey Murphy III": {"fgm":5.2,"fga":11.1,"ftm":3,"fta":3.5,"stats":[2.3,15.7,4.7,3.3,1.1,0.3,1.5]},
+    "VJ Edgecombe": {"fgm":5.3,"fga":11.5,"ftm":1.3,"fta":1.7,"stats":[1.7,13.6,6.5,3.9,1.7,0.4,1.3]},
+    "Jaime Jaquez Jr.": {"fgm":5.3,"fga":11.6,"ftm":2.5,"fta":3.3,"stats":[1.9,15,5.1,3,0.7,0.1,2.1]},
+    "Sidy Cissoko": {"fgm":2.5,"fga":5.4,"ftm":1.5,"fta":2.1,"stats":[1.3,7.9,3.8,2,0.6,0.3,0.7]},
+    "Keldon Johnson": {"fgm":3.3,"fga":6.9,"ftm":1.8,"fta":2.4,"stats":[0.3,8.7,5.6,2.3,0.8,0,1.1]},
+    "Isaiah Jackson": {"fgm":3.5,"fga":5.9,"ftm":1,"fta":1.5,"stats":[0.2,8.1,5.2,1.9,1.2,1.1,1.5]},
+    "Robert Williams III": {"fgm":2.8,"fga":4.3,"ftm":1,"fta":1.2,"stats":[0,6.5,6.6,1.3,0.8,1,0.9]},
+    "Anthony Davis": {"fgm":9.7,"fga":18.4,"ftm":5.1,"fta":6.3,"stats":[0.7,25.3,10.1,2.1,1.1,1.1,2.1]},
+    "Brandin Podziemski": {"fgm":5.5,"fga":12.3,"ftm":2.4,"fta":3.3,"stats":[2.4,15.8,4.7,3.6,1.1,0.5,1.4]},
+    "Quenton Jackson": {"fgm":3.4,"fga":7.1,"ftm":1.5,"fta":1.8,"stats":[1.1,9.4,3.6,3,1.4,0.2,1.4]},
+    "Dyson Daniels": {"fgm":4.3,"fga":8.8,"ftm":0.8,"fta":1.4,"stats":[0.2,9.6,7.6,5.8,2.9,0.3,1.3]},
+    "Christian Braun": {"fgm":5.1,"fga":10.4,"ftm":1.4,"fta":1.8,"stats":[1.6,13.2,4.4,2.4,2.3,0.4,1.1]},
+    "Draymond Green": {"fgm":1.3,"fga":3.2,"ftm":0.2,"fta":0.5,"stats":[0.3,3.2,4.7,6.5,0.9,0.9,2.5]},
   },
   last14: {
-    'Jalen Suggs': { fgm: 1, fga: 8, ftm: 0, fta: 0, stats: [1, 3, 2, 3, 0, 0, 1] },
-    'Jordan Goodwin': { fgm: 3.3, fga: 7.8, ftm: 1.8, fta: 2.3, stats: [2.3, 10.5, 4.3, 2.8, 1.3, 0.3, 1.3] },
-    'Jalen Brunson': { fgm: 9.6, fga: 20.4, ftm: 5.3, fta: 6.3, stats: [3.3, 27.7, 2.7, 6.6, 0.6, 0.1, 1.6] },
-    'Deni Avdija': { fgm: 8, fga: 15.9, ftm: 6.4, fta: 8.4, stats: [2.1, 24.6, 5.4, 6.7, 1.1, 0.4, 3.9] },
-    'Julius Randle': { fgm: 6.5, fga: 14.2, ftm: 5, fta: 7, stats: [1, 19, 5.3, 4.7, 1, 0.2, 3.5] },
-    'Tari Eason': { fgm: 4.7, fga: 10.7, ftm: 0.6, fta: 0.7, stats: [1.6, 11.6, 6.1, 1.6, 0.7, 0.7, 1.3] },
-    'Nikola Jokić': { fgm: 10, fga: 18.7, ftm: 4.8, fta: 5.3, stats: [1, 25.8, 11.2, 9, 2.2, 0.8, 2.2] },
-    'Jarrett Allen': { fgm: 3.4, fga: 5.4, ftm: 2.2, fta: 3, stats: [0.2, 9.2, 7.2, 1.2, 0.6, 0.8, 0.4] },
-    'RJ Barrett': { fgm: 8.1, fga: 17.9, ftm: 3.9, fta: 6, stats: [1.4, 21.6, 6.9, 4.3, 0.3, 0.6, 2.4] },
-    'Meleek Thomas': { fgm: 5.4, fga: 11.3, ftm: 0.4, fta: 0.5, stats: [2.8, 13.9, 2.8, 1.6, 1.1, 0.3, 1.3] },
-    'Devin Vassell': { fgm: 3.3, fga: 8.7, ftm: 2.2, fta: 2.3, stats: [1.2, 10, 3.5, 2.2, 1.5, 0.3, 0.3] },
-    'Ziaire Williams': { fgm: 3.7, fga: 6.6, ftm: 0.9, fta: 1, stats: [1.9, 10.1, 2.3, 2, 1.6, 0.1, 0.3] },
-    'Brook Lopez': { fgm: 6.3, fga: 11.7, ftm: 1.3, fta: 3, stats: [1.5, 15.5, 6.2, 2.7, 0.5, 0.8, 0.5] },
-    'Tyrese Maxey': { fgm: 7.7, fga: 15.1, ftm: 5.9, fta: 6.6, stats: [2.6, 23.9, 2.7, 6.7, 0.9, 0.4, 1.6] },
-    'Brandin Podziemski': { fgm: 5.7, fga: 12.3, ftm: 1.8, fta: 2.5, stats: [3.3, 16.5, 4.5, 2.3, 1.2, 0.7, 0.8] },
-    'VJ Edgecombe': { fgm: 6, fga: 11.4, ftm: 0.6, fta: 1, stats: [1.4, 14, 4.9, 4.6, 2, 0.4, 0.9] },
-    'Christian Braun': { fgm: 3.8, fga: 9, ftm: 2.2, fta: 2.8, stats: [0.8, 10.7, 4.5, 2.5, 2, 0.3, 0.5] },
-    'Jaime Jaquez Jr.': { fgm: 5.4, fga: 12.1, ftm: 2.4, fta: 2.9, stats: [2.4, 15.5, 4.5, 2.9, 1, 0.1, 2.1] },
-    'Sidy Cissoko': { fgm: 2.7, fga: 6.3, ftm: 2, fta: 2.4, stats: [1.9, 9.3, 3, 1.7, 0.3, 0.4, 0.6] },
-    'Anthony Davis': { fgm: 10.7, fga: 18.2, ftm: 5.2, fta: 5.7, stats: [0.5, 27, 11.3, 2.3, 1.3, 1.2, 2.2] },
-    'Draymond Green': { fgm: 1.5, fga: 3.5, ftm: 0.3, fta: 0.7, stats: [0.2, 3.5, 4.3, 7, 1, 0.7, 2.2] },
-    'Quenton Jackson': { fgm: 3.7, fga: 7.9, ftm: 1.4, fta: 1.7, stats: [1.3, 10.1, 5.1, 3.4, 1.6, 0.3, 2] },
-    'Dyson Daniels': { fgm: 4, fga: 8.4, ftm: 0.6, fta: 1, stats: [0.1, 8.7, 9.9, 6.9, 2.7, 0.3, 1.7] },
-    'Anfernee Simons': { fgm: 3.1, fga: 7.3, ftm: 0.7, fta: 0.7, stats: [1.7, 8.7, 2.1, 1, 0, 0, 0.4] },
-    'Keldon Johnson': { fgm: 3.3, fga: 7.3, ftm: 2.4, fta: 3.4, stats: [0.5, 9.4, 6.3, 3.3, 0.9, 0, 1.5] },
-    'Isaiah Jackson': { fgm: 3.6, fga: 5.8, ftm: 1, fta: 1.6, stats: [0.4, 8.6, 4.2, 1.8, 0.6, 0.8, 1.2] },
-    'Reed Sheppard': { fgm: 3.1, fga: 8.6, ftm: 0.1, fta: 0.1, stats: [2.1, 8.6, 0.7, 1.9, 1.1, 0.3, 0.6] },
+    "Jalen Brunson": {"fgm":9.9,"fga":21.7,"ftm":4.9,"fta":5.3,"stats":[3.1,27.7,3.1,6.9,0.9,0.3,1.9]},
+    "Ziaire Williams": {"fgm":3,"fga":5.7,"ftm":0.7,"fta":0.9,"stats":[1.3,8,1.4,1.7,1,0.1,0.3]},
+    "De'Aaron Fox": {"fgm":3.2,"fga":8.2,"ftm":3.3,"fta":3.7,"stats":[0.8,10.5,4.2,4.8,1.3,0.2,2]},
+    "Devin Vassell": {"fgm":4,"fga":9.4,"ftm":2,"fta":2.4,"stats":[1,11,3.8,2.8,1.8,0.2,0.4]},
+    "Julius Randle": {"fgm":7.7,"fga":15.1,"ftm":4.3,"fta":5.7,"stats":[1.4,21.1,4.7,4.7,1.4,0.3,3]},
+    "Tari Eason": {"fgm":4.1,"fga":10.1,"ftm":1.1,"fta":1.4,"stats":[1.1,10.5,6.3,1.8,0.8,0.5,1.8]},
+    "Brook Lopez": {"fgm":6.8,"fga":12.5,"ftm":1.7,"fta":2.7,"stats":[2.5,17.8,5.3,3.3,0.7,0.5,1]},
+    "Luke Kornet": {"fgm":1.6,"fga":3,"ftm":1,"fta":1.1,"stats":[0,4.1,3.3,1.4,0,0.9,0.1]},
+    "Meleek Thomas": {"fgm":5,"fga":11,"ftm":0.3,"fta":0.5,"stats":[2.4,12.6,3,2.3,1.5,0.3,1.3]},
+    "Dylan Cardwell": {"fgm":1.8,"fga":3,"ftm":0.8,"fta":1.7,"stats":[0,4.5,6.2,1.5,0.3,0.8,1.3]},
+    "Nikola Jokić": {"fgm":9.7,"fga":17.7,"ftm":4,"fta":4.3,"stats":[1.6,25,11.1,8.9,1,0.9,3.1]},
+    "Jalen Suggs": {"fgm":3.5,"fga":9,"ftm":0.8,"fta":1.5,"stats":[2.5,10.3,5.5,3.3,0.8,0.8,2.8]},
+    "Jarrett Allen": {"fgm":4.7,"fga":7.8,"ftm":2.2,"fta":2.7,"stats":[0.2,11.7,10,2.7,0.7,1,1.8]},
+    "Deni Avdija": {"fgm":8.8,"fga":16,"ftm":5.2,"fta":6.2,"stats":[2.8,25.6,5.4,4.6,1.4,0.8,3.8]},
+    "RJ Barrett": {"fgm":8,"fga":17,"ftm":2.2,"fta":4.2,"stats":[1.4,19.6,7,5,0.4,0.6,2.2]},
+    "Tyrese Maxey": {"fgm":8.2,"fga":14.4,"ftm":6.2,"fta":6.8,"stats":[3.2,25.8,2.4,6.8,0.8,0.2,1.8]},
+    "Trey Murphy III": {"fgm":7,"fga":13.5,"ftm":4,"fta":4.5,"stats":[3.5,21.5,5.5,2,1.5,0.5,1.5]},
+    "VJ Edgecombe": {"fgm":5.3,"fga":11.5,"ftm":2,"fta":2.3,"stats":[1.5,14.2,6.5,5.3,2,0.3,1.5]},
+    "Jaime Jaquez Jr.": {"fgm":4.3,"fga":10.3,"ftm":2.7,"fta":3.1,"stats":[1.9,13.1,3.7,3.3,1,0,2.1]},
+    "Sidy Cissoko": {"fgm":3.1,"fga":6.9,"ftm":1.6,"fta":2,"stats":[1.7,9.6,3.7,1.7,0.9,0.1,0.7]},
+    "Keldon Johnson": {"fgm":3.6,"fga":7.1,"ftm":2,"fta":2.6,"stats":[0.4,9.6,5.6,3,1.3,0,1.4]},
+    "Isaiah Jackson": {"fgm":3,"fga":5,"ftm":1,"fta":1.2,"stats":[0.2,7.2,3.6,1.4,1,1.6,0.6]},
+    "Robert Williams III": {"fgm":2,"fga":3,"ftm":1.2,"fta":1.2,"stats":[0,5.2,6.2,1.4,0.4,0.6,1]},
+    "Anthony Davis": {"fgm":10.4,"fga":18.6,"ftm":6.1,"fta":7.7,"stats":[0.6,27.6,11.1,2.1,0.9,1.1,2.1]},
+    "Brandin Podziemski": {"fgm":5.3,"fga":12,"ftm":2.6,"fta":3.4,"stats":[2.6,15.7,4.3,2.6,1,0.6,1.1]},
+    "Quenton Jackson": {"fgm":3.1,"fga":6.3,"ftm":0.6,"fta":0.9,"stats":[1.1,8,3.7,3.4,1.4,0,1.7]},
+    "Dyson Daniels": {"fgm":4.2,"fga":7.7,"ftm":0.5,"fta":1,"stats":[0.3,9.2,8.8,6.3,3.3,0.2,1.5]},
+    "Christian Braun": {"fgm":4.6,"fga":10.7,"ftm":1.4,"fta":1.9,"stats":[1.3,11.9,4.9,2.6,2.4,0.6,0.7]},
+    "Draymond Green": {"fgm":1.5,"fga":3.3,"ftm":0,"fta":0.3,"stats":[0.3,3.3,4.3,6,1,1,1.7]},
   },
 }
-const weekFiveSlots: Record<string, string> = {
-  "De'Aaron Fox": 'G', 'Jalen Suggs': 'BN', 'Jalen Brunson': 'PG', 'Deni Avdija': 'IL', 'Julius Randle': 'PF', 'Tari Eason': 'F', 'Nikola Jokić': 'BN', 'Jarrett Allen': 'BN', 'RJ Barrett': 'IL', 'Meleek Thomas': 'Util', 'Dylan Cardwell': 'Util', 'Devin Vassell': 'SF', 'Ziaire Williams': 'SG', 'Brook Lopez': 'C', 'Luke Kornet': 'C', 'Ryan Kalkbrenner': 'BN',
-  'Tyrese Maxey': 'PG', 'Brandin Podziemski': 'SG', 'VJ Edgecombe': 'G', 'Christian Braun': 'SF', 'Jaime Jaquez Jr.': 'BN', 'Sidy Cissoko': 'F', 'Anthony Davis': 'C', 'Draymond Green': 'BN', 'Dyson Daniels': 'Util', 'Leaky Black': 'Util', 'Reed Sheppard': 'Util', 'Keldon Johnson': 'PF', 'Isaiah Jackson': 'C', 'Quenton Jackson': 'BN',
-}
+const weekFiveSlots: Record<string, string> = {"Jalen Brunson":"PG","Ziaire Williams":"SG","De'Aaron Fox":"G","Devin Vassell":"SF","Julius Randle":"PF","Tari Eason":"F","Brook Lopez":"C","Luke Kornet":"C","Meleek Thomas":"Util","Dylan Cardwell":"Util","Nikola Jokić":"Util","Jalen Suggs":"BN","Jarrett Allen":"BN","Deni Avdija":"IL","RJ Barrett":"IL","Tyrese Maxey":"PG","Trey Murphy III":"SG","VJ Edgecombe":"G","Jaime Jaquez Jr.":"SF","Sidy Cissoko":"PF","Keldon Johnson":"F","Isaiah Jackson":"C","Robert Williams III":"C","Anthony Davis":"Util","Brandin Podziemski":"Util","Quenton Jackson":"Util","Dyson Daniels":"BN","Christian Braun":"BN","Draymond Green":"BN"}
 const latestProjectionRange = (): ProjectionRange => {
   const weeks: [ProjectionRange, number][] = [
     ['week7', Date.parse('2026-11-30T00:00:00+08:00')],
@@ -313,25 +307,68 @@ const weekFiveGameCounts: Record<string, number> = {
   HOU: 3, IND: 3, LAC: 3, LAL: 3, MEM: 4, MIA: 3, MIL: 3, MIN: 4, NOP: 4, NYK: 4,
   OKC: 3, ORL: 4, PHI: 3, PHX: 3, POR: 4, SAC: 3, SAS: 3, TOR: 3, UTA: 4, WAS: 4,
 }
-// Week 5 live audit: Wednesday's completed games plus the Yahoo roster snapshot.
-// Every non-IL player is counted for the remaining schedule, including BN.
+// Yahoo Nov. 20 completed totals and Nov. 21–22 games; bench included, IL excluded.
 const weekFiveRemainingGames: Record<string, Record<string, number>> = {
-  '阿肥加班幹大事': {
-    "De'Aaron Fox": 1, 'Jalen Suggs': 2, 'Ziaire Williams': 1, 'Jalen Brunson': 2,
-    'Julius Randle': 1, 'Tari Eason': 1, 'Jarrett Allen': 1,
-    'Nikola Jokić': 2, 'Meleek Thomas': 1, 'Dylan Cardwell': 2, 'Devin Vassell': 1,
-    'Brook Lopez': 1, 'Luke Kornet': 1, 'Ryan Kalkbrenner': 1,
+  "阿肥加班幹大事": {
+    "Jalen Brunson": 2,
+    "De'Aaron Fox": 1,
+    "Devin Vassell": 1,
+    "Brook Lopez": 1,
+    "Luke Kornet": 1,
+    "Dylan Cardwell": 1,
+    "Nikola Jokić": 1,
+    "Jalen Suggs": 1
   },
-  'Wei Too Strong': {
-    'Tyrese Maxey': 1, 'Brandin Podziemski': 1, 'VJ Edgecombe': 1, 'Christian Braun': 2,
-    'Keldon Johnson': 1, 'Sidy Cissoko': 1, 'Anthony Davis': 2, 'Isaiah Jackson': 1,
-    'Dyson Daniels': 2, 'Leaky Black': 2, 'Reed Sheppard': 1, 'Draymond Green': 1,
-    'Jaime Jaquez Jr.': 1, 'Quenton Jackson': 2,
-  },
+  "Wei Too Strong": {
+    "Tyrese Maxey": 1,
+    "Trey Murphy III": 1,
+    "VJ Edgecombe": 1,
+    "Jaime Jaquez Jr.": 1,
+    "Sidy Cissoko": 1,
+    "Keldon Johnson": 1,
+    "Isaiah Jackson": 1,
+    "Robert Williams III": 1,
+    "Anthony Davis": 1,
+    "Brandin Podziemski": 1,
+    "Quenton Jackson": 1,
+    "Dyson Daniels": 1,
+    "Christian Braun": 1,
+    "Draymond Green": 1
+  }
 }
 const weekFiveLive: Record<string, LiveProjection> = {
-  '阿肥加班幹大事': { gp: 28, fgm: 157, fga: 308, ftm: 62, fta: 75, stats: [50, 426, 145, 98, 28, 12, 56] },
-  'Wei Too Strong': { gp: 29, fgm: 114, fga: 235, ftm: 50, fta: 61, stats: [35, 313, 117, 78, 32, 16, 41] },
+  "阿肥加班幹大事": {
+    "gp": 37,
+    "fgm": 191,
+    "fga": 383,
+    "ftm": 76,
+    "fta": 92,
+    "stats": [
+      57,
+      515,
+      192,
+      127,
+      36,
+      16,
+      72
+    ]
+  },
+  "Wei Too Strong": {
+    "gp": 35,
+    "fgm": 143,
+    "fga": 291,
+    "ftm": 56,
+    "fta": 72,
+    "stats": [
+      40,
+      382,
+      148,
+      97,
+      45,
+      17,
+      48
+    ]
+  }
 }
 const projectionGameCount = (nba: string, range = projectionRange.value) => {
   if (range === 'week5') return weekFiveGameCounts[nba] || 0
@@ -467,7 +504,7 @@ const weekFiveRosterRows = computed(() => categories.map((category, index) => {
   const left = leftTeam.values[index]
   const right = rightTeam.values[index]
   const result = index === 8 ? right - left : left - right
-  return { category, left: formatProjection(left, index), right: formatProjection(right, index), leftCurrent: formatProjection(leftTeam.currentValues[index], index), rightCurrent: formatProjection(rightTeam.currentValues[index], index), leftAdd: formatProjection(leftTeam.remainingValues[index], index), rightAdd: formatProjection(rightTeam.remainingValues[index], index), winner: result === 0 ? 'tie' : result > 0 ? 'left' : 'right', edge: result === 0 ? '平手' : `${result > 0 ? '阿肥加班幹大事' : 'Wei Too Strong'} 優勢` }
+  return { category, left: formatProjection(left, index), right: formatProjection(right, index), leftCurrent: formatProjection(leftTeam.currentValues[index], index), rightCurrent: formatProjection(rightTeam.currentValues[index], index), leftAdd: formatProjection(leftTeam.remainingValues[index], index), rightAdd: formatProjection(rightTeam.remainingValues[index], index), winner: result === 0 ? 'tie' : result > 0 ? 'left' : 'right', edge: result === 0 ? '平手' : `${result > 0 ? '阿肥加班幹大事' : 'Wei Too Strong'} +${Math.abs(result).toFixed(index < 2 ? 4 : 1)}` }
 }))
 const weekFiveRosterSummary = computed(() => ({ left: weekFiveRosterRows.value.filter(row => row.winner === 'left').length, right: weekFiveRosterRows.value.filter(row => row.winner === 'right').length }))
 const activeWeekFiveDetail = ref<'left' | 'right' | null>(null)
@@ -650,9 +687,9 @@ const weiWeekFiveSummary = computed(() => ({ left: weiWeekFiveRows.value.filter(
         <Transition name="forecast-unlock"><div v-if="forecastGate !== 'revealed'" :class="['forecast-gate', { wrong: forecastGate === 'wrong', correct: forecastGate === 'correct' }]" role="dialog" aria-label="未來戰力預測表解鎖"><template v-if="forecastGate !== 'correct'"><p class="forecast-label">未來戰力預測表</p><p class="forecast-kicker">FORECAST LOCKED · SEASON ORACLE</p><div v-if="forecastGate === 'wrong'" :key="`wrong-mark-${wrongAttempt}`" class="forecast-error-mark">×</div><h3>你認為這季 NBA 總冠軍球隊是哪一支？</h3><p class="forecast-copy">猜對，才有資格查看未來戰力預測。</p><div class="championship-options"><button v-for="team in championOptions" :key="team" type="button" :class="{ selected: championGuess === team }" @click="chooseChampion(team)">{{ team }}</button></div><p v-if="forecastGate === 'wrong'" :key="`wrong-copy-${wrongAttempt}`" class="forecast-error">預言錯誤。再猜一次。</p></template><template v-else><div class="forecast-success-mark">✓</div><p class="forecast-kicker">ORACLE VERIFIED</p><h3>正確答案。</h3><p class="forecast-copy">阿肥加班幹大事，解鎖未來戰力預測。</p></template></div></Transition>
       </section>
       <section v-if="forecastOnly" class="sprint-lab" aria-labelledby="week-five-roster-title">
-        <div class="sprint-heading"><div><p class="eyebrow">WEEK 5 · LIVE ROSTER MODEL</p><h2 id="week-five-roster-title">阿肥 vs Wei Too Strong｜本週戰力推演</h2></div><p>已完成四日實績，加上週五至週日賽程；所有非 IL 球員都納入，包含板凳 BN。</p></div>
-        <div class="forecast-source week-five-source"><span>球員數據基準</span><div><button type="button" :class="{ active: weekFiveSource === 'season' }" @click="weekFiveSource = 'season'">整季平均</button><button type="button" :class="{ active: weekFiveSource === 'last14' }" @click="weekFiveSource = 'last14'">最近 14 天平均</button></div><p>{{ weekFiveSource === 'season' ? '以整季場均 × 本週預計出賽場次計算。' : '以 Yahoo 最近 14 天的球員近況趨勢 × 相同出賽場次計算。' }}</p></div>
-        <div class="sprint-status"><span><b>{{ weekFiveRosterForecast.left.team }}</b> · 已打 28 場／剩 {{ weekFiveRosterForecast.left.remainingGp }} 場</span><strong>WEEK 5</strong><span><b>{{ weekFiveRosterForecast.right.team }}</b> · 已打 29 場／剩 {{ weekFiveRosterForecast.right.remainingGp }} 場</span></div>
+        <div class="sprint-heading"><div><p class="eyebrow">WEEK 5 · TWO DAYS LEFT</p><h2 id="week-five-roster-title">阿肥 vs Wei Too Strong｜剩餘兩天預測</h2></div><p>已納入 Yahoo 11/20 完賽累計，推估 11/21–11/22（台灣時間 11/22–11/23）。包含 BN、不計 IL；阿偉含 3 場板凳，共 14 場。Maxey（Q）、Draymond Green（P）各暫計 1 場。</p></div>
+        <div class="forecast-source week-five-source"><span>球員數據基準</span><div><button type="button" :class="{ active: weekFiveSource === 'season' }" @click="weekFiveSource = 'season'">整季平均</button><button type="button" :class="{ active: weekFiveSource === 'last14' }" @click="weekFiveSource = 'last14'">最近 14 天平均</button></div><p>{{ weekFiveSource === 'season' ? '完賽累計 ＋ 最新整季場均 × 剩餘出賽場次。' : '完賽累計 ＋ Yahoo 最近 14 天場均 × 相同剩餘場次。' }}</p></div>
+        <div class="sprint-status"><span><b>{{ weekFiveRosterForecast.left.team }}</b> · 已打 37 場／剩 {{ weekFiveRosterForecast.left.remainingGp }} 場</span><strong>目前 6 : 3</strong><span><b>{{ weekFiveRosterForecast.right.team }}</b> · 已打 35 場／剩 {{ weekFiveRosterForecast.right.remainingGp }} 場</span></div>
         <div class="sprint-table-wrap"><table class="sprint-table"><thead><tr><th>項目</th><th>{{ weekFiveRosterForecast.left.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>{{ weekFiveRosterForecast.right.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>預測差距</th></tr></thead><tbody><tr v-for="row in weekFiveRosterRows" :key="`week-five-${row.category}`"><th>{{ row.category }}</th><td>{{ row.leftCurrent }}</td><td class="sprint-add">+{{ row.leftAdd }}</td><td :class="{ winner: row.winner === 'left' }">{{ row.left }}</td><td>{{ row.rightCurrent }}</td><td class="sprint-add">+{{ row.rightAdd }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
         <div class="sprint-result"><span>預測對位</span><strong>{{ weekFiveRosterSummary.left }} : {{ weekFiveRosterSummary.right }}</strong><b>{{ weekFiveRosterSummary.left === weekFiveRosterSummary.right ? '平手' : (weekFiveRosterSummary.left > weekFiveRosterSummary.right ? weekFiveRosterForecast.left.team : weekFiveRosterForecast.right.team) + ' 優勢' }}</b></div>
         <div class="sprint-details"><div class="projection-detail-tabs"><button type="button" :class="{ active: activeWeekFiveDetail === 'left' }" @click="activeWeekFiveDetail = activeWeekFiveDetail === 'left' ? null : 'left'">查看 {{ weekFiveRosterForecast.left.team }} 的剩餘球員明細</button><button type="button" :class="{ active: activeWeekFiveDetail === 'right' }" @click="activeWeekFiveDetail = activeWeekFiveDetail === 'right' ? null : 'right'">查看 {{ weekFiveRosterForecast.right.team }} 的剩餘球員明細</button></div><section v-if="activeWeekFiveDetail" class="projection-roster"><h3>{{ activeWeekFiveTeam.team }} · 剩餘賽程球員乘算明細</h3><div class="projection-table-wrap"><table><thead><tr><th>球員</th><th>NBA</th><th>位置</th><th>剩餘 GP</th><th>3PTM</th><th>PTS</th><th>REB</th><th>AST</th><th>ST</th><th>BLK</th><th>TO</th></tr></thead><tbody><tr v-for="player in activeWeekFiveTeam.players" :key="`week-five-${player.name}`"><th>{{ player.name }}</th><td>{{ player.nba }}</td><td>{{ player.slot }}</td><td>{{ player.gp }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 0).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 1).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 2).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 3).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 4).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 5).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 6).toFixed(1) }}</td></tr></tbody></table></div></section></div>

@@ -1,6 +1,6 @@
 <template>
   <main class="private-forecast-page">
-    <iframe src="/paymeforwin?view=forecast" title="未來戰力預測：阿肥加班幹大事對80年次男性屬羊" />
+    <iframe src="/paymeforwin?view=forecast" title="未來戰力預測：阿肥加班幹大事對Wei Too Strong" />
   </main>
 </template>
 
