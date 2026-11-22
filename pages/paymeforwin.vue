@@ -313,8 +313,8 @@ const weekFiveGameCounts: Record<string, number> = {
 // Yahoo Nov. 21 completed totals and Nov. 22 games; bench included, IL excluded.
 const weekFiveRemainingGames: Record<string, Record<string, number>> = {
   "阿肥加班幹大事": {
-    "Jalen Brunson": 1,
-    "Jalen Suggs": 1,
+    "Jalen Brunson": 0,
+    "Jalen Suggs": 0,
     "Nikola Jokić": 1
   },
   "Wei Too Strong": {
@@ -677,7 +677,7 @@ const weiWeekFiveSummary = computed(() => ({ left: weiWeekFiveRows.value.filter(
         <Transition name="forecast-unlock"><div v-if="forecastGate !== 'revealed'" :class="['forecast-gate', { wrong: forecastGate === 'wrong', correct: forecastGate === 'correct' }]" role="dialog" aria-label="未來戰力預測表解鎖"><template v-if="forecastGate !== 'correct'"><p class="forecast-label">未來戰力預測表</p><p class="forecast-kicker">FORECAST LOCKED · SEASON ORACLE</p><div v-if="forecastGate === 'wrong'" :key="`wrong-mark-${wrongAttempt}`" class="forecast-error-mark">×</div><h3>你認為這季 NBA 總冠軍球隊是哪一支？</h3><p class="forecast-copy">猜對，才有資格查看未來戰力預測。</p><div class="championship-options"><button v-for="team in championOptions" :key="team" type="button" :class="{ selected: championGuess === team }" @click="chooseChampion(team)">{{ team }}</button></div><p v-if="forecastGate === 'wrong'" :key="`wrong-copy-${wrongAttempt}`" class="forecast-error">預言錯誤。再猜一次。</p></template><template v-else><div class="forecast-success-mark">✓</div><p class="forecast-kicker">ORACLE VERIFIED</p><h3>正確答案。</h3><p class="forecast-copy">阿肥加班幹大事，解鎖未來戰力預測。</p></template></div></Transition>
       </section>
       <section v-if="forecastOnly" class="sprint-lab" aria-labelledby="week-five-roster-title">
-        <div class="sprint-heading"><div><p class="eyebrow">WEEK 5 · FINAL DAY</p><h2 id="week-five-roster-title">阿肥 vs Wei Too Strong｜最後一天預測</h2></div><p>已納入 Yahoo 11/21 完賽累計，推估最後一天 11/22（台灣時間 11/23）賽程。包含 BN、不計 IL；阿肥剩 3 場、阿偉剩 6 場。Deni 已移出 IL，與阿偉新增的 Precious Achiuwa 均無剩餘賽程。</p></div>
+        <div class="sprint-heading"><div><p class="eyebrow">WEEK 5 · FINAL DAY</p><h2 id="week-five-roster-title">阿肥 vs Wei Too Strong｜最後一天預測</h2></div><p>已納入 Yahoo 11/21 完賽累計，推估最後一天 11/22（台灣時間 11/23）賽程。依指定排陣，阿肥週日只上 Jokić，Brunson、Suggs 各計 0 場；阿肥採計 1 場、阿偉採計 6 場，排除 IL。Deni 已移出 IL，與阿偉新增的 Precious Achiuwa 均無剩餘賽程。</p></div>
         <div class="forecast-source week-five-source"><span>球員數據基準</span><div><button type="button" :class="{ active: weekFiveSource === 'season' }" @click="weekFiveSource = 'season'">整季平均</button><button type="button" :class="{ active: weekFiveSource === 'last14' }" @click="weekFiveSource = 'last14'">最近 14 天平均</button></div><p>{{ weekFiveSource === 'season' ? '完賽累計 ＋ 最新整季場均 × 剩餘出賽場次。' : '完賽累計 ＋ Yahoo 最近 14 天場均 × 相同剩餘場次。' }}</p></div>
         <div class="sprint-status"><span><b>{{ weekFiveRosterForecast.left.team }}</b> · 已打 44 場／剩 {{ weekFiveRosterForecast.left.remainingGp }} 場</span><strong>目前 6 : 3</strong><span><b>{{ weekFiveRosterForecast.right.team }}</b> · 已打 43 場／剩 {{ weekFiveRosterForecast.right.remainingGp }} 場</span></div>
         <div class="sprint-table-wrap"><table class="sprint-table"><thead><tr><th>項目</th><th>{{ weekFiveRosterForecast.left.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>{{ weekFiveRosterForecast.right.team }}<small>目前</small></th><th>剩餘預估</th><th>收官預估</th><th>預測差距</th></tr></thead><tbody><tr v-for="row in weekFiveRosterRows" :key="`week-five-${row.category}`"><th>{{ row.category }}</th><td>{{ row.leftCurrent }}</td><td class="sprint-add">+{{ row.leftAdd }}</td><td :class="{ winner: row.winner === 'left' }">{{ row.left }}</td><td>{{ row.rightCurrent }}</td><td class="sprint-add">+{{ row.rightAdd }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
