@@ -504,44 +504,50 @@ const weekFivePlayerStat = (_team: string, player: ProjectionPlayer, index: numb
 // Week 6 (Nov 23–29), Yahoo roster and season averages checked Nov. 22.
 // Assume every non-IL player plays their full NBA schedule, including BN.
 const weekSixFeiPlayers: ProjectionPlayer[] = [
-  {"name":"De'Aaron Fox","nba":"SAS","slot":"PG","fgm":4,"fga":8.5,"ftm":3.6,"fta":4.2,"stats":[0.8,12.4,3.9,5.8,1.3,0.4,2.5]},
-  {"name":"Jalen Suggs","nba":"ORL","slot":"SG","fgm":3.4,"fga":9.1,"ftm":0.9,"fta":1.4,"stats":[1.6,9.3,5.3,4.3,1.3,0.6,2.9]},
-  {"name":"Jalen Brunson","nba":"NYK","slot":"G","fgm":9.2,"fga":21.1,"ftm":5.3,"fta":6.6,"stats":[3.1,26.8,3.1,5.9,0.8,0.3,1.9]},
-  {"name":"Will Richard","nba":"GSW","slot":"SF","fgm":2.8,"fga":5.5,"ftm":0.9,"fta":1.1,"stats":[1.1,7.5,2.3,1,0.7,0.2,0.9]},
-  {"name":"Julius Randle","nba":"BKN","slot":"PF","fgm":7,"fga":15,"ftm":5.5,"fta":6.9,"stats":[1.6,21.1,6,4.7,1.1,0.2,3.5]},
-  {"name":"Tari Eason","nba":"HOU","slot":"F","fgm":4,"fga":9.2,"ftm":1.4,"fta":1.5,"stats":[1,10.4,6.1,1.5,0.9,0.9,1.4]},
-  {"name":"Brook Lopez","nba":"LAC","slot":"C","fgm":6.1,"fga":11,"ftm":1.8,"fta":2.6,"stats":[1.8,15.7,5.3,1.9,0.5,0.9,1.3]},
-  {"name":"Jarrett Allen","nba":"CLE","slot":"C","fgm":4.9,"fga":8.1,"ftm":2.5,"fta":3.4,"stats":[0.2,12.6,8.7,1.9,0.6,1.3,1.3]},
-  {"name":"Meleek Thomas","nba":"CLE","slot":"Util","fgm":4.9,"fga":10.6,"ftm":0.4,"fta":0.6,"stats":[2.4,12.7,2.7,1.8,1.4,0.2,1.2]},
-  {"name":"Dylan Cardwell","nba":"SAC","slot":"Util","fgm":1.8,"fga":3,"ftm":0.9,"fta":1.9,"stats":[0,4.4,5.1,1.3,0.4,0.8,1]},
-  {"name":"Nikola Jokić","nba":"DEN","slot":"Util","fgm":9.4,"fga":17.9,"ftm":4.1,"fta":4.5,"stats":[1.3,24.2,10.4,9.1,1.6,1,3.4]},
-  {"name":"Devin Vassell","nba":"SAS","slot":"BN","fgm":3.8,"fga":9.5,"ftm":2.3,"fta":2.5,"stats":[1.4,11.3,3.9,2.9,1.6,0.4,0.9]},
-  {"name":"Ziaire Williams","nba":"LAL","slot":"BN","fgm":3.3,"fga":6.1,"ftm":1,"fta":1.1,"stats":[1.6,9.1,2.2,1.8,1.3,0.1,0.4]},
-  {"name":"Deni Avdija","nba":"POR","slot":"BN","fgm":7.9,"fga":15.6,"ftm":5.9,"fta":8.4,"stats":[2.1,23.9,6.4,6,1,0.5,3.2]},
+  {"name":"De'Aaron Fox","nba":"SAS","slot":"PG","fgm":4,"fga":8.5,"ftm":3.6,"fta":4.2,"stats":[0.8,12.4,3.9,5.8,1.3,0.4,2.5],"last14":{"fgm":3.2,"fga":8.3,"ftm":3,"fta":3.2,"stats":[0.7,10,4,5.5,1.2,0,2.3]}},
+  {"name":"Devin Vassell","nba":"SAS","slot":"SG","fgm":3.8,"fga":9.5,"ftm":2.3,"fta":2.5,"stats":[1.4,11.3,3.9,2.9,1.6,0.4,0.9],"last14":{"fgm":3.6,"fga":9.2,"ftm":1.8,"fta":2.4,"stats":[1,10,4.2,2.6,1.4,0.6,0.6]}},
+  {"name":"Ziaire Williams","nba":"LAL","slot":"G","fgm":3.3,"fga":6.1,"ftm":1,"fta":1.1,"stats":[1.6,9.1,2.2,1.8,1.3,0.1,0.4],"last14":{"fgm":3,"fga":5.7,"ftm":0.7,"fta":0.9,"stats":[1.3,8,1.4,1.7,1,0.1,0.3]}},
+  {"name":"Deni Avdija","nba":"POR","slot":"SF","fgm":7.9,"fga":15.6,"ftm":5.9,"fta":8.4,"stats":[2.1,23.9,6.4,6,1,0.5,3.2],"last14":{"fgm":9.2,"fga":16,"ftm":5.4,"fta":6.8,"stats":[2.8,26.6,6.4,5.4,1.2,1.2,3.6]}},
+  {"name":"Julius Randle","nba":"BKN","slot":"PF","fgm":7,"fga":15,"ftm":5.5,"fta":6.9,"stats":[1.6,21.1,6,4.7,1.1,0.2,3.5],"last14":{"fgm":7.7,"fga":15.3,"ftm":4.7,"fta":6.3,"stats":[1.5,21.5,4.5,4.2,1.5,0.3,2.5]}},
+  {"name":"Tari Eason","nba":"HOU","slot":"F","fgm":4,"fga":9.2,"ftm":1.4,"fta":1.5,"stats":[1,10.4,6.1,1.5,0.9,0.9,1.4],"last14":{"fgm":4.6,"fga":10.4,"ftm":1.3,"fta":1.6,"stats":[1.3,11.7,6.1,1.7,0.7,0.4,1.4]}},
+  {"name":"Brook Lopez","nba":"LAC","slot":"C","fgm":6.1,"fga":11,"ftm":1.8,"fta":2.6,"stats":[1.8,15.7,5.3,1.9,0.5,0.9,1.3],"last14":{"fgm":7,"fga":12.9,"ftm":2,"fta":2.9,"stats":[2.3,18.3,5.4,2.9,0.6,0.6,1.4]}},
+  {"name":"Jarrett Allen","nba":"CLE","slot":"C","fgm":4.9,"fga":8.1,"ftm":2.5,"fta":3.4,"stats":[0.2,12.6,8.7,1.9,0.6,1.3,1.3],"last14":{"fgm":4.7,"fga":7.8,"ftm":2.2,"fta":2.7,"stats":[0.2,11.7,10,2.7,0.7,1,1.8]}},
+  {"name":"Meleek Thomas","nba":"CLE","slot":"Util","fgm":4.9,"fga":10.6,"ftm":0.4,"fta":0.6,"stats":[2.4,12.7,2.7,1.8,1.4,0.2,1.2],"last14":{"fgm":5.3,"fga":11.1,"ftm":0.3,"fta":0.6,"stats":[2.3,13.1,2.9,2.6,1.7,0.3,1.3]}},
+  {"name":"Dylan Cardwell","nba":"SAC","slot":"Util","fgm":1.8,"fga":3,"ftm":0.9,"fta":1.9,"stats":[0,4.4,5.1,1.3,0.4,0.8,1],"last14":{"fgm":1.6,"fga":2.6,"ftm":0.7,"fta":1.4,"stats":[0,3.9,5.4,1.3,0.3,0.7,1.1]}},
+  {"name":"Nikola Jokić","nba":"DEN","slot":"Util","fgm":9.4,"fga":17.9,"ftm":4.1,"fta":4.5,"stats":[1.3,24.2,10.4,9.1,1.6,1,3.4],"last14":{"fgm":10.2,"fga":17.3,"ftm":4,"fta":4.3,"stats":[1.7,26,10.8,9,1,0.8,3.5]}},
+  {"name":"Jalen Brunson","nba":"NYK","slot":"BN","fgm":9.2,"fga":21.1,"ftm":5.3,"fta":6.6,"stats":[3.1,26.8,3.1,5.9,0.8,0.3,1.9],"last14":{"fgm":9.7,"fga":21.4,"ftm":4.6,"fta":5,"stats":[3.6,27.6,3.3,6.3,0.9,0.3,2.1]}},
+  {"name":"Jalen Suggs","nba":"ORL","slot":"BN","fgm":3.4,"fga":9.1,"ftm":0.9,"fta":1.4,"stats":[1.6,9.3,5.3,4.3,1.3,0.6,2.9],"last14":{"fgm":3.5,"fga":9,"ftm":0.8,"fta":1.5,"stats":[2.5,10.3,5.5,3.3,0.8,0.8,2.8]}},
+  {"name":"Jordan Goodwin","nba":"PHX","slot":"BN","fgm":3.1,"fga":7.2,"ftm":0.6,"fta":0.8,"stats":[1.8,8.6,4.7,2.8,1.4,0.1,0.6],"last14":{"fgm":3.2,"fga":7.5,"ftm":1.2,"fta":1.5,"stats":[1.8,9.3,5.8,3,1.2,0.2,0.7]}},
   {"name":"RJ Barrett","nba":"TOR","slot":"IL","fgm":8.1,"fga":17.1,"ftm":3.2,"fta":5.3,"stats":[1.5,20.9,6.4,4.3,0.4,0.5,1.9]},
 ]
 const weekSixAlomarPlayers: ProjectionPlayer[] = [
-  {"name":"Josh Giddey","nba":"CHI","slot":"PG","fgm":3.8,"fga":9.1,"ftm":1.2,"fta":1.9,"stats":[1.1,9.9,5.9,8.4,0.4,0.5,3.3]},
-  {"name":"Jordan Poole","nba":"NOP","slot":"SG","fgm":2.8,"fga":7.2,"ftm":4.4,"fta":4.8,"stats":[1.4,11.3,1.8,3.2,0.7,0.3,1.1]},
-  {"name":"Kyrie Irving","nba":"DAL","slot":"G","fgm":8.1,"fga":17.6,"ftm":3,"fta":3.5,"stats":[3.3,22.5,3.8,4.4,1.2,0.4,1.5]},
-  {"name":"Klay Thompson","nba":"MIA","slot":"SF","fgm":5.2,"fga":11.6,"ftm":0.8,"fta":0.8,"stats":[4.1,15.3,1.4,2,0.1,0.8,0.9]},
-  {"name":"Rui Hachimura","nba":"LAC","slot":"PF","fgm":5,"fga":11.9,"ftm":1.8,"fta":2.7,"stats":[2.2,14,6.2,1.5,0.9,0.2,1.7]},
-  {"name":"Paul George","nba":"BOS","slot":"F","fgm":7.1,"fga":15.8,"ftm":2.4,"fta":3.1,"stats":[3.3,19.9,5.6,3.8,2.2,0.4,2.6]},
-  {"name":"Jakob Poeltl","nba":"TOR","slot":"C","fgm":3.6,"fga":6.1,"ftm":0.9,"fta":1.6,"stats":[0,8.2,6.8,1.7,0.9,0.8,1]},
-  {"name":"Mo Bamba","nba":"UTA","slot":"C","fgm":3.7,"fga":5.1,"ftm":1,"fta":1.7,"stats":[0.5,8.9,6.6,1,0.4,1.7,0.6]},
-  {"name":"Luka Dončić","nba":"LAL","slot":"Util","fgm":11.7,"fga":25.1,"ftm":8.8,"fta":10.2,"stats":[4.9,37.2,6.8,7.7,1.9,0.6,5.1]},
-  {"name":"LeBron James","nba":"PHI","slot":"Util","fgm":6.1,"fga":13.1,"ftm":3.2,"fta":4.2,"stats":[0.8,16.1,6.8,6.8,1.2,0.7,2.4]},
-  {"name":"Ryan Rollins","nba":"MIL","slot":"Util","fgm":4,"fga":10.1,"ftm":1.2,"fta":1.7,"stats":[1.5,10.7,4.9,3.9,0.9,0.3,2.3]},
-  {"name":"Devin Booker","nba":"PHX","slot":"BN","fgm":8.4,"fga":17.7,"ftm":6,"fta":6.5,"stats":[1.9,24.7,2.7,5.3,1.1,0.3,2.3]},
-  {"name":"Derrick Jones Jr.","nba":"LAC","slot":"BN","fgm":3.6,"fga":7.2,"ftm":1.2,"fta":2.1,"stats":[1.8,10.3,4.5,1.2,0.9,0.9,1.2]},
-  {"name":"Naz Reid","nba":"CHA","slot":"BN","fgm":6.6,"fga":17,"ftm":1.6,"fta":2.5,"stats":[2.5,17.3,8.5,2.4,0.9,0.5,2.5]},
+  {"name":"Josh Giddey","nba":"CHI","slot":"PG","fgm":3.8,"fga":9.1,"ftm":1.2,"fta":1.9,"stats":[1.1,9.9,5.9,8.4,0.4,0.5,3.3],"last14":{"fgm":4.1,"fga":9.1,"ftm":1.1,"fta":1.9,"stats":[1.3,10.7,7.3,9.3,0.3,0.7,4.1]}},
+  {"name":"Josh Green","nba":"UTA","slot":"SG","fgm":1.7,"fga":3.8,"ftm":0.5,"fta":0.7,"stats":[0.9,4.8,1.7,0.9,0.5,0.2,0.5],"last14":{"fgm":2.3,"fga":4.5,"ftm":0.8,"fta":1.3,"stats":[1.1,6.4,1.9,1.1,0.6,0.3,0.5]}},
+  {"name":"Kyrie Irving","nba":"DAL","slot":"G","fgm":8.1,"fga":17.6,"ftm":3,"fta":3.5,"stats":[3.3,22.5,3.8,4.4,1.2,0.4,1.5],"last14":{"fgm":8.3,"fga":18,"ftm":3.3,"fta":4,"stats":[3.7,23.7,4,4.3,1,0.3,1.3]}},
+  {"name":"Klay Thompson","nba":"MIA","slot":"SF","fgm":5.2,"fga":11.6,"ftm":0.8,"fta":0.8,"stats":[4.1,15.3,1.4,2,0.1,0.8,0.9],"last14":{"fgm":6,"fga":13,"ftm":1.2,"fta":1.2,"stats":[4.8,18,1,2.6,0.2,1.4,0.4]}},
+  {"name":"Rui Hachimura","nba":"LAC","slot":"PF","fgm":5,"fga":11.9,"ftm":1.8,"fta":2.7,"stats":[2.2,14,6.2,1.5,0.9,0.2,1.7],"last14":{"fgm":4.9,"fga":10.3,"ftm":1.4,"fta":2.3,"stats":[2.3,13.4,5.9,1.4,0.9,0.1,1.3]}},
+  {"name":"Naz Reid","nba":"CHA","slot":"F","fgm":6.6,"fga":17,"ftm":1.6,"fta":2.5,"stats":[2.5,17.3,8.5,2.4,0.9,0.5,2.5],"last14":{"fgm":7,"fga":20.2,"ftm":1.8,"fta":3,"stats":[2.8,18.6,9.2,3.4,1.4,0.6,2.4]}},
+  {"name":"Jakob Poeltl","nba":"TOR","slot":"C","fgm":3.6,"fga":6.1,"ftm":0.9,"fta":1.6,"stats":[0,8.2,6.8,1.7,0.9,0.8,1],"last14":{"fgm":4.1,"fga":7,"ftm":1,"fta":1.7,"stats":[0,9.3,7.1,2.3,1,1.1,1.3]}},
+  {"name":"Mo Bamba","nba":"UTA","slot":"C","fgm":3.7,"fga":5.1,"ftm":1,"fta":1.7,"stats":[0.5,8.9,6.6,1,0.4,1.7,0.6],"last14":{"fgm":3.6,"fga":5,"ftm":1,"fta":1.9,"stats":[0.9,9.1,6.6,1.3,0.5,1.8,0.6]}},
+  {"name":"Luka Dončić","nba":"LAL","slot":"Util","fgm":11.7,"fga":25.1,"ftm":8.8,"fta":10.2,"stats":[4.9,37.2,6.8,7.7,1.9,0.6,5.1],"last14":{"fgm":11,"fga":25.8,"ftm":7.2,"fta":8.5,"stats":[3.7,32.8,5.3,7.7,2.2,0.5,5.5]}},
+  {"name":"LeBron James","nba":"PHI","slot":"Util","fgm":6.1,"fga":13.1,"ftm":3.2,"fta":4.2,"stats":[0.8,16.1,6.8,6.8,1.2,0.7,2.4],"last14":{"fgm":6.8,"fga":13.2,"ftm":3.8,"fta":4.4,"stats":[0.8,18.2,5.8,6.6,0.8,0.4,1.6]}},
+  {"name":"Ryan Rollins","nba":"MIL","slot":"Util","fgm":4,"fga":10.1,"ftm":1.2,"fta":1.7,"stats":[1.5,10.7,4.9,3.9,0.9,0.3,2.3],"last14":{"fgm":3.7,"fga":8.5,"ftm":1.2,"fta":1.5,"stats":[1.5,10,5.8,3.5,1.3,0.2,2.3]}},
+  {"name":"Jordan Poole","nba":"NOP","slot":"BN","fgm":2.8,"fga":7.2,"ftm":4.4,"fta":4.8,"stats":[1.4,11.3,1.8,3.2,0.7,0.3,1.1],"last14":{"fgm":3.6,"fga":8.1,"ftm":5,"fta":5.5,"stats":[1.8,14,1.6,3.3,0.4,0.3,1.3]}},
+  {"name":"Devin Booker","nba":"PHX","slot":"BN","fgm":8.4,"fga":17.7,"ftm":6,"fta":6.5,"stats":[1.9,24.7,2.7,5.3,1.1,0.3,2.3],"last14":{"fgm":8,"fga":16.9,"ftm":6.1,"fta":6.9,"stats":[1.9,24,2.6,5.7,1,0.3,2]}},
+  {"name":"Derrick Jones Jr.","nba":"LAC","slot":"BN","fgm":3.6,"fga":7.2,"ftm":1.2,"fta":2.1,"stats":[1.8,10.3,4.5,1.2,0.9,0.9,1.2],"last14":{"fgm":2.9,"fga":5.9,"ftm":1.9,"fta":3.3,"stats":[1.4,9,3.7,1,0.7,1,1.3]}},
+  {"name":"Paul George","nba":"BOS","slot":"IL","fgm":7.1,"fga":15.8,"ftm":2.4,"fta":3.1,"stats":[3.3,19.9,5.6,3.8,2.2,0.4,2.6],"last14":{"fgm":7.3,"fga":16.2,"ftm":2.2,"fta":2.8,"stats":[3.3,20.2,5.8,2.8,2,0.3,1.7]}},
   {"name":"Ja Morant","nba":"POR","slot":"IL","fgm":6.5,"fga":12,"ftm":1.3,"fta":1.5,"stats":[1.5,15.8,2.5,5.5,1,0,1.3]},
   {"name":"Brandon Ingram","nba":"LAC","slot":"IL","fgm":0,"fga":0,"ftm":0,"fta":0,"stats":[0,0,0,0,0,0,0]},
 ]
-const weekSixGames: Record<string, number> = {"PHI":4,"MIL":4,"LAC":4,"MEM":4,"BKN":4,"SAS":4,"PHX":4,"MIN":4,"POR":4,"CHI":3,"CLE":3,"BOS":3,"MIA":3,"CHA":3,"UTA":3,"SAC":3,"NYK":3,"LAL":3,"ORL":3,"DEN":3,"IND":3,"NOP":3,"DET":3,"TOR":3,"HOU":3,"OKC":3,"GSW":3,"ATL":2,"DAL":2,"WAS":2}
+type WeekSixSource = 'season' | 'last14'
+const weekSixSource = ref<WeekSixSource>('season')
+const weekSixGames: Record<string, number> = {"PHI":4,"MIL":4,"LAC":4,"MEM":4,"BKN":4,"SAS":4,"PHX":4,"MIN":4,"POR":4,"CHI":3,"CLE":3,"BOS":3,"MIA":3,"CHA":3,"UTA":3,"SAC":3,"NYK":3,"LAL":3,"ORL":3,"DEN":3,"IND":3,"NOP":3,"DET":3,"TOR":3,"HOU":2,"OKC":3,"GSW":3,"ATL":2,"DAL":2,"WAS":2}
 const weekSixForecast = computed(() => {
   const makeTeam = (team: string, roster: ProjectionPlayer[]) => {
-    const players = roster.filter(player => player.slot !== 'IL').map(player => ({ ...player, gp: weekSixGames[player.nba] || 0 }))
+    const players = roster.filter(player => player.slot !== 'IL').map(player => {
+      const average = weekSixSource.value === 'last14' && player.last14 ? player.last14 : player
+      return { ...player, ...average, gp: weekSixGames[player.nba] || 0 }
+    })
     const totals = players.reduce((sum, player) => {
       sum.gp += player.gp; sum.fgm += player.fgm * player.gp; sum.fga += player.fga * player.gp; sum.ftm += player.ftm * player.gp; sum.fta += player.fta * player.gp
       player.stats.forEach((value, index) => { sum.stats[index] += value * player.gp })
@@ -702,7 +708,8 @@ const weiWeekFiveSummary = computed(() => ({ left: weiWeekFiveRows.value.filter(
         <div class="sprint-details"><div class="projection-detail-tabs"><button type="button" :class="{ active: activeWeekFiveDetail === 'left' }" @click="activeWeekFiveDetail = activeWeekFiveDetail === 'left' ? null : 'left'">查看 {{ weekFiveRosterForecast.left.team }} 的剩餘球員明細</button><button type="button" :class="{ active: activeWeekFiveDetail === 'right' }" @click="activeWeekFiveDetail = activeWeekFiveDetail === 'right' ? null : 'right'">查看 {{ weekFiveRosterForecast.right.team }} 的剩餘球員明細</button></div><section v-if="activeWeekFiveDetail" class="projection-roster"><h3>{{ activeWeekFiveTeam.team }} · 剩餘賽程球員乘算明細</h3><div class="projection-table-wrap"><table><thead><tr><th>球員</th><th>NBA</th><th>位置</th><th>剩餘 GP</th><th>3PTM</th><th>PTS</th><th>REB</th><th>AST</th><th>ST</th><th>BLK</th><th>TO</th></tr></thead><tbody><tr v-for="player in activeWeekFiveTeam.players" :key="`week-five-${player.name}`"><th>{{ player.name }}</th><td>{{ player.nba }}</td><td>{{ player.slot }}</td><td>{{ player.gp }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 0).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 1).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 2).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 3).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 4).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 5).toFixed(1) }}</td><td>{{ weekFivePlayerStat(activeWeekFiveTeam.team, player, 6).toFixed(1) }}</td></tr></tbody></table></div></section></div>
       </section>
       <section v-if="forecastOnly" class="sprint-lab next-week-lab" aria-labelledby="week-six-title">
-        <div class="sprint-heading"><div><p class="eyebrow">WEEK 6 · NEXT MATCHUP</p><h2 id="week-six-title">阿肥 vs ALOMAR｜下週預測</h2></div><p>依 11/22 Yahoo 最新名單與整季場均，乘上 11/23–11/29 完整 NBA 賽程。假設雙方所有非 IL 球員全數出賽，包含板凳 BN；Brunson、Suggs 全部納入。</p></div>
+        <div class="sprint-heading"><div><p class="eyebrow">WEEK 6 · NEXT MATCHUP</p><h2 id="week-six-title">阿肥 vs ALOMAR｜下週預測</h2></div><p>依 Yahoo 目前名單乘上 11/23–11/29 完整 NBA 賽程。包含板凳 BN，不計 IL；可切換整季與最近 14 天的球員場均。</p></div>
+        <div class="forecast-source week-six-source"><span>預測數據來源</span><div><button type="button" :class="{ active: weekSixSource === 'season' }" @click="weekSixSource = 'season'">整季平均</button><button type="button" :class="{ active: weekSixSource === 'last14' }" @click="weekSixSource = 'last14'">最近 14 天平均</button></div><p>{{ weekSixSource === 'season' ? '以整季場均 × 相同 Week 6 出賽場次估算。' : '以 Yahoo 最近 14 天場均 × 相同 Week 6 出賽場次估算；賽程與預計 GP 不變。' }}</p></div>
         <div class="sprint-status"><span><b>{{ weekSixForecast.left.team }}</b> · 預計 {{ weekSixForecast.left.gp }} GP</span><strong>WEEK 6</strong><span><b>{{ weekSixForecast.right.team }}</b> · 預計 {{ weekSixForecast.right.gp }} GP</span></div>
         <div class="sprint-table-wrap"><table class="sprint-table week-six-table"><thead><tr><th>項目</th><th>{{ weekSixForecast.left.team }}</th><th>{{ weekSixForecast.right.team }}</th><th>單項優勢</th></tr></thead><tbody><tr v-for="row in weekSixRows" :key="`week-six-${row.category}`"><th>{{ row.category }}</th><td :class="{ winner: row.winner === 'left' }">{{ row.left }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
         <div class="sprint-result"><span>預測對位</span><strong>{{ weekSixSummary.left }} : {{ weekSixSummary.right }}</strong><b>{{ weekSixSummary.left === weekSixSummary.right ? '平手' : (weekSixSummary.left > weekSixSummary.right ? weekSixForecast.left.team : weekSixForecast.right.team) + ' 優勢' }}</b></div>
