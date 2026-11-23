@@ -68,14 +68,30 @@ const weekFour: TeamWeek[] = [
   { team: '80年次男性屬羊', gp: 50, fgm: '243/528', ftm: '167/195', stats: ['.460', '.856', '82', '735', '227', '197', '41', '19', '84'] },
   { team: '尬電鮪魚', gp: 44, fgm: '230/482', ftm: '93/119', stats: ['.477', '.782', '75', '628', '226', '124', '43', '33', '90'] },
 ]
+const weekFive: TeamWeek[] = [
+  { team: '字母主委', gp: 48, fgm: '210/416', ftm: '93/117', stats: ['.505', '.795', '62', '575', '219', '135', '40', '38', '74'] },
+  { team: '哈利吸K', gp: 50, fgm: '244/557', ftm: '92/129', stats: ['.438', '.713', '95', '675', '248', '152', '49', '26', '97'] },
+  { team: '浪子踢球', gp: 50, fgm: '184/411', ftm: '47/66', stats: ['.448', '.712', '55', '470', '263', '159', '52', '30', '81'] },
+  { team: '卡店老闆的斑馬PSA10', gp: 53, fgm: '302/641', ftm: '123/153', stats: ['.471', '.804', '84', '811', '292', '169', '44', '23', '94'] },
+  { team: '傻逼維特向前衝', gp: 45, fgm: '220/461', ftm: '104/130', stats: ['.477', '.800', '67', '611', '179', '147', '44', '20', '84'] },
+  { team: 'ALOMAR', gp: 46, fgm: '231/522', ftm: '106/141', stats: ['.443', '.752', '72', '640', '250', '176', '43', '22', '90'] },
+  { team: '阿肥加班幹大事', gp: 45, fgm: '234/467', ftm: '101/124', stats: ['.501', '.815', '69', '638', '242', '160', '37', '22', '88'] },
+  { team: 'Wei Too Strong', gp: 49, fgm: '192/401', ftm: '88/109', stats: ['.479', '.807', '59', '531', '214', '134', '59', '25', '68'] },
+  { team: 'Gyuumao', gp: 41, fgm: '222/500', ftm: '100/142', stats: ['.444', '.704', '84', '628', '208', '168', '33', '16', '76'] },
+  { team: '台北胯下大暖流艦隊', gp: 50, fgm: '198/375', ftm: '73/104', stats: ['.528', '.702', '45', '514', '230', '110', '44', '21', '61'] },
+  { team: '螞蟻雄兵閃身步絕地大反擊', gp: 45, fgm: '195/388', ftm: '106/131', stats: ['.503', '.809', '46', '542', '206', '116', '39', '23', '51'] },
+  { team: 'Wintersoldier', gp: 48, fgm: '273/550', ftm: '114/143', stats: ['.496', '.797', '90', '752', '221', '128', '29', '24', '90'] },
+  { team: '80年次男性', gp: 48, fgm: '254/557', ftm: '140/180', stats: ['.456', '.778', '93', '741', '246', '226', '57', '24', '97'] },
+  { team: '尬電鮪魚', gp: 52, fgm: '301/615', ftm: '117/145', stats: ['.489', '.807', '115', '834', '280', '174', '47', '28', '95'] },
+]
 
 const split = (value: string) => value.split('/').map(Number) as [number, number]
 const canonicalTeam = (team: string) => ({
   '蟻人快歸來': '螞蟻雄兵閃身步絕地大反擊',
   '80年次男性': '80年次男性屬羊',
 }[team] || team)
-const combined = weekFour.map(current => {
-  const entries = [weekOne, weekTwo, weekThree, weekFour].map(week => week.find(entry => canonicalTeam(entry.team) === canonicalTeam(current.team))!)
+const combined = weekFive.map(current => {
+  const entries = [weekOne, weekTwo, weekThree, weekFour, weekFive].map(week => week.find(entry => canonicalTeam(entry.team) === canonicalTeam(current.team))!)
   const shooting = entries.map(entry => ({ fg: split(entry.fgm), ft: split(entry.ftm) }))
   const sums = current.stats.slice(2).map((_, index) => entries.reduce((total, entry) => total + Number(entry.stats[index + 2]), 0))
   return {
@@ -88,16 +104,17 @@ const combined = weekFour.map(current => {
     ],
   }
 })
-type MatchupPeriod = 'combined' | 'weekOne' | 'weekTwo' | 'weekThree' | 'weekFour'
+type MatchupPeriod = 'combined' | 'weekOne' | 'weekTwo' | 'weekThree' | 'weekFour' | 'weekFive'
 type MatchupTeam = { team: string; gp: number; stats: number[] }
 const normalizeWeek = (entries: TeamWeek[]): MatchupTeam[] => entries.map(entry => ({ team: canonicalTeam(entry.team), gp: entry.gp, stats: entry.stats.map(Number) }))
-const weeklyMatchupData = { weekOne: normalizeWeek(weekOne), weekTwo: normalizeWeek(weekTwo), weekThree: normalizeWeek(weekThree), weekFour: normalizeWeek(weekFour) }
+const weeklyMatchupData = { weekOne: normalizeWeek(weekOne), weekTwo: normalizeWeek(weekTwo), weekThree: normalizeWeek(weekThree), weekFour: normalizeWeek(weekFour), weekFive: normalizeWeek(weekFive) }
 const matchupPeriods: { id: MatchupPeriod; label: string; caption: string }[] = [
-  { id: 'combined', label: '四週合計', caption: 'WEEK 1–4 · COMBINED' },
+  { id: 'combined', label: '五週合計', caption: 'WEEK 1–5 · COMBINED' },
   { id: 'weekOne', label: 'WEEK 1', caption: 'WEEK 1 · FINAL' },
   { id: 'weekTwo', label: 'WEEK 2', caption: 'WEEK 2 · FINAL' },
   { id: 'weekThree', label: 'WEEK 3', caption: 'WEEK 3 · FINAL' },
   { id: 'weekFour', label: 'WEEK 4', caption: 'WEEK 4 · FINAL' },
+  { id: 'weekFive', label: 'WEEK 5', caption: 'WEEK 5 · FINAL' },
 ]
 const ranks = combined.map(entry => categories.map((_, index) => {
   const sorted = [...combined].sort((a, b) => index === 8 ? a.stats[index] - b.stats[index] : b.stats[index] - a.stats[index])
@@ -664,8 +681,8 @@ const weiWeekFiveSummary = computed(() => ({ left: weiWeekFiveRows.value.filter(
     </section>
     <section class="analysis-board wrap">
       <template v-if="!forecastOnly">
-      <div class="analysis-heading"><div><p class="eyebrow ink">WEEK 1–4 · COMBINED DATA</p><h2>全員九項戰力圖</h2></div><p>四週原始數據合併後再排名。FG% 與 FT% 以總命中／總出手加權計算；TO 越低越強。</p></div>
-      <div class="analysis-method"><span>14 TEAMS</span><span>4 WEEKS</span><span>9 CATEGORIES</span><span>14 RANK LEVELS</span><span>點雷達開啟完整名次</span></div>
+      <div class="analysis-heading"><div><p class="eyebrow ink">WEEK 1–5 · COMBINED DATA</p><h2>全員九項戰力圖</h2></div><p>五週原始數據合併後再排名。FG% 與 FT% 以總命中／總出手加權計算；TO 越低越強。</p></div>
+      <div class="analysis-method"><span>14 TEAMS</span><span>5 WEEKS</span><span>9 CATEGORIES</span><span>14 RANK LEVELS</span><span>點雷達開啟完整名次</span></div>
       <div class="analysis-grid">
         <article v-for="(player, playerIndex) in playerCards" :key="player.team" class="analysis-card" :class="{ active: isRankModalOpen && selectedTeam === player.team }" tabindex="0" role="button" :aria-pressed="isRankModalOpen && selectedTeam === player.team" @click="selectPlayer(player.team)" @keydown.enter="selectPlayer(player.team)" @keydown.space.prevent="selectPlayer(player.team)">
           <div class="analysis-card-head"><div><small>TEAM {{ String(playerIndex + 1).padStart(2, '0') }}</small><h3>{{ player.team }}</h3></div><b>{{ player.gp }}<em> GP</em></b></div>
