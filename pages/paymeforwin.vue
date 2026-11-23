@@ -522,7 +522,7 @@ const weekSixFeiPlayers: ProjectionPlayer[] = [
 ]
 const weekSixAlomarPlayers: ProjectionPlayer[] = [
   {"name":"Josh Giddey","nba":"CHI","slot":"PG","fgm":3.8,"fga":9.1,"ftm":1.2,"fta":1.9,"stats":[1.1,9.9,5.9,8.4,0.4,0.5,3.3],"last14":{"fgm":4.1,"fga":9.1,"ftm":1.1,"fta":1.9,"stats":[1.3,10.7,7.3,9.3,0.3,0.7,4.1]}},
-  {"name":"Josh Green","nba":"UTA","slot":"SG","fgm":1.7,"fga":3.8,"ftm":0.5,"fta":0.7,"stats":[0.9,4.8,1.7,0.9,0.5,0.2,0.5],"last14":{"fgm":2.3,"fga":4.5,"ftm":0.8,"fta":1.3,"stats":[1.1,6.4,1.9,1.1,0.6,0.3,0.5]}},
+  {"name":"Josh Green","nba":"UTA","slot":"IL","fgm":1.7,"fga":3.8,"ftm":0.5,"fta":0.7,"stats":[0.9,4.8,1.7,0.9,0.5,0.2,0.5],"last14":{"fgm":2.3,"fga":4.5,"ftm":0.8,"fta":1.3,"stats":[1.1,6.4,1.9,1.1,0.6,0.3,0.5]}},
   {"name":"Kyrie Irving","nba":"DAL","slot":"G","fgm":8.1,"fga":17.6,"ftm":3,"fta":3.5,"stats":[3.3,22.5,3.8,4.4,1.2,0.4,1.5],"last14":{"fgm":8.3,"fga":18,"ftm":3.3,"fta":4,"stats":[3.7,23.7,4,4.3,1,0.3,1.3]}},
   {"name":"Klay Thompson","nba":"MIA","slot":"SF","fgm":5.2,"fga":11.6,"ftm":0.8,"fta":0.8,"stats":[4.1,15.3,1.4,2,0.1,0.8,0.9],"last14":{"fgm":6,"fga":13,"ftm":1.2,"fta":1.2,"stats":[4.8,18,1,2.6,0.2,1.4,0.4]}},
   {"name":"Rui Hachimura","nba":"LAC","slot":"PF","fgm":5,"fga":11.9,"ftm":1.8,"fta":2.7,"stats":[2.2,14,6.2,1.5,0.9,0.2,1.7],"last14":{"fgm":4.9,"fga":10.3,"ftm":1.4,"fta":2.3,"stats":[2.3,13.4,5.9,1.4,0.9,0.1,1.3]}},
@@ -535,7 +535,7 @@ const weekSixAlomarPlayers: ProjectionPlayer[] = [
   {"name":"Jordan Poole","nba":"NOP","slot":"BN","fgm":2.8,"fga":7.2,"ftm":4.4,"fta":4.8,"stats":[1.4,11.3,1.8,3.2,0.7,0.3,1.1],"last14":{"fgm":3.6,"fga":8.1,"ftm":5,"fta":5.5,"stats":[1.8,14,1.6,3.3,0.4,0.3,1.3]}},
   {"name":"Devin Booker","nba":"PHX","slot":"BN","fgm":8.4,"fga":17.7,"ftm":6,"fta":6.5,"stats":[1.9,24.7,2.7,5.3,1.1,0.3,2.3],"last14":{"fgm":8,"fga":16.9,"ftm":6.1,"fta":6.9,"stats":[1.9,24,2.6,5.7,1,0.3,2]}},
   {"name":"Derrick Jones Jr.","nba":"LAC","slot":"BN","fgm":3.6,"fga":7.2,"ftm":1.2,"fta":2.1,"stats":[1.8,10.3,4.5,1.2,0.9,0.9,1.2],"last14":{"fgm":2.9,"fga":5.9,"ftm":1.9,"fta":3.3,"stats":[1.4,9,3.7,1,0.7,1,1.3]}},
-  {"name":"Paul George","nba":"BOS","slot":"IL","fgm":7.1,"fga":15.8,"ftm":2.4,"fta":3.1,"stats":[3.3,19.9,5.6,3.8,2.2,0.4,2.6],"last14":{"fgm":7.3,"fga":16.2,"ftm":2.2,"fta":2.8,"stats":[3.3,20.2,5.8,2.8,2,0.3,1.7]}},
+  {"name":"Paul George","nba":"BOS","slot":"F","fgm":7.1,"fga":15.8,"ftm":2.4,"fta":3.1,"stats":[3.3,19.9,5.6,3.8,2.2,0.4,2.6],"last14":{"fgm":7.3,"fga":16.2,"ftm":2.2,"fta":2.8,"stats":[3.3,20.2,5.8,2.8,2,0.3,1.7]}},
   {"name":"Ja Morant","nba":"POR","slot":"IL","fgm":6.5,"fga":12,"ftm":1.3,"fta":1.5,"stats":[1.5,15.8,2.5,5.5,1,0,1.3]},
   {"name":"Brandon Ingram","nba":"LAC","slot":"IL","fgm":0,"fga":0,"ftm":0,"fta":0,"stats":[0,0,0,0,0,0,0]},
 ]
