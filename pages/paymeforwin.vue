@@ -167,7 +167,12 @@ const comparisonRows = computed(() => {
     const rightValue = right.stats[index]
     const leftAverage = index < 2 ? leftValue : leftValue / left.gp
     const rightAverage = index < 2 ? rightValue : rightValue / right.gp
-    const result = index === 8 ? rightAverage - leftAverage : leftAverage - rightAverage
+    // A completed weekly matchup follows Yahoo's category totals. The combined
+    // view stays normalized by GP, while its averages remain visible either way.
+    const useAverageForOutcome = selectedMatchupPeriod.value === 'combined' && index >= 2
+    const leftOutcome = useAverageForOutcome ? leftAverage : leftValue
+    const rightOutcome = useAverageForOutcome ? rightAverage : rightValue
+    const result = index === 8 ? rightOutcome - leftOutcome : leftOutcome - rightOutcome
     return {
       category,
       left: formatStat(leftValue, index),
