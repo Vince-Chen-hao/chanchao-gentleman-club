@@ -91,6 +91,15 @@ const weekFourMatchups = [
   { left: 'ALOMAR', leftScore: 8, right: 'Wintersoldier', rightScore: 1 },
   { left: '螞蟻雄兵閃身步絕地大反擊', leftScore: 4, right: '台北胯下大暖流艦隊', rightScore: 5 },
 ]
+const weekFiveMatchups = [
+  { left: '阿肥加班幹大事', leftScore: 6, right: 'Wei Too Strong', rightScore: 3 },
+  { left: '字母主委', leftScore: 4, right: '哈利吸K', rightScore: 5 },
+  { left: '浪子踢球', leftScore: 3, right: '卡店老闆的斑馬PSA10', rightScore: 6 },
+  { left: '傻逼維特向前衝', leftScore: 4, right: 'ALOMAR', rightScore: 5 },
+  { left: 'Gyuumao', leftScore: 4, right: '台北胯下大暖流艦隊', rightScore: 5 },
+  { left: '螞蟻雄兵閃身步絕地大反擊', leftScore: 4, right: 'Wintersoldier', rightScore: 5 },
+  { left: '80年次男性', leftScore: 2, right: '尬電鮪魚', rightScore: 7 },
+]
 const weekOneCategories = ['FG%', 'FT%', '3PTM', 'PTS', 'REB', 'AST', 'ST', 'BLK', 'TO']
 const weekOneAverageCategories = ['3PTM(avg)', 'PTS(avg)', 'REB(avg)', 'AST(avg)', 'ST(avg)', 'BLK(avg)', 'TO(avg)']
 const weekOneTeamStats = [
@@ -157,17 +166,34 @@ const weekFourTeamStats = [
   { team: '80年次男性屬羊', gp: 50, fgm: '243/528', ftm: '167/195', stats: ['.460', '.856', '82', '735', '227', '197', '41', '19', '84'] },
   { team: '尬電鮪魚', gp: 44, fgm: '230/482', ftm: '93/119', stats: ['.477', '.782', '75', '628', '226', '124', '43', '33', '90'] },
 ]
-const selectedCurrentWeek = ref<'1' | '2' | '3' | '4'>('4')
+const weekFiveTeamStats = [
+  { team: '字母主委', gp: 48, fgm: '210/416', ftm: '93/117', stats: ['.505', '.795', '62', '575', '219', '135', '40', '38', '74'] },
+  { team: '哈利吸K', gp: 50, fgm: '244/557', ftm: '92/129', stats: ['.438', '.713', '95', '675', '248', '152', '49', '26', '97'] },
+  { team: '浪子踢球', gp: 50, fgm: '184/411', ftm: '47/66', stats: ['.448', '.712', '55', '470', '263', '159', '52', '30', '81'] },
+  { team: '卡店老闆的斑馬PSA10', gp: 53, fgm: '302/641', ftm: '123/153', stats: ['.471', '.804', '84', '811', '292', '169', '44', '23', '94'] },
+  { team: '傻逼維特向前衝', gp: 45, fgm: '220/461', ftm: '104/130', stats: ['.477', '.800', '67', '611', '179', '147', '44', '20', '84'] },
+  { team: 'ALOMAR', gp: 46, fgm: '231/522', ftm: '106/141', stats: ['.443', '.752', '72', '640', '250', '176', '43', '22', '90'] },
+  { team: '阿肥加班幹大事', gp: 45, fgm: '234/467', ftm: '101/124', stats: ['.501', '.815', '69', '638', '242', '160', '37', '22', '88'] },
+  { team: 'Wei Too Strong', gp: 49, fgm: '192/401', ftm: '88/109', stats: ['.479', '.807', '59', '531', '214', '134', '59', '25', '68'] },
+  { team: 'Gyuumao', gp: 41, fgm: '222/500', ftm: '100/142', stats: ['.444', '.704', '84', '628', '208', '168', '33', '16', '76'] },
+  { team: '台北胯下大暖流艦隊', gp: 50, fgm: '198/375', ftm: '73/104', stats: ['.528', '.702', '45', '514', '230', '110', '44', '21', '61'] },
+  { team: '螞蟻雄兵閃身步絕地大反擊', gp: 45, fgm: '195/388', ftm: '106/131', stats: ['.503', '.809', '46', '542', '206', '116', '39', '23', '51'] },
+  { team: 'Wintersoldier', gp: 48, fgm: '273/550', ftm: '114/143', stats: ['.496', '.797', '90', '752', '221', '128', '29', '24', '90'] },
+  { team: '80年次男性', gp: 48, fgm: '254/557', ftm: '140/180', stats: ['.456', '.778', '93', '741', '246', '226', '57', '24', '97'] },
+  { team: '尬電鮪魚', gp: 52, fgm: '301/615', ftm: '117/145', stats: ['.489', '.807', '115', '834', '280', '174', '47', '28', '95'] },
+]
+const selectedCurrentWeek = ref<'1' | '2' | '3' | '4' | '5'>('5')
 const showPlayerStrength = false
 const currentWeekData = {
   '1': { label: 'WEEK 1 · FINAL', title: '開幕週結算，先記一筆', detail: '10/20–10/25 · 九項分類 · 14 隊完成首週交手', caption: 'WEEK 1 · 2026–27 TEAM STATS', status: '最終結果' },
   '2': { label: 'WEEK 2 · FINAL', title: '第二週結算，排名落袋', detail: '10/26–11/01 · 九項分類 · 14 隊完成第二週交手', caption: 'WEEK 2 · 2026–27 TEAM STATS', status: '最終結果' },
   '3': { label: 'WEEK 3 · FINAL', title: '第三週結算，戰績入帳', detail: '11/02–11/08 · 九項分類 · 14 隊完成第三週交手', caption: 'WEEK 3 · 2026–27 TEAM STATS', status: '最終結果' },
   '4': { label: 'WEEK 4 · FINAL', title: '第四週結算，數據定案', detail: '11/09–11/15 · 九項分類 · 14 隊完成第四週交手', caption: 'WEEK 4 · 2026–27 TEAM STATS', status: '最終結果' },
+  '5': { label: 'WEEK 5 · FINAL', title: '第五週結算，戰績入帳', detail: '11/16–11/22 · 九項分類 · 14 隊完成第五週交手', caption: 'WEEK 5 · 2026–27 TEAM STATS', status: '最終結果' },
 } as const
 const activeCurrentWeek = computed(() => currentWeekData[selectedCurrentWeek.value])
-const activeCurrentWeekStats = computed(() => selectedCurrentWeek.value === '1' ? weekOneTeamStats : selectedCurrentWeek.value === '2' ? weekTwoTeamStats : selectedCurrentWeek.value === '3' ? weekThreeTeamStats : weekFourTeamStats)
-const activeCurrentWeekMatchups = computed(() => selectedCurrentWeek.value === '1' ? weekOneMatchups : selectedCurrentWeek.value === '2' ? weekTwoMatchups : selectedCurrentWeek.value === '3' ? weekThreeMatchups : weekFourMatchups)
+const activeCurrentWeekStats = computed(() => selectedCurrentWeek.value === '1' ? weekOneTeamStats : selectedCurrentWeek.value === '2' ? weekTwoTeamStats : selectedCurrentWeek.value === '3' ? weekThreeTeamStats : selectedCurrentWeek.value === '4' ? weekFourTeamStats : weekFiveTeamStats)
+const activeCurrentWeekMatchups = computed(() => selectedCurrentWeek.value === '1' ? weekOneMatchups : selectedCurrentWeek.value === '2' ? weekTwoMatchups : selectedCurrentWeek.value === '3' ? weekThreeMatchups : selectedCurrentWeek.value === '4' ? weekFourMatchups : weekFiveMatchups)
 const selectedMember = ref<typeof members[number] | null>(null)
 const prizes = [
   { place: 1, tier: 'contender', group: '爭冠組', title: '總冠軍', amount: '3,000' },
@@ -303,6 +329,7 @@ const weekOneAllPlayRanking = buildAllPlayRanking(weekOneTeamStats)
 const weekTwoAllPlayRanking = buildAllPlayRanking(weekTwoTeamStats)
 const weekThreeAllPlayRanking = buildAllPlayRanking(weekThreeTeamStats)
 const weekFourAllPlayRanking = buildAllPlayRanking(weekFourTeamStats)
+const weekFiveAllPlayRanking = buildAllPlayRanking(weekFiveTeamStats)
 const weekOneMedalTotals = weekOneAllPlayRanking.map(entry => ({
   ...entry,
   gold: entry.rank === 1 ? 1 : 0,
@@ -315,7 +342,7 @@ const canonicalTeam = (team: string) => ({
   '蟻人快歸來': '螞蟻雄兵閃身步絕地大反擊',
   '80年次男性': '80年次男性屬羊',
 }[team] || team)
-const allWeekRankings = [weekOneAllPlayRanking, weekTwoAllPlayRanking, weekThreeAllPlayRanking, weekFourAllPlayRanking]
+const allWeekRankings = [weekOneAllPlayRanking, weekTwoAllPlayRanking, weekThreeAllPlayRanking, weekFourAllPlayRanking, weekFiveAllPlayRanking]
 const seasonMedalTotals = [...new Set(allWeekRankings.flatMap(ranking => ranking.map(entry => canonicalTeam(entry.team))))].map(team => {
   const entries = allWeekRankings.map(ranking => ranking.find(entry => canonicalTeam(entry.team) === team))
   const gold = entries.filter(entry => entry?.rank === 1).length
@@ -441,7 +468,7 @@ const resetHonorCard = (event: PointerEvent) => {
           <div class="week-one-table-wrap"><table class="week-one-stats-table"><caption>{{ activeCurrentWeek.caption }}</caption><thead><tr><th>Team</th><th>GP</th><th>FGM/A*</th><th>FG%</th><th>FTM/A*</th><th>FT%</th><th v-for="category in weekOneCategories.slice(2)" :key="category">{{ category }}</th><th v-for="category in weekOneAverageCategories" :key="category">{{ category }}</th></tr></thead><tbody><tr v-for="(entry, rowIndex) in activeCurrentWeekStats" :key="entry.team"><th>{{ entry.team }}</th><td>{{ entry.gp }}</td><td>{{ entry.fgm }}</td><td :class="currentWeekStatRank(rowIndex, 0)">{{ entry.stats[0] }}</td><td>{{ entry.ftm }}</td><td :class="currentWeekStatRank(rowIndex, 1)">{{ entry.stats[1] }}</td><td v-for="(stat, statOffset) in entry.stats.slice(2)" :key="`${entry.team}-total-${statOffset}`" :class="currentWeekStatRank(rowIndex, statOffset + 2)">{{ stat }}</td><td v-for="(category, averageOffset) in weekOneAverageCategories" :key="`${entry.team}-${category}`" :class="currentWeekAverageRank(rowIndex, averageOffset + 2)">{{ currentWeekAverage(entry, averageOffset + 2) }}</td></tr></tbody></table></div>
           <div class="week-one-legend"><span class="legend-first">最佳</span><span class="legend-second">第二</span><span class="legend-third">第三</span><i /><span>九項數據以全盟排名標色；TO 越低越好。</span></div>
           <section v-if="showPlayerStrength && selectedCurrentWeek === '1'" class="player-strength-card"><div class="player-strength-heading"><div><p class="eyebrow ink">WEEK 1 · PLAYER PROFILE</p><h4>阿肥加班幹大事 · 九項強度</h4></div><p>以 Week 1 全盟 14 隊單項名次換算；TO 越低強度越高。</p></div><div class="player-strength-body"><div class="radar-wrap"><svg viewBox="0 0 260 260" role="img" aria-label="阿肥加班幹大事 Week 1 九項數據強度雷達圖"><polygon v-for="guide in [.25, .5, .75, 1]" :key="guide" class="radar-guide" :points="radarGuide(guide)" /><line v-for="(_, index) in weekOneCategories" :key="`axis-${index}`" class="radar-axis" x1="130" y1="130" :x2="radarPoint(index, 1).x" :y2="radarPoint(index, 1).y" /><polygon class="radar-shape" :points="weekOneAfeiRadar" /><circle v-for="(stat, index) in weekOneAfeiStrength" :key="`point-${stat.label}`" class="radar-point" :cx="radarPoint(index, Math.max(stat.strength / 100, .07)).x" :cy="radarPoint(index, Math.max(stat.strength / 100, .07)).y" r="3.5" /><text v-for="(stat, index) in weekOneAfeiStrength" :key="`label-${stat.label}`" class="radar-label" :x="radarPoint(index, 1.2).x" :y="radarPoint(index, 1.2).y">{{ stat.label }}</text></svg></div><div class="strength-list"><article v-for="stat in weekOneAfeiStrength" :key="stat.label"><span>{{ stat.label }}</span><b>{{ stat.value }}</b><em>全盟第 {{ stat.rank }}</em><i><i :style="{ width: `${stat.strength}%` }" /></i></article></div></div></section>
-          <div class="week-one-all-play"><div class="week-one-all-play-heading"><div><p class="eyebrow">ALL-PLAY COMPARISON</p><h4>{{ activeCurrentWeek.label.replace(' · FINAL', '') }} · 全盟對戰比較</h4></div><p>上方欄為自己、左側列為對手；九項數據逐隊比較，依對 13 隊的勝率決定排名，同勝率看直接對戰。</p></div><div class="week-one-podium" aria-label="本週全盟比較前三名"><article v-for="entry in currentWeekAllPlayRanking.slice(0, 3)" :key="entry.rank" :class="`week-one-rank-${entry.rank}`"><span class="week-one-medal">{{ rankMedal(entry.rank) }}</span><div><strong>{{ entry.team }}</strong><em>{{ entry.record }}</em></div></article></div><div class="week-one-all-play-scroll"><table class="week-one-all-play-table"><thead><tr><th>對手 \ 自己</th><th v-for="entry in currentWeekAllPlayTeams" :key="entry.team">{{ entry.team }}</th></tr></thead><tbody><tr v-for="row in currentWeekAllPlayRows" :key="row[0]"><th>{{ row[0] }}</th><td v-for="(value, valueIndex) in row.slice(1)" :key="valueIndex" :class="matchupState(value)">{{ value }}</td></tr></tbody></table></div><section class="weekly-matchups"><div class="weekly-matchups-heading"><p class="eyebrow ink">{{ activeCurrentWeek.label }} MATCHUPS</p><h4>本週對戰組合</h4></div><div class="week-one-matchups"><article v-for="matchup in activeCurrentWeekMatchups" :key="`${matchup.left}-${matchup.right}`"><strong>{{ matchup.left }}</strong><b>{{ matchup.leftScore }}</b><span>:</span><b>{{ matchup.rightScore }}</b><strong>{{ matchup.right }}</strong></article></div></section><section class="week-one-medal-totals"><p class="eyebrow ink">2026–27 MEDAL COLLECTION</p><h4>本季累積獎牌榜</h4><p>已累積至 Week 4；每週全盟比較前三名分別獲得金、銀、銅牌。</p><div class="medal-totals-scroll"><table class="medal-totals-table"><thead><tr><th>成員</th><th>🥇 金牌</th><th>🥈 銀牌</th><th>🥉 銅牌</th><th>總獎牌</th></tr></thead><tbody><tr v-for="entry in seasonMedalTotals" :key="entry.team"><th>{{ entry.team }}</th><td>{{ entry.gold }}</td><td>{{ entry.silver }}</td><td>{{ entry.bronze }}</td><td>{{ entry.total }}</td></tr></tbody></table></div></section></div>
+          <div class="week-one-all-play"><div class="week-one-all-play-heading"><div><p class="eyebrow">ALL-PLAY COMPARISON</p><h4>{{ activeCurrentWeek.label.replace(' · FINAL', '') }} · 全盟對戰比較</h4></div><p>上方欄為自己、左側列為對手；九項數據逐隊比較，依對 13 隊的勝率決定排名，同勝率看直接對戰。</p></div><div class="week-one-podium" aria-label="本週全盟比較前三名"><article v-for="entry in currentWeekAllPlayRanking.slice(0, 3)" :key="entry.rank" :class="`week-one-rank-${entry.rank}`"><span class="week-one-medal">{{ rankMedal(entry.rank) }}</span><div><strong>{{ entry.team }}</strong><em>{{ entry.record }}</em></div></article></div><div class="week-one-all-play-scroll"><table class="week-one-all-play-table"><thead><tr><th>對手 \ 自己</th><th v-for="entry in currentWeekAllPlayTeams" :key="entry.team">{{ entry.team }}</th></tr></thead><tbody><tr v-for="row in currentWeekAllPlayRows" :key="row[0]"><th>{{ row[0] }}</th><td v-for="(value, valueIndex) in row.slice(1)" :key="valueIndex" :class="matchupState(value)">{{ value }}</td></tr></tbody></table></div><section class="weekly-matchups"><div class="weekly-matchups-heading"><p class="eyebrow ink">{{ activeCurrentWeek.label }} MATCHUPS</p><h4>本週對戰組合</h4></div><div class="week-one-matchups"><article v-for="matchup in activeCurrentWeekMatchups" :key="`${matchup.left}-${matchup.right}`"><strong>{{ matchup.left }}</strong><b>{{ matchup.leftScore }}</b><span>:</span><b>{{ matchup.rightScore }}</b><strong>{{ matchup.right }}</strong></article></div></section><section class="week-one-medal-totals"><p class="eyebrow ink">2026–27 MEDAL COLLECTION</p><h4>本季累積獎牌榜</h4><p>已累積至 Week 5；每週全盟比較前三名分別獲得金、銀、銅牌。</p><div class="medal-totals-scroll"><table class="medal-totals-table"><thead><tr><th>成員</th><th>🥇 金牌</th><th>🥈 銀牌</th><th>🥉 銅牌</th><th>總獎牌</th></tr></thead><tbody><tr v-for="entry in seasonMedalTotals" :key="entry.team"><th>{{ entry.team }}</th><td>{{ entry.gold }}</td><td>{{ entry.silver }}</td><td>{{ entry.bronze }}</td><td>{{ entry.total }}</td></tr></tbody></table></div></section></div>
         </div>
         <div class="first-round-draft">
           <div class="first-round-heading"><div><p class="eyebrow">DRAFT RESULTS · ROUND 1</p><h3>首輪選秀，一人一張王牌</h3></div><p>14 位經理人的首輪決定，從這裡開始。</p></div>
