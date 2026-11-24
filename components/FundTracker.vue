@@ -150,8 +150,8 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
   <aside ref="section" class="fund-tracker" aria-labelledby="fund-title" :aria-busy="pending">
     <div class="fund-heading">
       <div>
-        <p class="fund-kicker"><span aria-hidden="true">↗</span> 0050 積分加菜計畫 · 鍋底先賠進去了</p>
-        <h3 id="fund-title"><span>聯盟長期投資計畫，</span><span>長期是多久不知道</span></h3>
+        <p class="fund-kicker"><span aria-hidden="true">↗</span> 0050 積分加菜計畫 · 黃爸回歸，牛市再臨</p>
+        <h3 id="fund-title"><span>聯盟長期投資計畫，</span><span>兄弟們帽子反戴，力拚年底五萬點</span></h3>
       </div>
       <button class="fund-refresh" type="button" :disabled="pending" @click="refreshQuote">
         <span aria-hidden="true" :class="{ 'is-refreshing': pending }">↻</span>
@@ -181,7 +181,7 @@ onUnmounted(() => { observer?.disconnect(); if (timer) clearInterval(timer) })
       <div :class="profitTone">
         <dt>帳面損益 <span class="fund-unit">NT$</span></dt>
         <dd>{{ profit }}</dd>
-        <small>{{ profitPercent || (fund?.position.baselinePrice != null ? '等待最新報價' : '等待買進資料建立起點') }} · 加菜還沒上桌，帳先結了</small>
+        <small>{{ profitPercent || (fund?.position.baselinePrice != null ? '等待最新報價' : '等待買進資料建立起點') }} · 信仰重新充電 · 0050，頂起。</small>
       </div>
     </dl>
 
