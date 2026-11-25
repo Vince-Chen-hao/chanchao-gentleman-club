@@ -598,9 +598,21 @@ const weekSixForecast = computed(() => {
   return { left: makeTeam('阿肥加班幹大事', weekSixFeiPlayers), right: makeTeam('ALOMAR', weekSixAlomarPlayers) }
 })
 const weekSixRows = computed(() => categories.map((category, index) => {
-  const left = weekSixForecast.value.left.values[index]; const right = weekSixForecast.value.right.values[index]
+  const leftTeam = weekSixForecast.value.left
+  const rightTeam = weekSixForecast.value.right
+  const left = leftTeam.values[index]; const right = rightTeam.values[index]
   const result = index === 8 ? right - left : left - right
-  return { category, left: formatProjection(left, index), right: formatProjection(right, index), winner: result === 0 ? 'tie' : result > 0 ? 'left' : 'right', edge: result === 0 ? '平手' : `${result > 0 ? '阿肥加班幹大事' : 'ALOMAR'} 優勢` }
+  return {
+    category,
+    left: formatProjection(left, index),
+    right: formatProjection(right, index),
+    leftCurrent: formatProjection(leftTeam.currentValues[index], index),
+    rightCurrent: formatProjection(rightTeam.currentValues[index], index),
+    leftAdd: formatProjection(leftTeam.remainingValues[index], index),
+    rightAdd: formatProjection(rightTeam.remainingValues[index], index),
+    winner: result === 0 ? 'tie' : result > 0 ? 'left' : 'right',
+    edge: result === 0 ? '平手' : `${result > 0 ? '阿肥加班幹大事' : 'ALOMAR'} +${Math.abs(result).toFixed(index < 2 ? 4 : 1)}`,
+  }
 }))
 const weekSixSummary = computed(() => ({ left: weekSixRows.value.filter(row => row.winner === 'left').length, right: weekSixRows.value.filter(row => row.winner === 'right').length }))
 const activeWeekSixDetail = ref<'left' | 'right' | null>(null)
@@ -751,7 +763,7 @@ const weiWeekFiveSummary = computed(() => ({ left: weiWeekFiveRows.value.filter(
         <div class="sprint-heading"><div><p class="eyebrow">WEEK 6 · LIVE AFTER DAY 2</p><h2 id="week-six-title">阿肥 vs ALOMAR｜本週戰力推演</h2></div><p>已納入 Yahoo 11/24 完賽實績，再以剩餘賽程乘上球員平均估算最終結果。包含 BN、不計 IL。</p></div>
         <div class="forecast-source week-six-source"><span>預測數據來源</span><div><button type="button" :class="{ active: weekSixSource === 'season' }" @click="weekSixSource = 'season'">整季平均</button><button type="button" :class="{ active: weekSixSource === 'last14' }" @click="weekSixSource = 'last14'">最近 14 天平均</button></div><p>{{ weekSixSource === 'season' ? '已賽數據為 Yahoo 實績；剩餘賽程以整季場均加總。' : '已賽數據為 Yahoo 實績；剩餘賽程改以最近 14 天場均加總。Ingram 本季剛復出，暫以 2025–26 基準估算。' }}</p></div>
         <div class="sprint-status"><span><b>{{ weekSixForecast.left.team }}</b> · 已賽 {{ weekSixLive['阿肥加班幹大事'].gp }} ＋ 剩 {{ weekSixForecast.left.remainingGp }} ＝ {{ weekSixForecast.left.gp }} GP</span><strong>WEEK 6</strong><span><b>{{ weekSixForecast.right.team }}</b> · 已賽 {{ weekSixLive.ALOMAR.gp }} ＋ 剩 {{ weekSixForecast.right.remainingGp }} ＝ {{ weekSixForecast.right.gp }} GP</span></div>
-        <div class="sprint-table-wrap"><table class="sprint-table week-six-table"><thead><tr><th>項目</th><th>{{ weekSixForecast.left.team }}</th><th>{{ weekSixForecast.right.team }}</th><th>單項優勢</th></tr></thead><tbody><tr v-for="row in weekSixRows" :key="`week-six-${row.category}`"><th>{{ row.category }}</th><td :class="{ winner: row.winner === 'left' }">{{ row.left }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
+        <div class="sprint-table-wrap"><table class="sprint-table week-six-table"><thead><tr><th>項目</th><th>{{ weekSixForecast.left.team }}<small>目前</small></th><th>剩餘預估</th><th>最終預測</th><th>{{ weekSixForecast.right.team }}<small>目前</small></th><th>剩餘預估</th><th>最終預測</th><th>預測差距</th></tr></thead><tbody><tr v-for="row in weekSixRows" :key="`week-six-${row.category}`"><th>{{ row.category }}</th><td>{{ row.leftCurrent }}</td><td class="sprint-add">+{{ row.leftAdd }}</td><td :class="{ winner: row.winner === 'left' }">{{ row.left }}</td><td>{{ row.rightCurrent }}</td><td class="sprint-add">+{{ row.rightAdd }}</td><td :class="{ winner: row.winner === 'right' }">{{ row.right }}</td><td><span :class="['sprint-edge', row.winner]">{{ row.edge }}</span></td></tr></tbody></table></div>
         <div class="sprint-result"><span>預測對位</span><strong>{{ weekSixSummary.left }} : {{ weekSixSummary.right }}</strong><b>{{ weekSixSummary.left === weekSixSummary.right ? '平手' : (weekSixSummary.left > weekSixSummary.right ? weekSixForecast.left.team : weekSixForecast.right.team) + ' 優勢' }}</b></div>
         <div class="sprint-details"><div class="projection-detail-tabs"><button type="button" :class="{ active: activeWeekSixDetail === 'left' }" @click="activeWeekSixDetail = activeWeekSixDetail === 'left' ? null : 'left'">查看 {{ weekSixForecast.left.team }} 的球員乘算明細</button><button type="button" :class="{ active: activeWeekSixDetail === 'right' }" @click="activeWeekSixDetail = activeWeekSixDetail === 'right' ? null : 'right'">查看 {{ weekSixForecast.right.team }} 的球員乘算明細</button></div><section v-if="activeWeekSixDetail" class="projection-roster"><h3>{{ activeWeekSixTeam.team }} · Week 6 球員乘算明細</h3><div class="projection-table-wrap"><table><thead><tr><th>球員</th><th>NBA</th><th>位置</th><th>預計 GP</th><th>3PTM</th><th>PTS</th><th>REB</th><th>AST</th><th>ST</th><th>BLK</th><th>TO</th></tr></thead><tbody><tr v-for="player in activeWeekSixTeam.players" :key="`week-six-player-${player.name}`"><th>{{ player.name }}</th><td>{{ player.nba }}</td><td>{{ player.slot }}</td><td>{{ player.gp }}</td><td>{{ (player.stats[0] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[1] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[2] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[3] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[4] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[5] * player.gp).toFixed(1) }}</td><td>{{ (player.stats[6] * player.gp).toFixed(1) }}</td></tr></tbody></table></div></section></div>
       </section>
