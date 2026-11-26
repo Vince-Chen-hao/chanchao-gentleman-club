@@ -1,6 +1,6 @@
 <template>
   <main class="private-forecast-page">
-    <iframe src="/paymeforwin?view=forecast" title="未來戰力預測：阿肥加班幹大事對Wei Too Strong" />
+    <iframe src="/paymeforwin?view=forecast" title="未來戰力預測：阿肥加班幹大事對ALOMAR" />
   </main>
 </template>
 
